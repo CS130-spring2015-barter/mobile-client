@@ -83,14 +83,7 @@
 		526E99FB1ADB822800615EFC /* Bartr */ = {
 			isa = PBXGroup;
 			children = (
-				526E9A001ADB822800615EFC /* AppDelegate.h */,
-				526E9A011ADB822800615EFC /* AppDelegate.m */,
-				526E9A061ADB822800615EFC /* ViewController.h */,
-				526E9A071ADB822800615EFC /* ViewController.m */,
 				526E9A091ADB822800615EFC /* Main.storyboard */,
-				526E9A0C1ADB822800615EFC /* Images.xcassets */,
-				526E9A0E1ADB822800615EFC /* LaunchScreen.xib */,
-				526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */,
 				526E99FC1ADB822800615EFC /* Supporting Files */,
 			);
 			path = Bartr;
@@ -99,6 +92,13 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				526E9A0C1ADB822800615EFC /* Images.xcassets */,
+				526E9A0E1ADB822800615EFC /* LaunchScreen.xib */,
+				526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */,
+				526E9A001ADB822800615EFC /* AppDelegate.h */,
+				526E9A011ADB822800615EFC /* AppDelegate.m */,
+				526E9A061ADB822800615EFC /* ViewController.h */,
+				526E9A071ADB822800615EFC /* ViewController.m */,
 				526E99FD1ADB822800615EFC /* Info.plist */,
 				526E99FE1ADB822800615EFC /* main.m */,
 			);
@@ -352,6 +352,7 @@
 				INFOPLIST_FILE = Bartr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -362,6 +363,7 @@
 				INFOPLIST_FILE = Bartr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -418,6 +420,7 @@
 				526E9A211ADB822800615EFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		526E9A221ADB822800615EFC /* Build configuration list for PBXNativeTarget "BartrTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +429,7 @@
 				526E9A241ADB822800615EFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
