@@ -15,6 +15,8 @@
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A101ADB822800615EFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0E1ADB822800615EFC /* LaunchScreen.xib */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
+		84CAA7FD1ADB981900253D2A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA7FC1ADB981900253D2A /* ProfileViewController.m */; };
+		84CAA8001ADB983F00253D2A /* ItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA7FF1ADB983F00253D2A /* ItemsTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,10 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		84CAA7FB1ADB981900253D2A /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		84CAA7FC1ADB981900253D2A /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		84CAA7FE1ADB983F00253D2A /* ItemsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemsTableViewController.h; sourceTree = "<group>"; };
+		84CAA7FF1ADB983F00253D2A /* ItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,10 @@
 				526E9A001ADB822800615EFC /* AppDelegate.h */,
 				526E9A011ADB822800615EFC /* AppDelegate.m */,
 				526E9A061ADB822800615EFC /* ViewController.h */,
+				84CAA7FB1ADB981900253D2A /* ProfileViewController.h */,
+				84CAA7FC1ADB981900253D2A /* ProfileViewController.m */,
+				84CAA7FE1ADB983F00253D2A /* ItemsTableViewController.h */,
+				84CAA7FF1ADB983F00253D2A /* ItemsTableViewController.m */,
 				526E9A071ADB822800615EFC /* ViewController.m */,
 				526E9A091ADB822800615EFC /* Main.storyboard */,
 				526E9A0C1ADB822800615EFC /* Images.xcassets */,
@@ -222,10 +232,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84CAA8001ADB983F00253D2A /* ItemsTableViewController.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				526E9A051ADB822800615EFC /* Bartr.xcdatamodeld in Sources */,
 				526E9A081ADB822800615EFC /* ViewController.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
+				84CAA7FD1ADB981900253D2A /* ProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +432,7 @@
 				526E9A211ADB822800615EFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		526E9A221ADB822800615EFC /* Build configuration list for PBXNativeTarget "BartrTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +441,7 @@
 				526E9A241ADB822800615EFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
