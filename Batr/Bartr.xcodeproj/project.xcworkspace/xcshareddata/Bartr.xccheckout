@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>425A2FD8-F599-430A-94DD-52879F65C1EC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Bartr</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EF3F9964EA475CE90B05F28A142C413B20221C4D</key>
+		<string>github.com:/CS130-spring2015-batr/mobile-client.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Batr/Bartr.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EF3F9964EA475CE90B05F28A142C413B20221C4D</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:/CS130-spring2015-batr/mobile-client.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EF3F9964EA475CE90B05F28A142C413B20221C4D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EF3F9964EA475CE90B05F28A142C413B20221C4D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mobile-client</string>
+		</dict>
+	</array>
+</dict>
+</plist>
