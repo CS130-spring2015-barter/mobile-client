@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BrtrProfileViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *picture;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

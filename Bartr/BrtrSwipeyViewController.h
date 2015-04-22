@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrtrSwipeyViewController : UITableViewController
+@interface BrtrSwipeyViewController : UIViewController
 
 @end

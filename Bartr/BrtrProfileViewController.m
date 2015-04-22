@@ -9,10 +9,13 @@
 #import "BrtrProfileViewController.h"
 
 @interface BrtrProfileViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 
 @end
 
 @implementation BrtrProfileViewController
+- (IBAction)didPushEditButton:(id)sender {
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

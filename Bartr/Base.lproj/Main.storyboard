@@ -7,7 +7,7 @@
         <!--Bartr-->
         <scene sceneID="Pzm-SP-bQn">
             <objects>
-                <viewController title="Bartr" id="QLV-dl-so9" sceneMemberID="viewController">
+                <viewController title="Bartr" id="QLV-dl-so9" customClass="BrtrSwipeyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UWt-Fa-Vjc"/>
                         <viewControllerLayoutGuide type="bottom" id="Csw-wc-tOm"/>
@@ -200,8 +200,17 @@
                         <color key="backgroundColor" red="0.30768865973878012" green="0.58228772095959602" blue="0.21884739784024476" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi" customClass="Barter">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="JDZ-Ld-36o"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="JDZ-Ld-36o">
+                            <connections>
+                                <action selector="didPushEditButton:" destination="rZI-Lk-tnj" id="1YN-Mc-3RO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="JDZ-Ld-36o" id="3hb-NW-FET"/>
+                        <outlet property="picture" destination="K85-2o-FTR" id="j9q-sZ-eNe"/>
+                        <outlet property="tableView" destination="8ow-Du-G02" id="dTv-Eo-Wzv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="US9-zj-svu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -220,8 +229,8 @@
                     <connections>
                         <segue destination="QLV-dl-so9" kind="relationship" relationship="viewControllers" id="Ltq-6t-3lx"/>
                         <segue destination="nSV-EX-Dnx" kind="relationship" relationship="viewControllers" id="lTj-jM-KNd"/>
-                        <segue destination="LAV-5f-3PC" kind="relationship" relationship="viewControllers" id="wG3-iH-wQj"/>
                         <segue destination="ZPy-Yl-6JK" kind="relationship" relationship="viewControllers" id="hRH-DA-ppJ"/>
+                        <segue destination="LAV-5f-3PC" kind="relationship" relationship="viewControllers" id="wG3-iH-wQj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgO-Fp-Sy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -250,7 +259,7 @@
         <!--Items-->
         <scene sceneID="ELD-b5-qEB">
             <objects>
-                <tableViewController title="Items" id="LAV-5f-3PC" customClass="BartarItemsTVCT" sceneMemberID="viewController">
+                <tableViewController title="Items" id="LAV-5f-3PC" customClass="BrtrItemsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZA4-0x-8hy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

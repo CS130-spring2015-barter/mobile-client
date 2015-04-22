@@ -8,11 +8,11 @@
 
 #import "BrtrStartupTabViewController.h"
 
-@interface StartupTabViewController ()
+@interface BrtrStartupTabViewController ()
 
 @end
 
-@implementation StartupTabViewController
+@implementation BrtrStartupTabViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
