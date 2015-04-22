@@ -88,7 +88,7 @@
         <!--Profile-->
         <scene sceneID="dCt-gf-fsA">
             <objects>
-                <viewController id="rZI-Lk-tnj" sceneMemberID="viewController">
+                <viewController id="rZI-Lk-tnj" customClass="BrtrProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="09H-Nk-xcN"/>
                         <viewControllerLayoutGuide type="bottom" id="veE-Z2-fWb"/>
@@ -124,7 +124,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="foobar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mmv-g5-21H">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -145,7 +145,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Foo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mDy-GJ-5L7">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -166,7 +166,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Bar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eTL-3d-gyw">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -187,7 +187,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="I love this app!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yWW-X5-UdH">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -199,7 +199,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.30768865973878012" green="0.58228772095959602" blue="0.21884739784024476" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi">
+                    <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi" customClass="Barter">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="JDZ-Ld-36o"/>
                     </navigationItem>
                 </viewController>
@@ -210,7 +210,7 @@
         <!--Start-->
         <scene sceneID="LEi-uO-y0K">
             <objects>
-                <tabBarController title="Start" id="twD-u1-kak" sceneMemberID="viewController">
+                <tabBarController title="Start" id="twD-u1-kak" customClass="BrtrStartupTabViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Hvf-fj-heB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -226,7 +226,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgO-Fp-Sy7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="260" y="608"/>
+            <point key="canvasLocation" x="276" y="608"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Ch5-rb-Sgg">
@@ -250,7 +250,7 @@
         <!--Items-->
         <scene sceneID="ELD-b5-qEB">
             <objects>
-                <tableViewController title="Items" id="LAV-5f-3PC" sceneMemberID="viewController">
+                <tableViewController title="Items" id="LAV-5f-3PC" customClass="BartarItemsTVCT" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZA4-0x-8hy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

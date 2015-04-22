@@ -20,6 +20,10 @@
 		84CAA8061AE0B80F00253D2A /* shoe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8051AE0B80F00253D2A /* shoe.jpg */; };
 		84CAA8081AE0B9B100253D2A /* Yes.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8071AE0B9B100253D2A /* Yes.png */; };
 		84CAA80A1AE0BAC500253D2A /* x_mark_red_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */; };
+		84CAA80D1AE4C13B00253D2A /* BarterStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA80C1AE4C13B00253D2A /* BarterStartupTabViewController.m */; };
+		84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */; };
+		84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */; };
+		84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,11 +51,19 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
-		84CAA8011ADE086A00253D2A /* Icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-user.png"; path = "Bartr/Icon-user.png"; sourceTree = "<group>"; };
-		84CAA8031ADE101100253D2A /* beater.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = beater.jpg; path = Bartr/beater.jpg; sourceTree = "<group>"; };
-		84CAA8051AE0B80F00253D2A /* shoe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = shoe.jpg; path = Bartr/shoe.jpg; sourceTree = "<group>"; };
+		84CAA8011ADE086A00253D2A /* Icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-user.png"; sourceTree = "<group>"; };
+		84CAA8031ADE101100253D2A /* beater.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beater.jpg; sourceTree = "<group>"; };
+		84CAA8051AE0B80F00253D2A /* shoe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shoe.jpg; sourceTree = "<group>"; };
 		84CAA8071AE0B9B100253D2A /* Yes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Yes.png; sourceTree = "<group>"; };
-		84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = x_mark_red_circle.png; path = Bartr/x_mark_red_circle.png; sourceTree = "<group>"; };
+		84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x_mark_red_circle.png; sourceTree = "<group>"; };
+		84CAA80B1AE4C13B00253D2A /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrtrStartupTabViewController.h; path = Bartr/BrtrStartupTabViewController.h; sourceTree = "<group>"; };
+		84CAA80C1AE4C13B00253D2A /* BarterStartupTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BarterStartupTabViewController.m; path = Bartr/BarterStartupTabViewController.m; sourceTree = "<group>"; };
+		84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrProfileViewController.h; sourceTree = "<group>"; };
+		84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrProfileViewController.m; sourceTree = "<group>"; };
+		84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItemsTableViewController.h; sourceTree = "<group>"; };
+		84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemsTableViewController.m; sourceTree = "<group>"; };
+		84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrSwipeyViewController.h; sourceTree = "<group>"; };
+		84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrSwipeyViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +87,6 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
-				84CAA8011ADE086A00253D2A /* Icon-user.png */,
-				84CAA8051AE0B80F00253D2A /* shoe.jpg */,
-				84CAA8031ADE101100253D2A /* beater.jpg */,
-				84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
@@ -98,7 +106,14 @@
 			isa = PBXGroup;
 			children = (
 				526E9A091ADB822800615EFC /* Main.storyboard */,
-				84CAA8071AE0B9B100253D2A /* Yes.png */,
+				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
+				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
+				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
+				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
+				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
+				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
+				84CAA80B1AE4C13B00253D2A /* BrtrStartupTabViewController.h */,
+				84CAA80C1AE4C13B00253D2A /* BarterStartupTabViewController.m */,
 				526E99FC1ADB822800615EFC /* Supporting Files */,
 			);
 			path = Bartr;
@@ -107,6 +122,11 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84CAA8071AE0B9B100253D2A /* Yes.png */,
+				84CAA8011ADE086A00253D2A /* Icon-user.png */,
+				84CAA8051AE0B80F00253D2A /* shoe.jpg */,
+				84CAA8031ADE101100253D2A /* beater.jpg */,
+				84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */,
 				526E9A0C1ADB822800615EFC /* Images.xcassets */,
 				526E9A0E1ADB822800615EFC /* LaunchScreen.xib */,
 				526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */,
@@ -245,7 +265,11 @@
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				526E9A051ADB822800615EFC /* Bartr.xcdatamodeld in Sources */,
 				526E9A081ADB822800615EFC /* ViewController.m in Sources */,
+				84CAA80D1AE4C13B00253D2A /* BarterStartupTabViewController.m in Sources */,
+				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
+				84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
+				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
