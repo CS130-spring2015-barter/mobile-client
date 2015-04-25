@@ -23,6 +23,7 @@
 		84C8F3611AEC40C5005D7D65 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3601AEC40C5005D7D65 /* BrtrUser.m */; };
 		84C8F3641AEC40C5005D7D65 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3631AEC40C5005D7D65 /* BrtrUserItem.m */; };
 		84C8F3671AEC53FE005D7D65 /* BarterStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BarterStartupTabViewController.m */; };
+		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
 		84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8011ADE086A00253D2A /* Icon-user.png */; };
 		84CAA8041ADE101100253D2A /* beater.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8031ADE101100253D2A /* beater.jpg */; };
 		84CAA8061AE0B80F00253D2A /* shoe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8051AE0B80F00253D2A /* shoe.jpg */; };
@@ -74,6 +75,8 @@
 		84C8F3631AEC40C5005D7D65 /* BrtrUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUserItem.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
 		84C8F3661AEC53FE005D7D65 /* BarterStartupTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarterStartupTabViewController.m; sourceTree = "<group>"; };
+		84C8F36A1AEC5F54005D7D65 /* JCDCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDCoreData.h; sourceTree = "<group>"; };
+		84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDCoreData.m; sourceTree = "<group>"; };
 		84CAA8011ADE086A00253D2A /* Icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-user.png"; sourceTree = "<group>"; };
 		84CAA8031ADE101100253D2A /* beater.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beater.jpg; sourceTree = "<group>"; };
 		84CAA8051AE0B80F00253D2A /* shoe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shoe.jpg; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 		526E99FB1ADB822800615EFC /* Bartr */ = {
 			isa = PBXGroup;
 			children = (
+				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
+				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
 				84C8F3661AEC53FE005D7D65 /* BarterStartupTabViewController.m */,
 				253238E91AEC500700DF7DE5 /* DraggableView.h */,
 				253238EA1AEC500700DF7DE5 /* DraggableView.m */,
@@ -149,7 +154,6 @@
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
-				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
 				526E99FC1ADB822800615EFC /* Supporting Files */,
 			);
 			path = Bartr;
@@ -190,6 +194,15 @@
 				526E9A1A1ADB822800615EFC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84C8F3681AEC5F54005D7D65 /* JCDCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				84C8F36A1AEC5F54005D7D65 /* JCDCoreData.h */,
+				84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */,
+			);
+			path = JCDCoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +322,7 @@
 				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
 				84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */,
 				84C8F3611AEC40C5005D7D65 /* BrtrUser.m in Sources */,
+				84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
 				84C8F35B1AEC40C4005D7D65 /* BrtrItem.m in Sources */,
 				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,

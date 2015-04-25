@@ -23,14 +23,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *app = [[UIApplication sharedApplication] delegate];
-    self.user = app.user;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     // Do any additional setup after loading the view.
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
 }
 
 // this gets the number of rows within the tableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.profileInfo count];
+    return 4;
 }
 
 // this actually gets the information for each cell
@@ -41,24 +47,28 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
     }
-    int row = indexPath.row;
+    long row = indexPath.row;
     switch (row) {
-        case 0:
+        case 0: {
             cell.textLabel.text = @"Email";
             cell.detailTextLabel.text = [self.user email];
-            break;
-        case 1:
+        } break;
+        case 1: {
             cell.textLabel.text = @"First";
             cell.detailTextLabel.text = [self.user first_name];
-        case 2:
+        } break;
+        case 2: {
             cell.textLabel.text = @"Last";
             cell.detailTextLabel.text = [self.user last_name];
-        case 3:
+        } break;
+        case 3: {
             cell.textLabel.text = @"About me";
             cell.detailTextLabel.text = [self.user about_me];
-        default:
+        } break;
+        default: {
+        }
             break;
     }
     
