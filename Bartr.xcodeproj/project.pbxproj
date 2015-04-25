@@ -9,12 +9,16 @@
 /* Begin PBXBuildFile section */
 		526E99FF1ADB822800615EFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E99FE1ADB822800615EFC /* main.m */; };
 		526E9A021ADB822800615EFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A011ADB822800615EFC /* AppDelegate.m */; };
-		526E9A051ADB822800615EFC /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */; };
 		526E9A081ADB822800615EFC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A071ADB822800615EFC /* ViewController.m */; };
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A101ADB822800615EFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0E1ADB822800615EFC /* LaunchScreen.xib */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
+		842C36E51AEABCCC005FDD5A /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842C36E31AEABCCC005FDD5A /* Bartr.xcdatamodeld */; };
+		84C8F3431AEC3BC2005D7D65 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3421AEC3BC2005D7D65 /* BrtrItem.m */; };
+		84C8F3461AEC3BC3005D7D65 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3451AEC3BC3005D7D65 /* BrtrUserItem.m */; };
+		84C8F3491AEC3BC3005D7D65 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3481AEC3BC3005D7D65 /* BrtrUser.m */; };
+		84C8F34C1AEC3BC3005D7D65 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F34B1AEC3BC3005D7D65 /* BrtrLikedItem.m */; };
 		84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8011ADE086A00253D2A /* Icon-user.png */; };
 		84CAA8041ADE101100253D2A /* beater.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8031ADE101100253D2A /* beater.jpg */; };
 		84CAA8061AE0B80F00253D2A /* shoe.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8051AE0B80F00253D2A /* shoe.jpg */; };
@@ -42,7 +46,6 @@
 		526E99FE1ADB822800615EFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		526E9A001ADB822800615EFC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		526E9A011ADB822800615EFC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		526E9A041ADB822800615EFC /* Bartr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bartr.xcdatamodel; sourceTree = "<group>"; };
 		526E9A061ADB822800615EFC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		526E9A071ADB822800615EFC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		526E9A0A1ADB822800615EFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,6 +54,15 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		842C36E41AEABCCC005FDD5A /* Bartr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bartr.xcdatamodel; sourceTree = "<group>"; };
+		84C8F3411AEC3BC2005D7D65 /* BrtrItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItem.h; sourceTree = "<group>"; };
+		84C8F3421AEC3BC2005D7D65 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
+		84C8F3441AEC3BC3005D7D65 /* BrtrUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUserItem.h; sourceTree = "<group>"; };
+		84C8F3451AEC3BC3005D7D65 /* BrtrUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUserItem.m; sourceTree = "<group>"; };
+		84C8F3471AEC3BC3005D7D65 /* BrtrUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUser.h; sourceTree = "<group>"; };
+		84C8F3481AEC3BC3005D7D65 /* BrtrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUser.m; sourceTree = "<group>"; };
+		84C8F34A1AEC3BC3005D7D65 /* BrtrLikedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrLikedItem.h; sourceTree = "<group>"; };
+		84C8F34B1AEC3BC3005D7D65 /* BrtrLikedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrLikedItem.m; sourceTree = "<group>"; };
 		84CAA8011ADE086A00253D2A /* Icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-user.png"; sourceTree = "<group>"; };
 		84CAA8031ADE101100253D2A /* beater.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beater.jpg; sourceTree = "<group>"; };
 		84CAA8051AE0B80F00253D2A /* shoe.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shoe.jpg; sourceTree = "<group>"; };
@@ -107,6 +119,15 @@
 			children = (
 				526E9A091ADB822800615EFC /* Main.storyboard */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
+				842C36E31AEABCCC005FDD5A /* Bartr.xcdatamodeld */,
+				84C8F34A1AEC3BC3005D7D65 /* BrtrLikedItem.h */,
+				84C8F34B1AEC3BC3005D7D65 /* BrtrLikedItem.m */,
+				84C8F3471AEC3BC3005D7D65 /* BrtrUser.h */,
+				84C8F3481AEC3BC3005D7D65 /* BrtrUser.m */,
+				84C8F3441AEC3BC3005D7D65 /* BrtrUserItem.h */,
+				84C8F3451AEC3BC3005D7D65 /* BrtrUserItem.m */,
+				84C8F3411AEC3BC2005D7D65 /* BrtrItem.h */,
+				84C8F3421AEC3BC2005D7D65 /* BrtrItem.m */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
@@ -129,7 +150,6 @@
 				84CAA8091AE0BAC500253D2A /* x_mark_red_circle.png */,
 				526E9A0C1ADB822800615EFC /* Images.xcassets */,
 				526E9A0E1ADB822800615EFC /* LaunchScreen.xib */,
-				526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */,
 				526E9A001ADB822800615EFC /* AppDelegate.h */,
 				526E9A011ADB822800615EFC /* AppDelegate.m */,
 				526E9A061ADB822800615EFC /* ViewController.h */,
@@ -263,12 +283,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
-				526E9A051ADB822800615EFC /* Bartr.xcdatamodeld in Sources */,
 				526E9A081ADB822800615EFC /* ViewController.m in Sources */,
 				84CAA80D1AE4C13B00253D2A /* BarterStartupTabViewController.m in Sources */,
+				84C8F3461AEC3BC3005D7D65 /* BrtrUserItem.m in Sources */,
+				842C36E51AEABCCC005FDD5A /* Bartr.xcdatamodeld in Sources */,
 				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
 				84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */,
+				84C8F3491AEC3BC3005D7D65 /* BrtrUser.m in Sources */,
+				84C8F34C1AEC3BC3005D7D65 /* BrtrLikedItem.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
+				84C8F3431AEC3BC2005D7D65 /* BrtrItem.m in Sources */,
 				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,12 +502,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		526E9A031ADB822800615EFC /* Bartr.xcdatamodeld */ = {
+		842C36E31AEABCCC005FDD5A /* Bartr.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				526E9A041ADB822800615EFC /* Bartr.xcdatamodel */,
+				842C36E41AEABCCC005FDD5A /* Bartr.xcdatamodel */,
 			);
-			currentVersion = 526E9A041ADB822800615EFC /* Bartr.xcdatamodel */;
+			currentVersion = 842C36E41AEABCCC005FDD5A /* Bartr.xcdatamodel */;
 			path = Bartr.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
