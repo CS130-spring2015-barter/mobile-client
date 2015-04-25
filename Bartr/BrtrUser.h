@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * first_name;
 @property (nonatomic, retain) NSString * last_name;
+@property (nonatomic, retain) NSDate * image;
 @property (nonatomic, retain) NSSet *liked_items;
 @property (nonatomic, retain) NSSet *my_items;
 @end

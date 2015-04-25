@@ -17,6 +17,7 @@
 @dynamic email;
 @dynamic first_name;
 @dynamic last_name;
+@dynamic image;
 @dynamic liked_items;
 @dynamic my_items;
 

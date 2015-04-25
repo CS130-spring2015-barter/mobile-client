@@ -12,6 +12,7 @@
         <attribute name="about_me" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="liked_items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BrtrLikedItem" inverseName="user" inverseEntity="BrtrLikedItem" syncable="YES"/>
         <relationship name="my_items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BrtrUserItem" inverseName="owner" inverseEntity="BrtrUserItem" syncable="YES"/>
@@ -22,7 +23,7 @@
     <elements>
         <element name="BrtrItem" positionX="-2117" positionY="3296" width="128" height="88"/>
         <element name="BrtrLikedItem" positionX="-2306" positionY="3335" width="128" height="58"/>
-        <element name="BrtrUser" positionX="-2700" positionY="3267" width="128" height="133"/>
+        <element name="BrtrUser" positionX="-2700" positionY="3267" width="128" height="148"/>
         <element name="BrtrUserItem" positionX="-2306" positionY="3267" width="128" height="58"/>
     </elements>
 </model>
