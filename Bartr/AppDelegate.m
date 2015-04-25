@@ -109,6 +109,19 @@
     return _managedObjectContext;
 }
 
+-(BrtrUser *)getUser
+{
+    if (nil == self.user) {
+        self.user = [[BrtrUser alloc] init];
+        // get from DB
+        self.user.email = @"foo@bar.com";
+        self.user.first_name = @"Bob";
+        self.user.last_name = @"Hope";
+        self.user.about_me = @"I love this app!";
+    }
+    return self.user;
+}
+
 #pragma mark - Core Data Saving support
 
 - (void)saveContext {
