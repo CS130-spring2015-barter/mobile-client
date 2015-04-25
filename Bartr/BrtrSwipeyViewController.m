@@ -8,6 +8,7 @@
 
 #import "BrtrSwipeyViewController.h"
 
+#import "DraggableViewBackground.h"
 @interface BrtrSwipeyViewController ()
 
 @end
@@ -17,6 +18,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//imageView.contentMode = UIViewContentModeScaleAspectFill;
+    DraggableViewBackground *draggableBackground = [[DraggableViewBackground alloc]initWithFrame:self.view.bounds];
+    [self.view addSubview:draggableBackground];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
