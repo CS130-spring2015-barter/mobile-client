@@ -12,5 +12,4 @@
 @property (strong, nonatomic) NSArray *profileInfo;
 @property (weak, nonatomic) IBOutlet UIImageView *picture;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @end
