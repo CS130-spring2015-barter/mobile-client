@@ -78,7 +78,7 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="1" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="BrtrItem" representedClassName="BrtrItem" syncable="YES">
+        <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="BrtrLikedItem" representedClassName="BrtrLikedItem" parentEntity="BrtrItem" syncable="YES">
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="BrtrUser" syncable="YES"/>
+    </entity>
+    <entity name="BrtrUser" representedClassName="BrtrUser" syncable="YES">
+        <attribute name="about_me" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="liked_items" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="BrtrLikedItem" syncable="YES"/>
+        <relationship name="my_items" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="BrtrUserItem" syncable="YES"/>
+    </entity>
+    <entity name="BrtrUserItem" representedClassName="BrtrUserItem" parentEntity="BrtrItem" syncable="YES">
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="BrtrUser" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="BrtrUser" positionX="-36" positionY="9" width="128" height="150"/>
+        <element name="BrtrLikedItem" positionX="0" positionY="45" width="128" height="60"/>
+        <element name="BrtrUserItem" positionX="27" positionY="72" width="128" height="60"/>
+        <element name="BrtrItem" positionX="54" positionY="99" width="128" height="90"/>
+    </elements>
+</model>

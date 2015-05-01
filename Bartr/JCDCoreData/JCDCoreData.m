@@ -89,7 +89,7 @@
 - (NSManagedObjectModel *)managedObjectModel
 {
     if (!_managedObjectModel) {
-        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:[JCDCoreData modelFilename] withExtension:@"momd"];
+        NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Bartr" withExtension:@"momd"];
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     }
 
@@ -135,6 +135,20 @@
 
     return persistentStoreCoordinator;
 }
+
+- (void)saveContext {
+    NSManagedObjectContext *managedObjectContext = [self defaultContext];
+    if (managedObjectContext != nil) {
+        NSError *error = nil;
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
 
 @end
 
@@ -273,5 +287,6 @@
 {
     return [context insertNewObjectWithEntityName:[self entityNameString]];
 }
+
 
 @end

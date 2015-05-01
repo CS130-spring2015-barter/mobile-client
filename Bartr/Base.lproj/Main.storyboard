@@ -199,7 +199,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.30768865973878012" green="0.58228772095959602" blue="0.21884739784024476" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi" customClass="Barter">
+                    <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="JDZ-Ld-36o">
                             <connections>
                                 <action selector="didPushEditButton:" destination="rZI-Lk-tnj" id="1YN-Mc-3RO"/>

@@ -38,7 +38,7 @@
 
 + (JCDCoreData *)sharedInstance;
 + (NSManagedObjectContext *)defaultContext;
-
+-(void)saveContext;
 @end
 
 
