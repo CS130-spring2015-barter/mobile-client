@@ -230,7 +230,7 @@
 
 - (NSArray *)fetchObjectsWithEntityName:(NSString *)entityName usingPredicate:(NSPredicate *)predicate sortedBy:(NSString *)sortDescriptorKey ascending:(BOOL)ascending
 {
-    NSArray *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:sortDescriptorKey ascending:ascending];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:sortDescriptorKey ascending:ascending];
     return [self fetchObjectsWithEntityName:entityName sortedBy:@[sortDescriptor] withPredicate:predicate];
 }
 

@@ -28,8 +28,8 @@ BOOL isEditMode;
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
         self.user.email = self.usernameField.text;
-        self.user.first_name = self.firstNameField.text;
-        self.user.last_name = self.lastNameField.text;
+        self.user.firstName = self.firstNameField.text;
+        self.user.lastName = self.lastNameField.text;
         self.user.about_me = self.aboutMeField.text;
         
         [self cancelEdit];
@@ -70,18 +70,22 @@ BOOL isEditMode;
 
 - (void) cancel {
     self.usernameField.text = self.user.email;
-    self.firstNameField.text = self.user.first_name;
-    self.lastNameField.text = self.user.last_name;
+    self.firstNameField.text = self.user.firstName;
+    self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
     [self cancelEdit];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    self.user =  [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+}
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    [self.tableView sizeToFit];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -98,7 +102,7 @@ BOOL isEditMode;
 // this actually gets the information for each cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"profileTableCell";
+    static NSString *simpleTableIdentifier = @"ProfileTableCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -110,7 +114,7 @@ BOOL isEditMode;
     switch (row) {
         case 0: {
             UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-            labelField.text = @"Username";
+            labelField.text = @"Email";
             self.usernameField = (UITextField *)[cell viewWithTag:200];
             self.usernameField.text = self.user.email;
         } break;
@@ -118,13 +122,13 @@ BOOL isEditMode;
             UILabel *labelField = (UILabel *)[cell viewWithTag:199];
             labelField.text = @"First";
             self.firstNameField = (UITextField *)[cell viewWithTag:200];
-            self.firstNameField.text = self.user.first_name;
+            self.firstNameField.text = self.user.firstName;
         } break;
         case 2: {
             UILabel *labelField = (UILabel *)[cell viewWithTag:199];
             labelField.text = @"Last";
             self.lastNameField = (UITextField *)[cell viewWithTag:200];
-            self.lastNameField.text = self.user.last_name;
+            self.lastNameField.text = self.user.lastName;
         } break;
         case 3: {
             UILabel *labelField = (UILabel *)[cell viewWithTag:199];

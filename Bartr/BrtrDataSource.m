@@ -29,8 +29,12 @@
     } else if ([matches count]) {
         user = [matches firstObject];
     } else {
+        
         user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                             inManagedObjectContext:context];
+        user.firstName = @"Foo";
+        user.lastName = @"Bar";
+        user.about_me = @"I love this app";
         user.email = email;
         [[JCDCoreData sharedInstance] saveContext];
     }
