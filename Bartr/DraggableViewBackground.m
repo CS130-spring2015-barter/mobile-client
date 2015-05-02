@@ -53,7 +53,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     int xButton_x=(screen_width/2) - ( button_size + (button_separation/2) );
     int checkButton_x= xButton_x + button_size+button_separation;
     
-#warning customize all of this.  These are just place holders to make it look pretty
+//warning customize all of this.  These are just place holders to make it look pretty
     self.backgroundColor = [UIColor colorWithRed:.92 green:.93 blue:.95 alpha:1]; //the gray background colors
     
     xButton = [[UIButton alloc]initWithFrame:CGRectMake(xButton_x, button_y, button_size, button_size)];
@@ -66,7 +66,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     [self addSubview:checkButton];
 }
 
-#warning include own card customization here!
+//warning include own card customization here!
 //%%% creates a card and returns it.  This should be customized to fit your needs.
 // use "index" to indicate where the information should be pulled.  If this doesn't apply to you, feel free
 // to get rid of it (eg: if you are building cards from data from the internet)
@@ -115,7 +115,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     }
 }
 
-#warning include own action here!
+//warning include own action here!
 //%%% action called when the card goes to the left.
 // This should be customized with your own action
 -(void)cardSwipedLeft:(UIView *)card;
@@ -132,7 +132,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     }
 }
 
-#warning include own action here!
+//warning include own action here!
 //%%% action called when the card goes to the right.
 // This should be customized with your own action
 -(void)cardSwipedRight:(UIView *)card
