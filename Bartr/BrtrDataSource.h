@@ -12,4 +12,5 @@
 @interface BrtrDataSource : NSObject
 
 +(BrtrUser *) getUserForEmail:(NSString *)email;
++ (void) saveAllData;
 @end

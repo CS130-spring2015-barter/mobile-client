@@ -36,9 +36,14 @@
         user.lastName = @"Bar";
         user.about_me = @"I love this app";
         user.email = email;
-        [[JCDCoreData sharedInstance] saveContext];
+        [BrtrDataSource saveAllData];
     }
     return user;
+}
+
++ (void) saveAllData
+{
+    [[JCDCoreData sharedInstance] saveContext];
 }
 
 /*

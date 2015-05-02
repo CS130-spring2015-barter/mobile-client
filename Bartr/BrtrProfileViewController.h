@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class BrtrUser;
+
 @interface BrtrProfileViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) NSArray *profileInfo;
+@property (strong, nonatomic) BrtrUser *user;
 @property (weak, nonatomic) IBOutlet UIImageView *picture;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
