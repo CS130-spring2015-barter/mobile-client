@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BrtrUser;
+
 @interface BrtrStartupTabViewController : UITabBarController
+
+-(BrtrUser *) getUser;
 
 @end

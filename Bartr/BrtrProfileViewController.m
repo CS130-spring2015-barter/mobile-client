@@ -11,6 +11,7 @@
 #import "BrtrUser.h"
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
+#import "BrtrStartupTabViewController.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -78,7 +79,8 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.user =  [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
+    self.user = [root getUser];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 }

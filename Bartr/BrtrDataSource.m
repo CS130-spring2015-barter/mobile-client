@@ -11,6 +11,7 @@
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
 #import "BrtrUser.h"
+#import "BrtrCardItem.h"
 #include "AppDelegate.h"
 
 @implementation BrtrDataSource
@@ -41,10 +42,11 @@
     NSError *error;
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     NSArray *matches = [context executeFetchRequest:request error:&error];
+    BrtrUser* user  = nil;
+    // first lookup if the user is already in the database
     if (!matches || error || ([matches count] > 1)) {
     
-    }
-    else if (0 == [matches count]) {
+    } else if (0 == [matches count]) { /* create a new user if no user */
         BrtrUser* user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                              inManagedObjectContext:context];
         user.firstName = @"Foo";
@@ -52,9 +54,20 @@
         user.about_me = @"I love this app";
         user.email = @"foo@bar.com";
         user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
+    } else {
+        user = [matches firstObject];
     }
-    request = [NSFetchRequest fetchRequestWithEntityName:@"Brtr"];
-    request.predicate = [NSPredicate predicateWithFormat:@"email = %@", @"foo@bar.com"];
+    // next populate the item stack
+    if (nil == user.item_stack) {
+        for (int i = 0; i < 3; ++i) {
+        BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
+                                                               inManagedObjectContext:context];
+        cardItem.user = user;
+        cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
+        cardItem.name = [NSString stringWithFormat: @"Rohan %d" , i];
+            
+        }
+    }
     
     [BrtrDataSource saveAllData];
 }
