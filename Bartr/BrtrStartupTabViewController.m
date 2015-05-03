@@ -11,7 +11,7 @@
 #import "BrtrProfileViewController.h"
 
 @interface BrtrStartupTabViewController ()
-
+@property (strong, nonatomic) BrtrUser *user;
 @end
 
 @implementation BrtrStartupTabViewController
@@ -30,7 +30,10 @@
 
 -(BrtrUser *)getUser
 {
-    return [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    if (nil == self.user) {
+        self.user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    }
+    return self.user;
 }
 
 #pragma mark - Navigation
