@@ -1,17 +1,17 @@
 //
-//  BrtrUserItem.m
+//  BrtrCardItem.m
 //  Bartr
 //
 //  Created by admin on 5/2/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
-#import "BrtrUserItem.h"
+#import "BrtrCardItem.h"
 #import "BrtrUser.h"
 
 
-@implementation BrtrUserItem
+@implementation BrtrCardItem
 
-@dynamic owner;
+@dynamic user;
 
 @end

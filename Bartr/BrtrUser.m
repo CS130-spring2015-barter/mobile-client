@@ -2,11 +2,12 @@
 //  BrtrUser.m
 //  Bartr
 //
-//  Created by Synthia Ling on 5/2/15.
+//  Created by admin on 5/2/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
 #import "BrtrUser.h"
+#import "BrtrItem.h"
 #import "BrtrLikedItem.h"
 #import "BrtrUserItem.h"
 
@@ -21,5 +22,6 @@
 @dynamic u_id;
 @dynamic liked_items;
 @dynamic my_items;
+@dynamic item_stack;
 
 @end

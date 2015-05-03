@@ -1,5 +1,5 @@
 //
-//  BrtrLikedItem.h
+//  BrtrCardItem.h
 //  Bartr
 //
 //  Created by admin on 5/2/15.
@@ -12,7 +12,7 @@
 
 @class BrtrUser;
 
-@interface BrtrLikedItem : BrtrItem
+@interface BrtrCardItem : BrtrItem
 
 @property (nonatomic, retain) BrtrUser *user;
 

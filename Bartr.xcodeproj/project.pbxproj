@@ -17,13 +17,14 @@
 		526E9A101ADB822800615EFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0E1ADB822800615EFC /* LaunchScreen.xib */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
 		842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */; };
-		84C8F35B1AEC40C4005D7D65 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F35A1AEC40C4005D7D65 /* BrtrItem.m */; };
-		84C8F35E1AEC40C5005D7D65 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F35D1AEC40C5005D7D65 /* BrtrLikedItem.m */; };
-		84C8F3611AEC40C5005D7D65 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3601AEC40C5005D7D65 /* BrtrUser.m */; };
-		84C8F3641AEC40C5005D7D65 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3631AEC40C5005D7D65 /* BrtrUserItem.m */; };
+		8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176641AF5A90600B72AA3 /* BrtrDataSource.m */; };
+		842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */; };
+		842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176841AF5A9D500B72AA3 /* BrtrUser.m */; };
+		842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176871AF5A9D600B72AA3 /* BrtrUserItem.m */; };
+		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
+		8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
-		84C8F3741AEC67F7005D7D65 /* BrtrDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3731AEC67F7005D7D65 /* BrtrDataSource.m */; };
 		84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8011ADE086A00253D2A /* Icon-user.png */; };
 		84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */; };
 		84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */; };
@@ -59,20 +60,22 @@
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
 		842176551AF585D700B72AA3 /* Bartr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bartr.xcdatamodel; sourceTree = "<group>"; };
-		84C8F3591AEC40C4005D7D65 /* BrtrItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItem.h; sourceTree = "<group>"; };
-		84C8F35A1AEC40C4005D7D65 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
-		84C8F35C1AEC40C5005D7D65 /* BrtrLikedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrLikedItem.h; sourceTree = "<group>"; };
-		84C8F35D1AEC40C5005D7D65 /* BrtrLikedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrLikedItem.m; sourceTree = "<group>"; };
-		84C8F35F1AEC40C5005D7D65 /* BrtrUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUser.h; sourceTree = "<group>"; };
-		84C8F3601AEC40C5005D7D65 /* BrtrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUser.m; sourceTree = "<group>"; };
-		84C8F3621AEC40C5005D7D65 /* BrtrUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUserItem.h; sourceTree = "<group>"; };
-		84C8F3631AEC40C5005D7D65 /* BrtrUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUserItem.m; sourceTree = "<group>"; };
+		842176631AF5A90600B72AA3 /* BrtrDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrDataSource.h; sourceTree = "<group>"; };
+		842176641AF5A90600B72AA3 /* BrtrDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrDataSource.m; sourceTree = "<group>"; };
+		842176801AF5A9D500B72AA3 /* BrtrLikedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrLikedItem.h; sourceTree = "<group>"; };
+		842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrLikedItem.m; sourceTree = "<group>"; };
+		842176831AF5A9D500B72AA3 /* BrtrUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUser.h; sourceTree = "<group>"; };
+		842176841AF5A9D500B72AA3 /* BrtrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUser.m; sourceTree = "<group>"; };
+		842176861AF5A9D600B72AA3 /* BrtrUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUserItem.h; sourceTree = "<group>"; };
+		842176871AF5A9D600B72AA3 /* BrtrUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUserItem.m; sourceTree = "<group>"; };
+		842176891AF5A9D600B72AA3 /* BrtrItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItem.h; sourceTree = "<group>"; };
+		8421768A1AF5A9D600B72AA3 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
+		8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
+		8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrCardItem.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
 		84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrStartupTabViewController.m; sourceTree = "<group>"; };
 		84C8F36A1AEC5F54005D7D65 /* JCDCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDCoreData.h; sourceTree = "<group>"; };
 		84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDCoreData.m; sourceTree = "<group>"; };
-		84C8F3721AEC67F7005D7D65 /* BrtrDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrDataSource.h; sourceTree = "<group>"; };
-		84C8F3731AEC67F7005D7D65 /* BrtrDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrDataSource.m; sourceTree = "<group>"; };
 		84CAA8011ADE086A00253D2A /* Icon-user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-user.png"; sourceTree = "<group>"; };
 		84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrProfileViewController.h; sourceTree = "<group>"; };
 		84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrProfileViewController.m; sourceTree = "<group>"; };
@@ -103,7 +106,6 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
-				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				526E9A091ADB822800615EFC /* Main.storyboard */,
+				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				84F9E1931AF44492006E504D /* Views */,
 				84F9E1951AF444C8006E504D /* Controllers */,
 				84F9E1941AF444B2006E504D /* Models */,
@@ -187,17 +190,19 @@
 		84F9E1941AF444B2006E504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */,
+				8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */,
+				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
+				8421768A1AF5A9D600B72AA3 /* BrtrItem.m */,
+				842176861AF5A9D600B72AA3 /* BrtrUserItem.h */,
+				842176871AF5A9D600B72AA3 /* BrtrUserItem.m */,
+				842176831AF5A9D500B72AA3 /* BrtrUser.h */,
+				842176841AF5A9D500B72AA3 /* BrtrUser.m */,
+				842176801AF5A9D500B72AA3 /* BrtrLikedItem.h */,
+				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
+				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
+				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
 				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
-				84C8F3721AEC67F7005D7D65 /* BrtrDataSource.h */,
-				84C8F3731AEC67F7005D7D65 /* BrtrDataSource.m */,
-				84C8F3621AEC40C5005D7D65 /* BrtrUserItem.h */,
-				84C8F3631AEC40C5005D7D65 /* BrtrUserItem.m */,
-				84C8F35F1AEC40C5005D7D65 /* BrtrUser.h */,
-				84C8F3601AEC40C5005D7D65 /* BrtrUser.m */,
-				84C8F35C1AEC40C5005D7D65 /* BrtrLikedItem.h */,
-				84C8F35D1AEC40C5005D7D65 /* BrtrLikedItem.m */,
-				84C8F3591AEC40C4005D7D65 /* BrtrItem.h */,
-				84C8F35A1AEC40C4005D7D65 /* BrtrItem.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -318,21 +323,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,
 				253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
-				84C8F3641AEC40C5005D7D65 /* BrtrUserItem.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
-				84C8F3741AEC67F7005D7D65 /* BrtrDataSource.m in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
-				84C8F35E1AEC40C5005D7D65 /* BrtrLikedItem.m in Sources */,
 				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
 				84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */,
-				84C8F3611AEC40C5005D7D65 /* BrtrUser.m in Sources */,
 				84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
-				84C8F35B1AEC40C4005D7D65 /* BrtrItem.m in Sources */,
+				8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */,
+				842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */,
+				842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */,
+				842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */,
+				8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */,
 				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,7 +555,7 @@
 			);
 			currentVersion = 842176551AF585D700B72AA3 /* Bartr.xcdatamodel */;
 			path = Bartr.xcdatamodeld;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

@@ -13,4 +13,5 @@
 
 +(BrtrUser *) getUserForEmail:(NSString *)email;
 + (void) saveAllData;
++ (void) loadFakeData;
 @end

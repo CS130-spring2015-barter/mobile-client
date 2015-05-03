@@ -29,16 +29,34 @@
     } else if ([matches count]) {
         user = [matches firstObject];
     } else {
-        
-        user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
-                                            inManagedObjectContext:context];
+        // handle error
+    }
+    return user;
+}
+
++(void) loadFakeData
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrUser"];
+    request.predicate = [NSPredicate predicateWithFormat:@"email = %@", @"foo@bar.com"];
+    NSError *error;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    if (!matches || error || ([matches count] > 1)) {
+    
+    }
+    else if (0 == [matches count]) {
+        BrtrUser* user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
+                                             inManagedObjectContext:context];
         user.firstName = @"Foo";
         user.lastName = @"Bar";
         user.about_me = @"I love this app";
-        user.email = email;
-        [BrtrDataSource saveAllData];
+        user.email = @"foo@bar.com";
+        user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
     }
-    return user;
+    request = [NSFetchRequest fetchRequestWithEntityName:@"Brtr"];
+    request.predicate = [NSPredicate predicateWithFormat:@"email = %@", @"foo@bar.com"];
+    
+    [BrtrDataSource saveAllData];
 }
 
 + (void) saveAllData

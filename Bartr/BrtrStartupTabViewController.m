@@ -7,6 +7,7 @@
 //
 
 #import "BrtrStartupTabViewController.h"
+#import "BrtrDataSource.h"
 
 @interface BrtrStartupTabViewController ()
 
@@ -17,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [BrtrDataSource loadFakeData];
     // Do any additional setup after loading the view.
 }
 
