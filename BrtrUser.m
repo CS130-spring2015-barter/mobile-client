@@ -2,7 +2,7 @@
 //  BrtrUser.m
 //  Bartr
 //
-//  Created by admin on 4/25/15.
+//  Created by Synthia Ling on 5/2/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
@@ -16,8 +16,9 @@
 @dynamic about_me;
 @dynamic email;
 @dynamic firstName;
-@dynamic lastName;
 @dynamic image;
+@dynamic lastName;
+@dynamic u_id;
 @dynamic liked_items;
 @dynamic my_items;
 

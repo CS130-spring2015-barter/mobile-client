@@ -2,7 +2,7 @@
 //  BrtrUser.h
 //  Bartr
 //
-//  Created by admin on 4/25/15.
+//  Created by Synthia Ling on 5/2/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
@@ -16,8 +16,9 @@
 @property (nonatomic, retain) NSString * about_me;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * firstName;
+@property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NSString * lastName;
-@property (nonatomic, retain) NSDate * image;
+@property (nonatomic, retain) NSNumber * u_id;
 @property (nonatomic, retain) NSSet *liked_items;
 @property (nonatomic, retain) NSSet *my_items;
 @end
