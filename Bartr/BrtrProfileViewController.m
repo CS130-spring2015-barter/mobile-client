@@ -10,9 +10,9 @@
 #import "AppDelegate.h"
 #import "BrtrUser.h"
 #import "BrtrDataSource.h"
+#import "JCDCoreData.h"
 
 @interface BrtrProfileViewController ()
-@property (weak, nonatomic) BrtrUser *user;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (weak, nonatomic) UITextField *usernameField;
 @property (weak, nonatomic) UITextField *firstNameField;
@@ -31,7 +31,8 @@ BOOL isEditMode;
         self.user.firstName = self.firstNameField.text;
         self.user.lastName = self.lastNameField.text;
         self.user.about_me = self.aboutMeField.text;
-        
+        [BrtrDataSource saveAllData];
+        [self.tableView reloadData];
         [self cancelEdit];
 
     }
@@ -47,8 +48,8 @@ BOOL isEditMode;
         self.firstNameField.userInteractionEnabled = YES;
         self.lastNameField.userInteractionEnabled = YES;
         self.aboutMeField.userInteractionEnabled = YES;
-        
         [self.usernameField becomeFirstResponder];
+        
         isEditMode = YES;
     }
 }
@@ -64,7 +65,6 @@ BOOL isEditMode;
     self.firstNameField.userInteractionEnabled = NO;
     self.lastNameField.userInteractionEnabled = NO;
     self.aboutMeField.userInteractionEnabled = NO;
-    
     isEditMode = NO;
 }
 
