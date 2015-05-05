@@ -83,18 +83,16 @@ BOOL isEditMode;
     self.user = [root getUser];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.picture.image  = [UIImage imageWithData: self.user.image];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-    
-}
 
 -(void) viewDidAppear:(BOOL)animated
 {
     CGRect frame = self.tableView.frame;
     frame.size.height = self.tableView.contentSize.height;
     self.tableView.frame = frame;
+    [self.tableView sizeToFit];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

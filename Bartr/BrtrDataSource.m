@@ -37,7 +37,6 @@
 
 +(NSSet *)getCardStackForUser:(BrtrUser *)user
 {
-    NSSet *cards = nil;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrCardItem"];
     request.predicate = [NSPredicate predicateWithFormat:@"user.email = %@", user.email];
     NSError *error;
