@@ -19,7 +19,7 @@
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="u_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="item_stack" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BrtrCardItem" inverseName="user" inverseEntity="BrtrCardItem" syncable="YES"/>
+        <relationship name="item_stack" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BrtrCardItem" inverseName="user" inverseEntity="BrtrCardItem" syncable="YES"/>
         <relationship name="liked_items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BrtrLikedItem" inverseName="user" inverseEntity="BrtrLikedItem" syncable="YES"/>
         <relationship name="my_items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BrtrUserItem" inverseName="owner" inverseEntity="BrtrUserItem" syncable="YES"/>
     </entity>
@@ -27,10 +27,10 @@
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BrtrUser" inverseName="my_items" inverseEntity="BrtrUser" syncable="YES"/>
     </entity>
     <elements>
+        <element name="BrtrCardItem" positionX="-261" positionY="-4" width="126" height="58"/>
         <element name="BrtrItem" positionX="-29" positionY="-28" width="128" height="103"/>
         <element name="BrtrLikedItem" positionX="-263" positionY="-117" width="128" height="58"/>
         <element name="BrtrUser" positionX="-603" positionY="-61" width="128" height="178"/>
         <element name="BrtrUserItem" positionX="-254" positionY="117" width="128" height="58"/>
-        <element name="BrtrCardItem" positionX="-261" positionY="-4" width="126" height="58"/>
     </elements>
 </model>

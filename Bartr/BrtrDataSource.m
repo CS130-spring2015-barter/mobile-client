@@ -35,6 +35,19 @@
     return user;
 }
 
++(NSSet *)getCardStackForUser:(BrtrUser *)user
+{
+    NSSet *cards = nil;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrCardItem"];
+    request.predicate = [NSPredicate predicateWithFormat:@"user.email = %@", user.email];
+    NSError *error;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+
+    return [[NSSet alloc] initWithArray: matches];
+
+}
+
 +(void) loadFakeData
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrUser"];
@@ -54,22 +67,20 @@
         user.about_me = @"I love this app";
         user.email = @"foo@bar.com";
         user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
+        [BrtrDataSource saveAllData];
+        for (int i = 0; i < 3; ++i) {
+            BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
+                inManagedObjectContext:context];
+            cardItem.user = user;
+            cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
+            cardItem.name = [NSString stringWithFormat: @"Rohan %d" , i];
+        }
     } else {
         user = [matches firstObject];
     }
     // next populate the item stack
-    if (nil == user.item_stack) {
-        for (int i = 0; i < 3; ++i) {
-        BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
-                                                               inManagedObjectContext:context];
-        cardItem.user = user;
-        cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
-        cardItem.name = [NSString stringWithFormat: @"Rohan %d" , i];
-            
-        }
-    }
+
     
-    [BrtrDataSource saveAllData];
 }
 
 + (void) saveAllData
