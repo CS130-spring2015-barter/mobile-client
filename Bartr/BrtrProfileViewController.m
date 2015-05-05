@@ -45,7 +45,7 @@ BOOL isEditMode;
                                                                          style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
         self.navigationItem.leftBarButtonItem = cancelButton;
         
-        self.usernameField.userInteractionEnabled = YES;
+        self.usernameField.userInteractionEnabled = NO;
         self.firstNameField.userInteractionEnabled = YES;
         self.lastNameField.userInteractionEnabled = YES;
         self.aboutMeField.userInteractionEnabled = YES;
@@ -87,7 +87,14 @@ BOOL isEditMode;
 
 -(void) viewWillAppear:(BOOL)animated
 {
-    [self.tableView sizeToFit];
+    
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    CGRect frame = self.tableView.frame;
+    frame.size.height = self.tableView.contentSize.height;
+    self.tableView.frame = frame;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -107,7 +114,6 @@ BOOL isEditMode;
     static NSString *simpleTableIdentifier = @"ProfileTableCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
@@ -139,8 +145,9 @@ BOOL isEditMode;
             self.aboutMeField.text = self.user.about_me;
         } break;
         default: {
-        }
-            break;
+            NSLog(@"ERROR: Unknown cell id");
+            cell = nil;
+        } break;
     }
     
     return cell;
