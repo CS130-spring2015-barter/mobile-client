@@ -74,6 +74,7 @@ BOOL isEditMode;
     self.firstNameField.text = self.user.firstName;
     self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
+    
     [self cancelEdit];
 }
 
@@ -84,6 +85,7 @@ BOOL isEditMode;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.picture.image  = [UIImage imageWithData: self.user.image];
+    self.tableView.scrollEnabled = false;
 }
 
 
