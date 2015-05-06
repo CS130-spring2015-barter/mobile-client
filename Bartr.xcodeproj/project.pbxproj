@@ -29,6 +29,7 @@
 		84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */; };
 		84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */; };
 		84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */; };
+		D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,8 @@
 		84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemsTableViewController.m; sourceTree = "<group>"; };
 		84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrSwipeyViewController.h; sourceTree = "<group>"; };
 		84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrSwipeyViewController.m; sourceTree = "<group>"; };
+		D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemViewController.m; sourceTree = "<group>"; };
+		D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItemViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +221,8 @@
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
+				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
+				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
+				D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
 				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
