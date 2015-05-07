@@ -19,13 +19,10 @@
 
 +(BrtrUser *)getUserForEmail:(NSString *)email
 {
-    BrtrUser *user = nil;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrUser"];
-    request.predicate = [NSPredicate predicateWithFormat:@"email = %@", email];
-    NSError *error;
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    NSError *error = nil;
+    BrtrUser *user = nil;
     if (!matches || error || ([matches count] > 1)) {
         // handle error
     } else if ([matches count]) {
@@ -47,6 +44,13 @@
    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
    return [context fetchObjectsWithEntityName:@"BrtrUserItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
+
++(NSArray *)getLikedItemsForUser:(BrtrUser *)user
+{
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+}
+
 +(void) loadFakeData
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrUser"];
