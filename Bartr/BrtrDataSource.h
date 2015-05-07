@@ -14,5 +14,6 @@
 +(BrtrUser *) getUserForEmail:(NSString *)email;
 + (void) saveAllData;
 + (void) loadFakeData;
-+(NSSet *)getCardStackForUser:(BrtrUser *)user;
++(NSArray *)getCardStackForUser:(BrtrUser *)user;
++(NSArray *)getUserItemsForUser:(BrtrUser *)user;
 @end

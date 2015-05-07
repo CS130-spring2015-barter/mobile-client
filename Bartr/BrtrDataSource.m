@@ -36,18 +36,17 @@
     return user;
 }
 
-+(NSSet *)getCardStackForUser:(BrtrUser *)user
++(NSArray *)getCardStackForUser:(BrtrUser *)user
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrCardItem"];
-    request.predicate = [NSPredicate predicateWithFormat:@"user.email = %@", user.email];
-    NSError *error;
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-
-    return [[NSSet alloc] initWithArray: matches];
-
+    return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
 
++(NSArray *)getUserItemsForUser:(BrtrUser *)user
+{
+   NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+   return [context fetchObjectsWithEntityName:@"BrtrUserItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+}
 +(void) loadFakeData
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"BrtrUser"];
