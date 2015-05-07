@@ -12,6 +12,7 @@
 #import "JCDCoreData.h"
 #import "BrtrUser.h"
 #import "BrtrCardItem.h"
+#import "BrtrUserItem.h"
 #include "AppDelegate.h"
 
 @implementation BrtrDataSource
@@ -66,14 +67,21 @@
         user.about_me = @"I love this app";
         user.email = @"foo@bar.com";
         user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
-        [BrtrDataSource saveAllData];
+        
         for (int i = 0; i < 3; ++i) {
             BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
                 inManagedObjectContext:context];
             cardItem.user = user;
             cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
             cardItem.name = [NSString stringWithFormat: @"Rohan %d" , i];
+            cardItem.info = @"House cleaning service";
         }
+        BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
+        userItem.owner = user;
+        userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
+        userItem.name = @"House cleaning service";
+        userItem.info = @"We do good work!";
+        [BrtrDataSource saveAllData];
     } else {
         user = [matches firstObject];
     }

@@ -7,6 +7,11 @@
 //
 
 #import "BrtrItemsTableViewController.h"
+#import "BrtrStartupTabViewController.h"
+#import "BrtrUser.h"
+#import "BrtrUserItem.h"
+#import "BrtrItem.h"
+#import "ItemTableViewCell.h"
 
 @interface BrtrItemsTableViewController ()
 
@@ -16,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
+    BrtrUser *user = [root getUser];
+    self.items = [[NSArray alloc] initWithArray:[user.my_items allObjects]];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -32,26 +42,38 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.items count];
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 78;
+}
+
+-(void) tableView:(UITableView*)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Here 0");
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    ItemTableViewCell *cell = (ItemTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell" forIndexPath:indexPath];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ItemCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
     
-    // Configure the cell...
-    
+    long row = indexPath.row;
+    BrtrItem *item = (BrtrItem *)[self.items objectAtIndex:row];
+    cell.imageView.image = [UIImage imageWithData:item.picture];
+    cell.textLabel.text = item.name;
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -87,14 +109,16 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    long row = [self.tableView indexPathForCell:sender].row;
+//    NSLog(@"Here 1");
 }
-*/
+
 
 @end

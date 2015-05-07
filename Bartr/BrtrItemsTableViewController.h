@@ -10,4 +10,5 @@
 
 @interface BrtrItemsTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *items;
 @end

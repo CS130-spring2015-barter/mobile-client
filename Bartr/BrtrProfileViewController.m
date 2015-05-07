@@ -35,7 +35,6 @@ BOOL isEditMode;
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
-
     }
     else {
         self.navigationItem.rightBarButtonItem.title = @"Done";

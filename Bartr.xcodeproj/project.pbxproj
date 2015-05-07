@@ -23,6 +23,7 @@
 		842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176871AF5A9D600B72AA3 /* BrtrUserItem.m */; };
 		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
 		8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */; };
+		8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
 		84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8011ADE086A00253D2A /* Icon-user.png */; };
@@ -73,6 +74,8 @@
 		8421768A1AF5A9D600B72AA3 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
 		8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
 		8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrCardItem.m; sourceTree = "<group>"; };
+		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
+		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
 		84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrStartupTabViewController.m; sourceTree = "<group>"; };
 		84C8F36A1AEC5F54005D7D65 /* JCDCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDCoreData.h; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 		84F9E1931AF44492006E504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */,
+				8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */,
 				253238E91AEC500700DF7DE5 /* DraggableView.h */,
 				253238EA1AEC500700DF7DE5 /* DraggableView.m */,
 				253238EB1AEC500700DF7DE5 /* DraggableViewBackground.h */,
@@ -193,6 +198,7 @@
 		84F9E1941AF444B2006E504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
 				8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */,
 				8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */,
 				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
@@ -205,7 +211,6 @@
 				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
-				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */,
 				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,
 				253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
