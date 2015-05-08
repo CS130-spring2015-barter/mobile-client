@@ -20,8 +20,7 @@
 @property (weak, nonatomic) UITextField *firstNameField;
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextField *aboutMeField;
-
-
+@property (retain, nonatomic) UIBarButtonItem *myItemButton;
 @end
 
 @implementation BrtrProfileViewController
@@ -60,7 +59,8 @@ BOOL isEditMode;
     self.navigationItem.rightBarButtonItem.title = @"Edit";
     self.navigationItem.rightBarButtonItem.enabled = YES;
     
-    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = self.myItemButton;
+    self.navigationItem.leftBarButtonItem.enabled = YES;
     self.navigationItem.hidesBackButton = NO;
     
     self.usernameField.userInteractionEnabled = NO;
@@ -75,7 +75,6 @@ BOOL isEditMode;
     self.firstNameField.text = self.user.firstName;
     self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
-    
     [self cancelEdit];
 }
 
@@ -87,6 +86,7 @@ BOOL isEditMode;
     self.tableView.dataSource = self;
     self.picture.image  = [UIImage imageWithData: self.user.image];
     self.tableView.scrollEnabled = false;
+    self.myItemButton = self.navigationItem.leftBarButtonItem;
 }
 
 
@@ -175,9 +175,10 @@ BOOL isEditMode;
             vc = ((UINavigationController *)vc).topViewController;
         }
         if ([vc isKindOfClass:[BrtrItemsTableViewController class]]) {
-        
             itvc = (BrtrItemsTableViewController *) vc;
             itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
+            AppDelegate *ad = [UIApplication sharedApplication].delegate;
+            itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
         }
         else {
             // error
