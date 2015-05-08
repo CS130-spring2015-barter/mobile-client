@@ -149,8 +149,14 @@
             }
         }
         // TODO
-        BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
+        BrtrCardItem *likeItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
                                                                inManagedObjectContext:context];
+        likeItem.user = user;
+        likeItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"ball"], 1.0);
+        likeItem.name = @"Basketball";
+        likeItem.info = @"Signed by Michael Jordan";
+        
+        
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
