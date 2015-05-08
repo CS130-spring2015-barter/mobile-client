@@ -148,6 +148,9 @@
                 cardItem.info = @"Don't drink and drive (or code)";
             }
         }
+        // TODO
+        BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
+                                                               inManagedObjectContext:context];
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
