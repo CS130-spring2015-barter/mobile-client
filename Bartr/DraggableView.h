@@ -38,17 +38,26 @@
 
 -(void)cardSwipedLeft:(UIView *)card;
 -(void)cardSwipedRight:(UIView *)card;
-
 @end
 
 @interface DraggableView : UIView
+@property (nonatomic,strong)UILabel* information;
+@property (nonatomic,strong)UILabel* name;
+@property (nonatomic,strong)UILabel* info;
+@property (nonatomic,strong)UIImageView* image;
+
+/*
+@property (nonatomic, retain) IBOutlet UIImageView *image;
+@property (nonatomic, retain) IBOutlet UILabel *name;
+@property (nonatomic, retain) IBOutlet UILabel *info;
+ */
 
 @property (weak) id <DraggableViewDelegate> delegate;
 
 @property (nonatomic, strong)UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic)CGPoint originalPoint;
 @property (nonatomic,strong)OverlayView* overlayView;
-@property (nonatomic,strong)UILabel* information; //%%% a placeholder for any card-specific information
+
 
 -(void)leftClickAction;
 -(void)rightClickAction;

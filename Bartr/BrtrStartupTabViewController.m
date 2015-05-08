@@ -12,7 +12,7 @@
 #import "BrtrProfileViewController.h"
 #import "BrtrSwipeyViewController.h"
 
-@interface BrtrStartupTabViewController ()
+@interface BrtrStartupTabViewController  ()
 @property (strong, nonatomic) BrtrUser *user;
 @end
 
