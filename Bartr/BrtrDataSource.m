@@ -113,19 +113,46 @@
         user.email = @"foo@bar.com";
         user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
         
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 6; ++i) {
             BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
                 inManagedObjectContext:context];
             cardItem.user = user;
-            cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
-            cardItem.name = [NSString stringWithFormat: @"Rohan %d" , i];
-            cardItem.info = @"House cleaning service";
+            if (i == 0) {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"polo"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Lacoste Polo %d" , i];
+                cardItem.info = @"Dark Navy Blue";
+            }
+            else if (i == 1) {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"starwars"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Lightsaber %d" , i];
+                cardItem.info = @"Please use with caution";
+            }
+            else if (i == 2) {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"iwatch"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Apple Watch %d" , i];
+                cardItem.info = @"Mint condition, even tells time";
+            }
+            else if (i == 3) {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"lambo"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Lamborghini Aventador %d" , i];
+                cardItem.info = @"Incredible Car for incredible people";
+            }
+            else if (i == 4) {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"bed"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Ikea Bed %d" , i];
+                cardItem.info = @"Great for sleeping and other activities as well";
+            }
+            else {
+                cardItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"everclear"], 1.0);
+                cardItem.name = [NSString stringWithFormat: @"Everclear %d" , i];
+                cardItem.info = @"Don't drink and drive (or code)";
+            }
         }
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
-        userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1.0);
-        userItem.name = @"House cleaning service";
-        userItem.info = @"We do good work!";
+        userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
+        userItem.name = @"Boxers";
+        userItem.info = @"Sexy men's blue boxers. Great comfort!";
         [BrtrDataSource saveAllData];
     } else {
         user = [matches firstObject];
