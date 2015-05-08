@@ -48,19 +48,18 @@
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
-        itvc.items = [BrtrDataSource getCardStackForUser:self.user];
+        itvc.items = [BrtrDataSource getLikedItemsForUser:
+                    self.user];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
-        NSLog(@"Items");
+       // NSLog(@"Items");
     }
     else if ([vc isKindOfClass:[BrtrSwipeyViewController class]])
     {
-        NSLog(@"Swipey");
-        BrtrSwipeyViewController *svc = (BrtrSwipeyViewController *) vc;
-        NSArray *cards = [BrtrDataSource getCardStackForUser:self.user];
+        //NSLog(@"Swipey");
         
     }
     else {
-        NSLog(@"Unknown vc");
+       // NSLog(@"Unknown vc");
     }
 }
 
