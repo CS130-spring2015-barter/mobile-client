@@ -38,7 +38,6 @@
     if (self) {
         [self setupView];
         
-#warning placeholder stuff, replace with card-specific information {
         int screen_height=[[UIScreen mainScreen] bounds].size.height;
         int screen_width= [[UIScreen mainScreen] bounds].size.width;
         
@@ -54,15 +53,15 @@
         name= [[UILabel alloc]initWithFrame:CGRectMake(side_padding, name_y, self.frame.size.width, 20)];
         info= [[UILabel alloc]initWithFrame:CGRectMake(side_padding+5, info_y, self.frame.size.width, 20)];
         image = [[UIImageView alloc] initWithFrame:CGRectMake(side_padding, image_y, image_length, image_length)];
-        /*
-         image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"stock"]];
-        image.frame = CGRectMake(image_side_padding, image_y, image_length, image_length);
-         */
         
        
         name.text = @"no name";
         info.text = @"no info";
-        name.textColor = [UIColor greenColor];
+        
+        //name.font=[name.font fontWithSize:25];
+        [name setFont:[UIFont fontWithName:@"Avenir-Book" size:25]];
+        [info setFont:[UIFont fontWithName:@"Avenir-Book" size:15]];
+        name.textColor = [UIColor colorWithRed:0 green:.816 blue:.408 alpha:1];
         info.textColor = [UIColor blackColor];
         [name setTextAlignment:NSTextAlignmentLeft];
         [info setTextAlignment:NSTextAlignmentLeft];
@@ -70,7 +69,6 @@
 
         
         self.backgroundColor = [UIColor whiteColor];
-#warning placeholder stuff, replace with card-specific information }
         
         
         
@@ -195,7 +193,7 @@
 -(void)rightAction
 {
     CGPoint finishPoint = CGPointMake(500, 2*yFromCenter +self.originalPoint.y);
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.4
                      animations:^{
                          self.center = finishPoint;
                      }completion:^(BOOL complete){
@@ -211,7 +209,7 @@
 -(void)leftAction
 {
     CGPoint finishPoint = CGPointMake(-500, 2*yFromCenter +self.originalPoint.y);
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.4
                      animations:^{
                          self.center = finishPoint;
                      }completion:^(BOOL complete){
@@ -226,7 +224,7 @@
 -(void)rightClickAction
 {
     CGPoint finishPoint = CGPointMake(600, self.center.y);
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.45
                      animations:^{
                          self.center = finishPoint;
                          self.transform = CGAffineTransformMakeRotation(1);
@@ -242,7 +240,7 @@
 -(void)leftClickAction
 {
     CGPoint finishPoint = CGPointMake(-600, self.center.y);
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.45
                      animations:^{
                          self.center = finishPoint;
                          self.transform = CGAffineTransformMakeRotation(-1);

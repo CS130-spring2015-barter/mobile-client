@@ -32,7 +32,6 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         self.delegate = delegate;
         [super layoutSubviews];
         [self setupView];
-        //exampleCardLabels = [[NSArray alloc]initWithObjects:@"first",@"second",@"third",@"fourth",@"last", nil]; //%%% placeholder for card-specific information
         exampleCardLabels=[self.delegate getMultipleCards];
         loadedCards = [[NSMutableArray alloc] init];
         allCards = [[NSMutableArray alloc] init];
@@ -45,7 +44,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 //%%% sets up the extra buttons on the screen
 -(void)setupView
 {
-    //TO-DO make x & y positioning, height, and width based on screen size
+
     int screen_height=[[UIScreen mainScreen] bounds].size.height;
     int screen_width= [[UIScreen mainScreen] bounds].size.width;
     
@@ -55,8 +54,8 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     int xButton_x=(screen_width/2) - ( button_size + (button_separation/2) );
     int checkButton_x= xButton_x + button_size+button_separation;
     
-    //warning customize all of this.  These are just place holders to make it look pretty
     self.backgroundColor = [UIColor colorWithRed:.92 green:.93 blue:.95 alpha:1]; //the gray background colors
+    
     
     xButton = [[UIButton alloc]initWithFrame:CGRectMake(xButton_x, button_y, button_size, button_size)];
     [xButton setImage:[UIImage imageNamed:@"xButton"] forState:UIControlStateNormal];
@@ -68,8 +67,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     [self addSubview:checkButton];
 }
 
-//warning include own card customization here!
-//%%% creates a card and returns it.  This should be customized to fit your needs.
+
 // use "index" to indicate where the information should be pulled.  If this doesn't apply to you, feel free
 // to get rid of it (eg: if you are building cards from data from the internet)
 -(DraggableView *)createDraggableViewWithDataAtIndex:(NSInteger)index
@@ -81,7 +79,6 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     int card_width=screen_width -screen_width/5;
     
     DraggableView *draggableView = [[DraggableView alloc]initWithFrame:CGRectMake((screen_width - card_width)/2, (screen_height - card_height)/2-(screen_height-card_height)/4, card_width, card_height)];
-    //draggableView.information.text = [exampleCardLabels objectAtIndex:index]; //%%% placeholder for card-specific information
     
     
     BrtrCardItem* item= [exampleCardLabels objectAtIndex:index];
