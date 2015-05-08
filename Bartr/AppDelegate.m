@@ -8,13 +8,13 @@
 
 #import "AppDelegate.h"
 #import "JCDCoreData.h"
+#import "BrtrDataSource.h"
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
-
+@synthesize user = _user;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -45,6 +45,13 @@
      [[JCDCoreData sharedInstance] saveContext];
 }
 
+-(BrtrUser *)user
+{
+    if (nil == _user) {
+        _user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    }
+    return _user;
+}
 
 
 

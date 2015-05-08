@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrtrItem.h"
 
 @interface BrtrItemViewController : UIViewController <UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIScrollView *pictureScrollView;
-
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (retain, nonatomic) BrtrItem *item;
 @end
