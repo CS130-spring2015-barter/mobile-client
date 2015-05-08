@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "BrtrProfileViewController.h"
 #import "AppDelegate.h"
 #import "BrtrUser.h"
@@ -36,6 +37,7 @@ BOOL isEditMode;
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
+        
     }
     else {
         self.navigationItem.rightBarButtonItem.title = @"Done";
@@ -49,6 +51,7 @@ BOOL isEditMode;
         self.firstNameField.userInteractionEnabled = YES;
         self.lastNameField.userInteractionEnabled = YES;
         self.aboutMeField.userInteractionEnabled = YES;
+        self.picture.userInteractionEnabled = YES;
         [self.usernameField becomeFirstResponder];
         
         isEditMode = YES;
@@ -58,7 +61,7 @@ BOOL isEditMode;
 - (void) cancelEdit {
     self.navigationItem.rightBarButtonItem.title = @"Edit";
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    
+    self.picture.userInteractionEnabled = NO;
     self.navigationItem.leftBarButtonItem = self.myItemButton;
     self.navigationItem.leftBarButtonItem.enabled = YES;
     self.navigationItem.hidesBackButton = NO;
@@ -87,8 +90,34 @@ BOOL isEditMode;
     self.picture.image  = [UIImage imageWithData: self.user.image];
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
+    self.picture.userInteractionEnabled = NO;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
+    [self.picture addGestureRecognizer:tap];
 }
 
+-(void) clickPicture:(UITapGestureRecognizer *)tap
+{
+    if([UIImagePickerController isSourceTypeAvailable:
+        UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        UIImagePickerController *picker= [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
+        
+        [self presentModalViewController:picker animated:YES];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSLog(@"%@", [info allKeys]);
+    UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+    self.user.image = UIImagePNGRepresentation(selectedImage);
+    self.picture.image = selectedImage;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 -(void) viewDidAppear:(BOOL)animated
 {
