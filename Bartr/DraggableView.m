@@ -29,6 +29,7 @@
 @synthesize info;
 @synthesize information;
 @synthesize panGestureRecognizer;
+@synthesize item;
 
 @synthesize overlayView;
 
@@ -38,7 +39,7 @@
     if (self) {
         [self setupView];
         
-#warning placeholder stuff, replace with card-specific information {
+
         int screen_height=[[UIScreen mainScreen] bounds].size.height;
         int screen_width= [[UIScreen mainScreen] bounds].size.width;
         
@@ -70,7 +71,7 @@
 
         
         self.backgroundColor = [UIColor whiteColor];
-#warning placeholder stuff, replace with card-specific information }
+
         
         
         

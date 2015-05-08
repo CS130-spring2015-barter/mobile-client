@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BrtrUser.h"
+#import "BrtrCardItem.h"
 
 @interface BrtrDataSource : NSObject
 
@@ -17,4 +18,8 @@
 +(NSArray *)getCardStackForUser:(BrtrUser *)user;
 +(NSArray *)getUserItemsForUser:(BrtrUser *)user;
 +(NSArray *)getLikedItemsForUser:(BrtrUser *)user;
++(BrtrDataSource *)sharedInstance;
+
+-(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item;
+-(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item;
 @end

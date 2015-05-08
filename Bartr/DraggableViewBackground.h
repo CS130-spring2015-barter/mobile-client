@@ -32,10 +32,12 @@
 
 #import <UIKit/UIKit.h>
 #import "DraggableView.h"
+#import "BrtrCardItem.h"
 
 @protocol DraggableViewBackgroundDelegate <NSObject>
 -(NSMutableArray *) getMultipleCards;
-
+-(void) itemSwipedRight:(BrtrCardItem *)item;
+-(void) itemSwipedLeft:(BrtrCardItem *)item;
 @end
 
 @interface DraggableViewBackground : UIView <DraggableViewDelegate>

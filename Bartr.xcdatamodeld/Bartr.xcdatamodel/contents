@@ -9,7 +9,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
-    <entity name="BrtrLikedItem" representedClassName="BrtrLikedItem" isAbstract="YES" parentEntity="BrtrItem" syncable="YES">
+    <entity name="BrtrLikedItem" representedClassName="BrtrLikedItem" parentEntity="BrtrItem" syncable="YES">
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BrtrUser" inverseName="liked_items" inverseEntity="BrtrUser" syncable="YES"/>
     </entity>
     <entity name="BrtrUser" representedClassName="BrtrUser" syncable="YES">
@@ -29,7 +29,7 @@
     <elements>
         <element name="BrtrCardItem" positionX="-261" positionY="-4" width="126" height="58"/>
         <element name="BrtrItem" positionX="-29" positionY="-28" width="128" height="103"/>
-        <element name="BrtrLikedItem" positionX="-263" positionY="-117" width="128" height="58"/>
+        <element name="BrtrLikedItem" positionX="-263" positionY="-117" width="128" height="60"/>
         <element name="BrtrUser" positionX="-603" positionY="-61" width="128" height="178"/>
         <element name="BrtrUserItem" positionX="-254" positionY="117" width="128" height="58"/>
     </elements>
