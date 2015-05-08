@@ -156,6 +156,12 @@
         likeItem.name = @"Basketball";
         likeItem.info = @"Signed by Michael Jordan";
         
+        BrtrCardItem *likeItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
+                                                               inManagedObjectContext:context];
+        likeItem2.user = user;
+        likeItem2.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"harry"], 1.0);
+        likeItem2.name = @"Harry Potter and the Chamber of Secrets";
+        likeItem2.info = @"The second book of the series!";
         
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
