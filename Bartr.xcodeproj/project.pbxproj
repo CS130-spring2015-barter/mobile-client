@@ -14,7 +14,6 @@
 		526E9A021ADB822800615EFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A011ADB822800615EFC /* AppDelegate.m */; };
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
-		526E9A101ADB822800615EFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0E1ADB822800615EFC /* LaunchScreen.xib */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
 		842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */; };
 		8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176641AF5A90600B72AA3 /* BrtrDataSource.m */; };
@@ -58,7 +57,6 @@
 		526E9A011ADB822800615EFC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		526E9A0A1ADB822800615EFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		526E9A0C1ADB822800615EFC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		526E9A0F1ADB822800615EFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 				526E9A011ADB822800615EFC /* AppDelegate.m */,
 				84CAA8011ADE086A00253D2A /* Icon-user.png */,
 				526E9A0C1ADB822800615EFC /* Images.xcassets */,
-				526E9A0E1ADB822800615EFC /* LaunchScreen.xib */,
 				526E99FD1ADB822800615EFC /* Info.plist */,
 				526E99FE1ADB822800615EFC /* main.m */,
 			);
@@ -318,7 +315,6 @@
 			files = (
 				526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */,
 				84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */,
-				526E9A101ADB822800615EFC /* LaunchScreen.xib in Resources */,
 				526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,14 +380,6 @@
 				526E9A0A1ADB822800615EFC /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		526E9A0E1ADB822800615EFC /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				526E9A0F1ADB822800615EFC /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -479,7 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Bartr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -491,7 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Bartr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
