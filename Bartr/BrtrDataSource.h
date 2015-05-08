@@ -16,5 +16,5 @@
 + (void) loadFakeData;
 +(NSArray *)getCardStackForUser:(BrtrUser *)user;
 +(NSArray *)getUserItemsForUser:(BrtrUser *)user;
-+(NSArray *)getLikedItemsForUser:(BrtrUser *)user
++(NSArray *)getLikedItemsForUser:(BrtrUser *)user;
 @end

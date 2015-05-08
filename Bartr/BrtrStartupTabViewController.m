@@ -8,7 +8,9 @@
 
 #import "BrtrStartupTabViewController.h"
 #import "BrtrDataSource.h"
+#import "BrtrItemsTableViewController.h"
 #import "BrtrProfileViewController.h"
+#import "BrtrSwipeyViewController.h"
 
 @interface BrtrStartupTabViewController ()
 @property (strong, nonatomic) BrtrUser *user;
@@ -20,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BrtrDataSource loadFakeData];
+    self.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -27,6 +30,39 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    UIViewController *vc = viewController;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *nav = (UINavigationController *) vc;
+        vc = nav.topViewController;
+    }
+    if ([vc isKindOfClass:[BrtrProfileViewController class]])
+    {
+        NSLog(@"Profile");
+        
+        
+    }
+    else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
+    {
+        BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
+        itvc.items = [BrtrDataSource getCardStackForUser:self.user];
+        NSLog(@"Items");
+    }
+    else if ([vc isKindOfClass:[BrtrSwipeyViewController class]])
+    {
+        NSLog(@"Swipey");
+        BrtrSwipeyViewController *svc = (BrtrSwipeyViewController *) vc;
+        NSArray *cards = [BrtrDataSource getCardStackForUser:self.user];
+        
+    }
+    else {
+        NSLog(@"Unknown vc");
+    }
+}
+
 
 -(BrtrUser *)getUser
 {

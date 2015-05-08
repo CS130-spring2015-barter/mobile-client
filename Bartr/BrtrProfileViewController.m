@@ -12,6 +12,7 @@
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
 #import "BrtrStartupTabViewController.h"
+#import "BrtrItemsTableViewController.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -19,6 +20,7 @@
 @property (weak, nonatomic) UITextField *firstNameField;
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextField *aboutMeField;
+
 
 @end
 
@@ -159,14 +161,30 @@ BOOL isEditMode;
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UIViewController *vc = segue.destinationViewController;
+    
+    BrtrItemsTableViewController *itvc;
+    if ([@"ShowMyItems" isEqual: segue.identifier]) {
+        if ([vc isKindOfClass:[UINavigationController class]])
+        {
+            vc = ((UINavigationController *)vc).topViewController;
+        }
+        if ([vc isKindOfClass:[BrtrItemsTableViewController class]]) {
+        
+            itvc = (BrtrItemsTableViewController *) vc;
+            itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
+        }
+        else {
+            // error
+        }
+    
+    }
 }
-*/
+
 
 @end

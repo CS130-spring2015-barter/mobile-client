@@ -10,7 +10,7 @@
 
 @class BrtrUser;
 
-@interface BrtrStartupTabViewController : UITabBarController
+@interface BrtrStartupTabViewController : UITabBarController<UITabBarControllerDelegate>
 
 -(BrtrUser *) getUser;
 

@@ -20,7 +20,7 @@
 +(BrtrUser *)getUserForEmail:(NSString *)email
 {
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
     NSError *error = nil;
     BrtrUser *user = nil;
     if (!matches || error || ([matches count] > 1)) {

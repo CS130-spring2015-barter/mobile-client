@@ -23,9 +23,6 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
-    BrtrUser *user = [root getUser];
-    self.items = [[NSArray alloc] initWithArray:[user.my_items allObjects]];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

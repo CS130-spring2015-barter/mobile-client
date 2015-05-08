@@ -94,6 +94,11 @@
                         <color key="backgroundColor" red="0.30768865973878012" green="0.58228772095959602" blue="0.21884739784024476" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="Yl6-Pk-XCi">
+                        <barButtonItem key="leftBarButtonItem" title="My Items" id="N6w-nR-cII">
+                            <connections>
+                                <segue destination="LAV-5f-3PC" kind="push" identifier="ShowMyItems" id="gGd-Lm-Q54"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="JDZ-Ld-36o">
                             <connections>
                                 <action selector="didPushEditButton:" destination="rZI-Lk-tnj" id="1YN-Mc-3RO"/>
@@ -159,12 +164,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="om6-0t-60t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2841" y="517"/>
+            <point key="canvasLocation" x="2841" y="472"/>
         </scene>
-        <!--Brtr-->
+        <!--ItemViewController-->
         <scene sceneID="ini-7j-j5r">
             <objects>
-                <viewController title="Brtr" id="dMK-44-AKK" customClass="BrtrItemViewController" sceneMemberID="viewController">
+                <viewController title="ItemViewController" id="dMK-44-AKK" customClass="BrtrItemViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="FCI-Hy-eg7"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unc-TN-Amr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -239,4 +244,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="gGd-Lm-Q54"/>
+    </inferredMetricsTieBreakers>
 </document>
