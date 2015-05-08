@@ -15,7 +15,49 @@
 #import "BrtrUserItem.h"
 #include "AppDelegate.h"
 
+@interface BrtrDataSource()
+@property (nonatomic, strong) NSArray *liked_items;
+@property (nonatomic, strong) NSArray *rejected_items;
+@end
+
+
 @implementation BrtrDataSource
+@synthesize liked_items  = _likedItems;
+@synthesize rejected_items = _rejectedItems;
+
++(BrtrDataSource *)sharedInstance
+{
+    static BrtrDataSource *_sharedInstance;
+    
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+    
+    return _sharedInstance;
+}
+
+-(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item
+{
+    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
+    [newLikedItems addObject:item];
+    self.liked_items = [newLikedItems copy];
+    
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:item];
+    [BrtrDataSource saveAllData];
+}
+
+-(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item
+{
+    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
+    [newLikedItems addObject:item];
+    self.liked_items = [newLikedItems copy];
+    
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:item];
+    [BrtrDataSource saveAllData];
+}
 
 +(BrtrUser *)getUserForEmail:(NSString *)email
 {

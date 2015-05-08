@@ -49,6 +49,7 @@
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
         itvc.items = [BrtrDataSource getCardStackForUser:self.user];
+        itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         NSLog(@"Items");
     }
     else if ([vc isKindOfClass:[BrtrSwipeyViewController class]])

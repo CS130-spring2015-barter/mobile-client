@@ -33,6 +33,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OverlayView.h"
+#import "BrtrCardItem.h"
 
 @protocol DraggableViewDelegate <NSObject>
 
@@ -45,6 +46,7 @@
 @property (nonatomic,strong)UILabel* name;
 @property (nonatomic,strong)UILabel* info;
 @property (nonatomic,strong)UIImageView* image;
+@property (nonatomic,strong)BrtrCardItem* item;
 
 /*
 @property (nonatomic, retain) IBOutlet UIImageView *image;

@@ -29,6 +29,7 @@
 @synthesize info;
 @synthesize information;
 @synthesize panGestureRecognizer;
+@synthesize item;
 
 @synthesize overlayView;
 
@@ -69,7 +70,6 @@
 
         
         self.backgroundColor = [UIColor whiteColor];
-        
         
         
         panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(beingDragged:)];

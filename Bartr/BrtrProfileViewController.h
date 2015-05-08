@@ -10,7 +10,7 @@
 
 @class BrtrUser;
 
-@interface BrtrProfileViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface BrtrProfileViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) NSArray *profileInfo;
 @property (weak, nonatomic) BrtrUser *user;
 @property (weak, nonatomic) IBOutlet UIImageView *picture;

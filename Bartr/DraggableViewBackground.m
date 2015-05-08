@@ -8,6 +8,8 @@
 
 #import "DraggableViewBackground.h"
 #import "BrtrCardItem.h"
+#import "BrtrDataSource.h"
+
 @implementation DraggableViewBackground{
     NSInteger cardsLoadedIndex; //%%% the index of the card you have loaded into the loadedCards array last
     NSMutableArray *loadedCards; //%%% the array of card loaded (change max_buffer_size to increase or decrease the number of cards this holds)
@@ -81,14 +83,14 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     DraggableView *draggableView = [[DraggableView alloc]initWithFrame:CGRectMake((screen_width - card_width)/2, (screen_height - card_height)/2-(screen_height-card_height)/4, card_width, card_height)];
     
     
-    BrtrCardItem* item= [exampleCardLabels objectAtIndex:index];
+    draggableView.item= [exampleCardLabels objectAtIndex:index];
     
-    draggableView.image.image = [UIImage imageWithData:item.picture];
-    draggableView.name.text=item.name;
-    if (item.info == nil) {
+    draggableView.image.image = [UIImage imageWithData:draggableView.item.picture];
+    draggableView.name.text=draggableView.item.name;
+    if (draggableView.item.info == nil) {
         draggableView.info.text=@"no item information";
     } else {
-        draggableView.info.text=item.info;
+        draggableView.info.text=draggableView.item.info;
     }
     
      
@@ -143,6 +145,8 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
     }
+    DraggableView *itemCard = (DraggableView *)card;
+    [self.delegate itemSwipedLeft:itemCard.item];
 }
 
 //warning include own action here!
@@ -160,7 +164,9 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
     }
+    DraggableView *itemCard = (DraggableView *)card;
     
+    [self.delegate itemSwipedRight:itemCard.item];
 }
 
 //%%% when you hit the right button, this is called and substitutes the swipe
