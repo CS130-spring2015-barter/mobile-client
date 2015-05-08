@@ -24,9 +24,12 @@
 
 //delegate is instance of ViewController
 @synthesize delegate;
-
-@synthesize panGestureRecognizer;
+@synthesize name;
+@synthesize image;
+@synthesize info;
 @synthesize information;
+@synthesize panGestureRecognizer;
+
 @synthesize overlayView;
 
 - (id)initWithFrame:(CGRect)frame
@@ -36,10 +39,35 @@
         [self setupView];
         
 #warning placeholder stuff, replace with card-specific information {
-        information = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, self.frame.size.width, 100)];
-        information.text = @"no info given";
-        [information setTextAlignment:NSTextAlignmentCenter];
-        information.textColor = [UIColor blackColor];
+        int screen_height=[[UIScreen mainScreen] bounds].size.height;
+        int screen_width= [[UIScreen mainScreen] bounds].size.width;
+        
+        int card_height=screen_height-screen_height/3;
+        int card_width=screen_width -screen_width/5;
+        
+        int image_y=20;
+        int side_padding=4;
+        int image_length=card_width-(side_padding*2);
+        int name_y=image_y+image_length+5;
+        int info_y=name_y+25;
+        
+        name= [[UILabel alloc]initWithFrame:CGRectMake(side_padding, name_y, self.frame.size.width, 20)];
+        info= [[UILabel alloc]initWithFrame:CGRectMake(side_padding+5, info_y, self.frame.size.width, 20)];
+        image = [[UIImageView alloc] initWithFrame:CGRectMake(side_padding, image_y, image_length, image_length)];
+        /*
+         image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"stock"]];
+        image.frame = CGRectMake(image_side_padding, image_y, image_length, image_length);
+         */
+        
+       
+        name.text = @"no name";
+        info.text = @"no info";
+        name.textColor = [UIColor greenColor];
+        info.textColor = [UIColor blackColor];
+        [name setTextAlignment:NSTextAlignmentLeft];
+        [info setTextAlignment:NSTextAlignmentLeft];
+        
+
         
         self.backgroundColor = [UIColor whiteColor];
 #warning placeholder stuff, replace with card-specific information }
@@ -49,7 +77,9 @@
         panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(beingDragged:)];
         
         [self addGestureRecognizer:panGestureRecognizer];
-        [self addSubview:information];
+        [self addSubview:name];
+        [self addSubview:info];
+        [self addSubview:image];
         
         overlayView = [[OverlayView alloc]initWithFrame:CGRectMake(self.frame.size.width/2-100, 0, 100, 100)];
         overlayView.alpha = 0;
@@ -64,6 +94,11 @@
     self.layer.shadowRadius = 3;
     self.layer.shadowOpacity = 0.2;
     self.layer.shadowOffset = CGSizeMake(1, 1);
+}
+
+-(void) awakeFromNib
+{
+    NSLog(@"Here");
 }
 
 /*

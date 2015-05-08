@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BrtrSwipeyViewController : UIViewController
+#import "DraggableViewBackground.h"
+#import "BrtrUser.h"
+@interface BrtrSwipeyViewController : UIViewController <DraggableViewBackgroundDelegate>
+@property (weak,nonatomic)BrtrUser* user;
 
 @end

@@ -88,6 +88,7 @@
     } else {
         user = [matches firstObject];
     }
+    [BrtrDataSource saveAllData];
     // next populate the item stack
 
     
