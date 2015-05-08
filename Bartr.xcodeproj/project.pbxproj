@@ -23,6 +23,7 @@
 		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
 		8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */; };
 		8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */; };
+		8435DFB81AFCB2BE003207A4 /* launchimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8435DFB71AFCB2BE003207A4 /* launchimage.png */; };
 		8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
@@ -74,6 +75,7 @@
 		8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
 		8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrCardItem.m; sourceTree = "<group>"; };
 		8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8435DFB71AFCB2BE003207A4 /* launchimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = launchimage.png; path = Bartr/Images.xcassets/LaunchImage.launchimage/launchimage.png; sourceTree = "<group>"; };
 		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
+				8435DFB71AFCB2BE003207A4 /* launchimage.png */,
 				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
@@ -313,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8435DFB81AFCB2BE003207A4 /* launchimage.png in Resources */,
 				526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */,
 				84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */,
 				526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */,
