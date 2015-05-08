@@ -38,7 +38,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupView];
-        
+
         int screen_height=[[UIScreen mainScreen] bounds].size.height;
         int screen_width= [[UIScreen mainScreen] bounds].size.width;
         
@@ -70,7 +70,7 @@
 
         
         self.backgroundColor = [UIColor whiteColor];
-        
+
         
         panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(beingDragged:)];
         
