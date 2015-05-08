@@ -12,6 +12,7 @@
 #import "BrtrUserItem.h"
 #import "BrtrItem.h"
 #import "ItemTableViewCell.h"
+#import "BrtrItemViewController.h"
 
 @interface BrtrItemsTableViewController ()
 
@@ -114,6 +115,18 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     long row = [self.tableView indexPathForCell:sender].row;
+    UIViewController *vc = segue.destinationViewController;
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        vc = ((UINavigationController *)vc).topViewController;
+    }
+    if ([vc isKindOfClass:[BrtrItemViewController class] ]) {
+        BrtrItemViewController *ivc = (BrtrItemViewController *)vc;
+        ivc.item = [self.items objectAtIndex:row];
+    }
+    else {
+        // error
+        NSLog(@"Unrecognized VC in BrtrItemTVC segue");
+    }
 //    NSLog(@"Here 1");
 }
 
