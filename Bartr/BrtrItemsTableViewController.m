@@ -114,6 +114,8 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     long row = [self.tableView indexPathForCell:sender].row;
+    BrtrItem *item = [self.items objectAtIndex:row];
+    
 //    NSLog(@"Here 1");
 }
 
