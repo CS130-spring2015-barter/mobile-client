@@ -39,6 +39,7 @@
 
 -(void)cardSwipedLeft:(UIView *)card;
 -(void)cardSwipedRight:(UIView *)card;
+
 @end
 
 @interface DraggableView : UIView

@@ -38,6 +38,8 @@
 -(NSMutableArray *) getMultipleCards;
 -(void) itemSwipedRight:(BrtrCardItem *)item;
 -(void) itemSwipedLeft:(BrtrCardItem *)item;
+-(void)userClickedItem:(BrtrCardItem *)card;
+
 @end
 
 @interface DraggableViewBackground : UIView <DraggableViewDelegate>

@@ -11,4 +11,6 @@
 @interface BrtrItemsTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSArray *items;
+@property                     BOOL     allowEditableItems; 
+
 @end

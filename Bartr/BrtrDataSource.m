@@ -148,7 +148,6 @@
                 cardItem.info = @"Don't drink and drive (or code)";
             }
         }
-        // TODO
         BrtrCardItem *likeItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
                                                                inManagedObjectContext:context];
         likeItem.user = user;

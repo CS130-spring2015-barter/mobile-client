@@ -51,6 +51,7 @@
         itvc.items = [BrtrDataSource getLikedItemsForUser:
                     self.user];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
+        itvc.allowEditableItems = NO;
        // NSLog(@"Items");
     }
     else if ([vc isKindOfClass:[BrtrSwipeyViewController class]])

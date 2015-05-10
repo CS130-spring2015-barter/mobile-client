@@ -39,10 +39,8 @@
     if (self) {
         [self setupView];
 
-        int screen_height=[[UIScreen mainScreen] bounds].size.height;
         int screen_width= [[UIScreen mainScreen] bounds].size.width;
         
-        int card_height=screen_height-screen_height/3;
         int card_width=screen_width -screen_width/5;
         
         int image_y=20;
@@ -54,7 +52,7 @@
         name= [[UILabel alloc]initWithFrame:CGRectMake(side_padding, name_y, self.frame.size.width, 20)];
         info= [[UILabel alloc]initWithFrame:CGRectMake(side_padding+5, info_y, self.frame.size.width, 20)];
         image = [[UIImageView alloc] initWithFrame:CGRectMake(side_padding, image_y, image_length, image_length)];
-        
+
        
         name.text = @"no name";
         info.text = @"no info";
@@ -67,11 +65,9 @@
         [name setTextAlignment:NSTextAlignmentLeft];
         [info setTextAlignment:NSTextAlignmentLeft];
         
-
-        
         self.backgroundColor = [UIColor whiteColor];
 
-        
+
         panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(beingDragged:)];
         
         [self addGestureRecognizer:panGestureRecognizer];

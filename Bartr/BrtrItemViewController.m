@@ -29,6 +29,7 @@
 @synthesize nameTextField = _nameTextField;
 @synthesize ownerTextField = _ownerTextField;
 @synthesize descriptionTextView = _descriptionTextView;
+@synthesize editable = _editable;
 
 - (void)viewDidLoad {
     
@@ -37,6 +38,9 @@
     self.itemImageView.image = image;
     self.nameTextField.text = self.item.name;
     self.descriptionTextView.text = self.item.info;
+    self.nameTextField.userInteractionEnabled = self.editable;
+    self.descriptionTextView.userInteractionEnabled = self.editable;
+    self.itemImageView.userInteractionEnabled = self.editable;
 }
 
 //@synthesize pictureScrollView = _pictureScrollView;

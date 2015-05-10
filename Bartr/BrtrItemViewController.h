@@ -12,4 +12,5 @@
 @interface BrtrItemViewController : UIViewController <UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) BrtrItem *item;
+@property                     BOOL     editable;
 @end

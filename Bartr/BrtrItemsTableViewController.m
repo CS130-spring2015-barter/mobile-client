@@ -121,9 +121,11 @@
     if ([vc isKindOfClass:[UINavigationController class]]) {
         vc = ((UINavigationController *)vc).topViewController;
     }
+    
     if ([vc isKindOfClass:[BrtrItemViewController class] ]) {
         BrtrItemViewController *ivc = (BrtrItemViewController *)vc;
         ivc.item = [self.items objectAtIndex:row];
+        ivc.editable = self.allowEditableItems;
     }
     else {
         // error

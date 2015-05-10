@@ -208,6 +208,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
             AppDelegate *ad = [UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
+            itvc.allowEditableItems = YES;
         }
         else {
             // error

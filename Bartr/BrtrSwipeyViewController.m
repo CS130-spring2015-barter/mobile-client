@@ -18,7 +18,7 @@
 
 @implementation BrtrSwipeyViewController
 @synthesize user;
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
     
     BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
@@ -34,6 +34,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)userClickedItem:(BrtrCardItem *)card
+{
+    [self performSegueWithIdentifier:@"ShowItem" sender:self];
 }
 
 -(NSArray *) getMultipleCards {
