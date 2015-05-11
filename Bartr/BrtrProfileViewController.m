@@ -94,8 +94,8 @@ BOOL isEditMode;
     self.picture.userInteractionEnabled = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
     [self.picture addGestureRecognizer:tap];
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 25.0;
+    //self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44.0;
 }
 
 -(void) clickPicture:(UITapGestureRecognizer *)tap
@@ -124,6 +124,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:YES];
     CGRect frame = self.tableView.frame;
     frame.size.height = self.tableView.contentSize.height;
     self.tableView.frame = frame;
@@ -155,7 +156,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     switch (row) {
         case 0: {
             [cell.titleLabel setText:@"Hello"];
-            [cell.subtitleLabel setText: @"HelloHloHelloHelloHello"];
+            cell.subtitleLabel.text = @"Show up";
         } break;
         case 1: {
             [cell.titleLabel setText:@"Hello1"];
