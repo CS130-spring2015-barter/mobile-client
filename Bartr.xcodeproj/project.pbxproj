@@ -30,6 +30,7 @@
 		84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */; };
 		84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */; };
 		84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */; };
+		D24C83E71B00768200E73524 /* ProfileTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D24C83E61B00768200E73524 /* ProfileTableCell.m */; };
 		D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,8 @@
 		84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemsTableViewController.m; sourceTree = "<group>"; };
 		84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrSwipeyViewController.h; sourceTree = "<group>"; };
 		84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrSwipeyViewController.m; sourceTree = "<group>"; };
+		D24C83E21B00566E00E73524 /* ProfileTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileTableCell.h; sourceTree = "<group>"; };
+		D24C83E61B00768200E73524 /* ProfileTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableCell.m; sourceTree = "<group>"; };
 		D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemViewController.m; sourceTree = "<group>"; };
 		D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItemViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +222,7 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
@@ -229,6 +233,7 @@
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
 				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
+				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
 				84CAA8131AE4C6E000253D2A /* BrtrItemsTableViewController.m in Sources */,
+				D24C83E71B00768200E73524 /* ProfileTableCell.m in Sources */,
 				84CAA8101AE4C5A400253D2A /* BrtrProfileViewController.m in Sources */,
 				84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,

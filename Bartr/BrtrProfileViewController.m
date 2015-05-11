@@ -14,6 +14,7 @@
 #import "JCDCoreData.h"
 #import "BrtrStartupTabViewController.h"
 #import "BrtrItemsTableViewController.h"
+#import "ProfileTableCell.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -93,6 +94,8 @@ BOOL isEditMode;
     self.picture.userInteractionEnabled = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
     [self.picture addGestureRecognizer:tap];
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 25.0;
 }
 
 -(void) clickPicture:(UITapGestureRecognizer *)tap
@@ -142,43 +145,62 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"ProfileTableCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    ProfileTableCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
+        cell = [[ProfileTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
     }
     long row = indexPath.row;
     switch (row) {
         case 0: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-            labelField.text = @"Email";
-            self.usernameField = (UITextField *)[cell viewWithTag:200];
-            self.usernameField.text = self.user.email;
+            [cell.titleLabel setText:@"Hello"];
+            [cell.subtitleLabel setText: @"HelloHloHelloHelloHello"];
         } break;
         case 1: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-            labelField.text = @"First";
-            self.firstNameField = (UITextField *)[cell viewWithTag:200];
-            self.firstNameField.text = self.user.firstName;
+            [cell.titleLabel setText:@"Hello1"];
         } break;
         case 2: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-            labelField.text = @"Last";
-            self.lastNameField = (UITextField *)[cell viewWithTag:200];
-            self.lastNameField.text = self.user.lastName;
+            [cell.titleLabel setText:@"Hello2"];
         } break;
         case 3: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-            labelField.text = @"About me";
-            self.aboutMeField = (UITextField *)[cell viewWithTag:200];
-            self.aboutMeField.text = self.user.about_me;
+            [cell.titleLabel setText:@"Hello3"];
         } break;
         default: {
             NSLog(@"ERROR: Unknown cell id");
             cell = nil;
         } break;
     }
+//    switch (row) {
+//        case 0: {
+//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
+//            labelField.text = @"Email";
+//            self.usernameField = (UITextField *)[cell viewWithTag:200];
+//            self.usernameField.text = self.user.email;
+//        } break;
+//        case 1: {
+//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
+//            labelField.text = @"First";
+//            self.firstNameField = (UITextField *)[cell viewWithTag:200];
+//            self.firstNameField.text = self.user.firstName;
+//        } break;
+//        case 2: {
+//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
+//            labelField.text = @"Last";
+//            self.lastNameField = (UITextField *)[cell viewWithTag:200];
+//            self.lastNameField.text = self.user.lastName;
+//        } break;
+//        case 3: {
+//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
+//            labelField.text = @"About me";
+//            self.aboutMeField = (UITextField *)[cell viewWithTag:200];
+//            self.aboutMeField.text = self.user.about_me;
+//        } break;
+//        default: {
+//            NSLog(@"ERROR: Unknown cell id");
+//            cell = nil;
+//        } break;
+//    }
     
     return cell;
 }
