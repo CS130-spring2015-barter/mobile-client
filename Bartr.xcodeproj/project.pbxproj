@@ -222,7 +222,6 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
@@ -234,6 +233,7 @@
 				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
+				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
