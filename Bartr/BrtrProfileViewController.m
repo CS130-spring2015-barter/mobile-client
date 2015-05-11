@@ -95,7 +95,7 @@ BOOL isEditMode;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
     [self.picture addGestureRecognizer:tap];
     //self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 44.0;
+    //self.tableView.estimatedRowHeight = 70.0;
 }
 
 -(void) clickPicture:(UITapGestureRecognizer *)tap
@@ -145,27 +145,37 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 // this actually gets the information for each cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"ProfileTableCell";
-    ProfileTableCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    long row = indexPath.row;
+    UITableViewCell *cell = nil;
+    
+    if (row == 0 ) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileTableCell"];
+        if (cell == nil) {
+            cell = [[ProfileTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ProfileTableCell"];
+        }
+    }
+    else {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileTableCell2"];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ProfileTableCell2"];
+        }
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (cell == nil) {
-        cell = [[ProfileTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
-    }
-    long row = indexPath.row;
     switch (row) {
         case 0: {
-            [cell.titleLabel setText:@"Hello"];
-            cell.subtitleLabel.text = @"Show up";
+            ProfileTableCell *tmp = (ProfileTableCell *)cell;
+            [tmp.titleLabel setText:@"Hello"];
+            //tmp.subtitleLabel.text = @"Show up";
         } break;
         case 1: {
-            [cell.titleLabel setText:@"Hello1"];
+            //[cell.titleLabel setText:@"Hello1"];
         } break;
         case 2: {
-            [cell.titleLabel setText:@"Hello2"];
+            //[cell.titleLabel setText:@"Hello2"];
         } break;
         case 3: {
-            [cell.titleLabel setText:@"Hello3"];
+            //[cell.titleLabel setText:@"Hello3"];
         } break;
         default: {
             NSLog(@"ERROR: Unknown cell id");
