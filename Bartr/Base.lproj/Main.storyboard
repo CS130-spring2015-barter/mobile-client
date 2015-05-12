@@ -227,6 +227,35 @@
             </objects>
             <point key="canvasLocation" x="3235" y="573"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="x5r-sQ-vq9">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="uLq-gV-2DQ" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZXy-dv-KeK"/>
+                        <viewControllerLayoutGuide type="bottom" id="ieM-Gf-ZBV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WEC-Ta-6n0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eq0-IA-8Qt">
+                                <rect key="frame" x="130" y="184" width="38" height="30"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonPressed:" destination="uLq-gV-2DQ" eventType="touchUpInside" id="ygL-YB-s6n"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oCz-iY-YRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="846" y="522"/>
+        </scene>
         <!--Brtr Startup Tab View Controller-->
         <scene sceneID="2eo-6b-qdP">
             <objects>

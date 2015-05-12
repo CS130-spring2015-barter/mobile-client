@@ -11,13 +11,27 @@
 #import "BrtrDataSource.h"
 
 @interface AppDelegate ()
+@property BOOL authenticatedUser;
 @end
 
 @implementation AppDelegate
 @synthesize user = _user;
+@synthesize authenticatedUser;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
+    if (self.authenticatedUser)
+    {
+        self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+    }
+    else
+    {
+        UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        UINavigationController* navigation = [[UINavigationController alloc] initWithRootViewController:rootController];
+        
+        self.window.rootViewController = navigation;
+    }
+    
     return YES;
 }
 
