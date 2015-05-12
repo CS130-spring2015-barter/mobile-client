@@ -21,7 +21,7 @@
 @property (weak, nonatomic) UITextField *usernameField;
 @property (weak, nonatomic) UITextField *firstNameField;
 @property (weak, nonatomic) UITextField *lastNameField;
-@property (weak, nonatomic) UITextField *aboutMeField;
+@property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
 @end
 
@@ -82,20 +82,68 @@ BOOL isEditMode;
     [self cancelEdit];
 }
 
+- (UIImage *)centerCropImage:(UIImage *)image
+{
+    // Use smallest side length as crop square length
+    CGFloat squareLength = MIN(image.size.width, image.size.height);
+    // Center the crop area
+    CGRect clippedRect = CGRectMake((image.size.width - squareLength) / 2, (image.size.height - squareLength) / 2, squareLength, squareLength);
+    
+    // Crop logic
+    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], clippedRect);
+    UIImage * croppedImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return croppedImage;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
     self.user = [root getUser];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.picture.image  = [UIImage imageWithData: self.user.image];
+    self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
+    //self.picture.image  = [UIImage imageWithData: self.user.image];
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
     self.picture.userInteractionEnabled = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
     [self.picture addGestureRecognizer:tap];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     //self.tableView.rowHeight = UITableViewAutomaticDimension;
     //self.tableView.estimatedRowHeight = 70.0;
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets;
+    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
+        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height), 0.0);
+    } else {
+        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.width), 0.0);
+    }
+    
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+    [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForSelectedRow] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    self.tableView.contentInset = UIEdgeInsetsZero;
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 -(void) clickPicture:(UITapGestureRecognizer *)tap
@@ -129,6 +177,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     frame.size.height = self.tableView.contentSize.height;
     self.tableView.frame = frame;
     [self.tableView sizeToFit];
+    self.picture.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -164,12 +213,16 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     
     switch (row) {
         case 0: {
-            ProfileTableCell *tmp = (ProfileTableCell *)cell;
-            [tmp.titleLabel setText:@"Hello"];
-            //tmp.subtitleLabel.text = @"Show up";
+            ProfileTableCell *aboutCell = (ProfileTableCell *)cell;
+            [aboutCell.titleLabel setText:@"About me"];
+            
         } break;
         case 1: {
-            //[cell.titleLabel setText:@"Hello1"];
+            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
+            labelField.text = @"Email";
+            self.usernameField = (UITextField *)[cell viewWithTag:2];
+            self.usernameField.text = self.user.email;
+            
         } break;
         case 2: {
             //[cell.titleLabel setText:@"Hello2"];
