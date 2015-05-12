@@ -31,6 +31,7 @@
         [self.keychainItem resetKeychainItem];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [BrtrDataSource loadFakeData];
     }
     
     NSDictionary *creds = [self getLoginCredentials];

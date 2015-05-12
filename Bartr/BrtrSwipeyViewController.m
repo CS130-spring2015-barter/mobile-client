@@ -12,9 +12,16 @@
 #import "DraggableViewBackground.h"
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
+
 #import "AppDelegate.h"
 #import "DataFetchDelegate.h"
 #import "JCDCoreData.h"
+
+#import "BrtrItemViewController.h"
+
+@interface BrtrSwipeyViewController ()
+
+@end
 
 @implementation BrtrSwipeyViewController
 
@@ -36,10 +43,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)userClickedItem:(BrtrCardItem *)card
-{
-    //[self performSegueWithIdentifier:@"ShowItem" sender:self];
-}
+
 
 -(NSArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate>) delegate {
     return [BrtrDataSource getCardStackForUser:user delegate:delegate];
@@ -55,12 +59,17 @@
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item delegate:delegate];
 }
 
+-(void) itemClicked:(BrtrCardItem *)card
+{
+    BrtrItemViewController *ivc = [[BrtrItemViewController alloc] init];
+    ivc.item = card;
+
+    [self.navigationController pushViewController:ivc animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 @end
