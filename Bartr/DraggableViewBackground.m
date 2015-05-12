@@ -8,6 +8,7 @@
 
 #import "DraggableViewBackground.h"
 #import "BrtrCardItem.h"
+#import "BrtrItemViewController.h"
 #import "BrtrDataSource.h"
 
 @implementation DraggableViewBackground{
@@ -83,7 +84,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     DraggableView *draggableView = [[DraggableView alloc]initWithFrame:CGRectMake((screen_width - card_width)/2, (screen_height - card_height)/2-(screen_height-card_height)/4, card_width, card_height)];
     
     draggableView.image.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:draggableView.image action:@selector(clickPicture:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
     [draggableView.image addGestureRecognizer:tap];
     
     
@@ -197,16 +198,9 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 
 -(void)clickPicture:(UIGestureRecognizer *)tap
 {
-    
+    DraggableView *dragView = [loadedCards firstObject];
+    [self.delegate itemClicked:dragView.item];
 }
 
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
 
 @end

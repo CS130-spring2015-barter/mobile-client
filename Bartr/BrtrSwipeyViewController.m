@@ -12,6 +12,8 @@
 #import "DraggableViewBackground.h"
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
+#import "BrtrItemViewController.h"
+
 @interface BrtrSwipeyViewController ()
 
 @end
@@ -36,13 +38,8 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)userClickedItem:(BrtrCardItem *)card
+-(NSArray *) getMultipleCards
 {
-    [self performSegueWithIdentifier:@"ShowItem" sender:self];
-}
-
--(NSArray *) getMultipleCards {
-
     return [BrtrDataSource getCardStackForUser:user];
 }
 
@@ -55,10 +52,18 @@
 {
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
 }
+
+-(void) itemClicked:(BrtrCardItem *)card
+{
+    BrtrItemViewController *ivc = [[BrtrItemViewController alloc] init];
+    ivc.item = card;
+
+    [self.navigationController pushViewController:ivc animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

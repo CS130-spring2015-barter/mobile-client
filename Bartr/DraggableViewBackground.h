@@ -38,7 +38,7 @@
 -(NSMutableArray *) getMultipleCards;
 -(void) itemSwipedRight:(BrtrCardItem *)item;
 -(void) itemSwipedLeft:(BrtrCardItem *)item;
--(void)userClickedItem:(BrtrCardItem *)card;
+-(void) itemClicked:(BrtrCardItem *)card;
 
 @end
 
