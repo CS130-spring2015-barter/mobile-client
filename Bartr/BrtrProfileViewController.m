@@ -176,6 +176,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     frame.size.height = self.tableView.contentSize.height;
     self.tableView.frame = frame;
     [self.tableView sizeToFit];
+    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
+    self.picture.layer.masksToBounds = YES;
+    self.picture.layer.borderWidth = 0;
     self.picture.contentMode = UIViewContentModeScaleAspectFit;
 }
 
