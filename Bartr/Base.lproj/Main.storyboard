@@ -302,18 +302,18 @@
                                 <sections/>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AN0-ru-Z6D">
-                                <rect key="frame" x="95" y="72" width="130" height="130"/>
+                                <rect key="frame" x="73" y="64" width="175" height="175"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.85841245860000004" green="0.86092948349999998" blue="0.8933278093" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="AN0-ru-Z6D" secondAttribute="trailing" constant="95" id="0jy-TV-p0C"/>
+                            <constraint firstAttribute="trailing" secondItem="AN0-ru-Z6D" secondAttribute="trailing" constant="72" id="0jy-TV-p0C"/>
                             <constraint firstAttribute="trailing" secondItem="rzo-xh-SKk" secondAttribute="trailing" id="GPh-fW-T7c"/>
                             <constraint firstItem="rzo-xh-SKk" firstAttribute="leading" secondItem="7Bq-aS-lnM" secondAttribute="leading" id="WUz-2A-1w5"/>
-                            <constraint firstItem="AN0-ru-Z6D" firstAttribute="leading" secondItem="7Bq-aS-lnM" secondAttribute="leading" constant="95" id="XMG-oW-tyC"/>
+                            <constraint firstItem="AN0-ru-Z6D" firstAttribute="leading" secondItem="7Bq-aS-lnM" secondAttribute="leading" constant="73" id="XMG-oW-tyC"/>
                             <constraint firstAttribute="bottom" secondItem="rzo-xh-SKk" secondAttribute="bottom" constant="49" id="gc4-5D-EZU"/>
-                            <constraint firstItem="AN0-ru-Z6D" firstAttribute="top" secondItem="7Bq-aS-lnM" secondAttribute="top" constant="72" id="ih6-WS-PXp"/>
-                            <constraint firstItem="rzo-xh-SKk" firstAttribute="top" secondItem="AN0-ru-Z6D" secondAttribute="bottom" constant="37" id="tlW-kj-YR1"/>
+                            <constraint firstItem="AN0-ru-Z6D" firstAttribute="top" secondItem="7Bq-aS-lnM" secondAttribute="top" constant="64" id="ih6-WS-PXp"/>
+                            <constraint firstItem="rzo-xh-SKk" firstAttribute="top" secondItem="AN0-ru-Z6D" secondAttribute="bottom" id="tlW-kj-YR1"/>
                             <constraint firstItem="rzo-xh-SKk" firstAttribute="top" secondItem="7Bq-aS-lnM" secondAttribute="top" constant="239" id="zex-jC-p6F"/>
                         </constraints>
                     </view>
