@@ -49,11 +49,12 @@ BOOL isEditMode;
         self.navigationItem.leftBarButtonItem = cancelButton;
         
         self.usernameField.userInteractionEnabled = NO;
-        self.firstNameField.userInteractionEnabled = YES;
-        self.lastNameField.userInteractionEnabled = YES;
-        self.aboutMeField.userInteractionEnabled = YES;
+        //self.firstNameField.userInteractionEnabled = YES;
+        //self.lastNameField.userInteractionEnabled = YES;
+        //self.aboutMeField.userInteractionEnabled = YES;
+        //self.aboutMeField.editable = YES;
         self.picture.userInteractionEnabled = YES;
-        [self.usernameField becomeFirstResponder];
+        //[self.usernameField becomeFirstResponder];
         
         isEditMode = YES;
     }
@@ -120,8 +121,6 @@ BOOL isEditMode;
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    //self.tableView.rowHeight = UITableViewAutomaticDimension;
-    //self.tableView.estimatedRowHeight = 70.0;
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -215,6 +214,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         case 0: {
             ProfileTableCell *aboutCell = (ProfileTableCell *)cell;
             [aboutCell.titleLabel setText:@"About me"];
+            self.aboutMeField = aboutCell.subtitleLabel;
+            self.aboutMeField.text = self.user.about_me;
             
         } break;
         case 1: {
@@ -225,50 +226,82 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             
         } break;
         case 2: {
-            //[cell.titleLabel setText:@"Hello2"];
+            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
+            labelField.text = @"First";
+            self.firstNameField = (UITextField *)[cell viewWithTag:2];
+            self.firstNameField.text = self.user.firstName;
         } break;
         case 3: {
-            //[cell.titleLabel setText:@"Hello3"];
+            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
+            labelField.text = @"Last";
+            self.lastNameField = (UITextField *)[cell viewWithTag:2];
+            self.lastNameField.text = self.user.lastName;
         } break;
         default: {
             NSLog(@"ERROR: Unknown cell id");
             cell = nil;
         } break;
     }
-//    switch (row) {
-//        case 0: {
-//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-//            labelField.text = @"Email";
-//            self.usernameField = (UITextField *)[cell viewWithTag:200];
-//            self.usernameField.text = self.user.email;
-//        } break;
-//        case 1: {
-//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-//            labelField.text = @"First";
-//            self.firstNameField = (UITextField *)[cell viewWithTag:200];
-//            self.firstNameField.text = self.user.firstName;
-//        } break;
-//        case 2: {
-//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-//            labelField.text = @"Last";
-//            self.lastNameField = (UITextField *)[cell viewWithTag:200];
-//            self.lastNameField.text = self.user.lastName;
-//        } break;
-//        case 3: {
-//            UILabel *labelField = (UILabel *)[cell viewWithTag:199];
-//            labelField.text = @"About me";
-//            self.aboutMeField = (UITextField *)[cell viewWithTag:200];
-//            self.aboutMeField.text = self.user.about_me;
-//        } break;
-//        default: {
-//            NSLog(@"ERROR: Unknown cell id");
-//            cell = nil;
-//        } break;
-//    }
-    
     return cell;
 }
 
+// Dynamically set the height for the cells on the comments table based on their text
+// FIX ME: need to change size of font when its established
+- (CGFloat)tableView:(UITableView *)t heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat size = 0.0f;
+    CGFloat totalSize =self.navigationController.navigationBar.frame.size.height  + self.tabBarController.tabBar.frame.size.height + self.picture.frame.size.height;
+    CGFloat defaultCellSize = totalSize/4;
+
+    // Get the string of text from each comment
+    NSString *text = self.user.about_me;
+    // Calculate the size of the text using the fixed width of the cell
+    CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:10.0f] constrainedToSize:CGSizeMake(279, 1000)];
+    CGFloat aboutMeSize = defaultCellSize + textSize.height;
+    CGFloat maxAboutMeSize = totalSize - ((defaultCellSize - 10.0f) * 3.0f);
+    
+    if(aboutMeSize > maxAboutMeSize) {
+        aboutMeSize = maxAboutMeSize;
+        defaultCellSize = defaultCellSize - 5.0f;
+    }
+    else if(aboutMeSize < defaultCellSize) {
+        aboutMeSize = defaultCellSize;
+    }
+    
+    if(indexPath.row == 0) {
+        size = aboutMeSize;
+    }
+    else {
+        size = defaultCellSize;
+    }
+    
+    return size;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (isEditMode) {
+        long row = indexPath.row;
+        switch (row) {
+            case 0:
+                self.aboutMeField.userInteractionEnabled = YES;
+                self.aboutMeField.editable = YES;
+                [self.aboutMeField becomeFirstResponder];
+                break;
+            case 1:
+                break;
+            case 2:
+                self.firstNameField.userInteractionEnabled = YES;
+                [self.firstNameField becomeFirstResponder];
+                break;
+            case 3:
+                self.lastNameField.userInteractionEnabled = YES;
+                [self.lastNameField becomeFirstResponder];
+                break;
+            default:
+                break;
+        }
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {
