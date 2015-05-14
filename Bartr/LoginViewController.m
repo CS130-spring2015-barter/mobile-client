@@ -13,14 +13,22 @@
 @property (weak, nonatomic) IBOutlet UITableView *userFields;
 @property (weak, nonatomic) UITextField *emailField;
 @property (weak, nonatomic) UITextField *passwordField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @end
 
 @implementation LoginViewController
-- (IBAction)loginButtonPressed:(id)sender {
+- (IBAction)loginButtonPressed:(UIButton *)sender {
     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
 
     appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
 
+}
+- (IBAction)forgotPasswordButtonPressed:(UIButton *)sender
+{
+//UIAlertView *av = [UIL]
+}
+
+- (IBAction)createAccountButtonPressed:(UIButton *)sender {
 }
 
 - (void)viewDidLoad {
@@ -31,6 +39,7 @@
     self.userFields.estimatedRowHeight = 44;
     self.userFields.rowHeight = UITableViewAutomaticDimension;
     // Do any additional setup after loading the view.
+    self.loginButton.layer.cornerRadius = 10;
 
 
 }
@@ -44,28 +53,6 @@
     }
     return YES;
 }
-
-//- (void)keyboardWillShow:(NSNotification *)notification
-//{
-//    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//
-//    UIEdgeInsets contentInsets;
-//    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
-//        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height), 0.0);
-//    } else {
-//        contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.width), 0.0);
-//    }
-//
-//    self.userFields.contentInset = contentInsets;
-//    self.userFields.scrollIndicatorInsets = contentInsets;
-//    [self.userFields scrollToRowAtIndexPath:[self.userFields indexPathForSelectedRow] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//}
-
-//- (void)keyboardWillHide:(NSNotification *)notification
-//{
-//    self.userFields.contentInset = UIEdgeInsetsZero;
-//    self.userFields.scrollIndicatorInsets = UIEdgeInsetsZero;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
