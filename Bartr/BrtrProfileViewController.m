@@ -49,13 +49,7 @@ BOOL isEditMode;
         self.navigationItem.leftBarButtonItem = cancelButton;
         
         self.usernameField.userInteractionEnabled = NO;
-        //self.firstNameField.userInteractionEnabled = YES;
-        //self.lastNameField.userInteractionEnabled = YES;
-        //self.aboutMeField.userInteractionEnabled = YES;
-        //self.aboutMeField.editable = YES;
         self.picture.userInteractionEnabled = YES;
-        //[self.usernameField becomeFirstResponder];
-        
         isEditMode = YES;
     }
 }
