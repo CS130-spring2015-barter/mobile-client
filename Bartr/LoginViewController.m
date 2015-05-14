@@ -21,11 +21,22 @@
     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
 
     appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
-
 }
+
+-(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex) {
+        // hook up forgot password backend stuff
+        NSLog(@"Forgot password");
+    }
+}
+
 - (IBAction)forgotPasswordButtonPressed:(UIButton *)sender
 {
-//UIAlertView *av = [UIL]
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Forgot Password" message:@"Please enter email below" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Enter", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [av textFieldAtIndex:0].delegate = self;
+    [av show];
 }
 
 - (IBAction)createAccountButtonPressed:(UIButton *)sender {
