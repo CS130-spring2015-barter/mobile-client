@@ -139,8 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				526E9A091ADB822800615EFC /* Main.storyboard */,
-				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
-				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				84F9E1931AF44492006E504D /* Views */,
 				84F9E1951AF444C8006E504D /* Controllers */,
@@ -227,6 +225,8 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
+				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
