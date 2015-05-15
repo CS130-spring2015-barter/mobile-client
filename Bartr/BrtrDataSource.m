@@ -29,12 +29,12 @@
 +(BrtrDataSource *)sharedInstance
 {
     static BrtrDataSource *_sharedInstance;
-    
+
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         _sharedInstance = [[self alloc] init];
     });
-    
+
     return _sharedInstance;
 }
 
@@ -43,7 +43,7 @@
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
-    
+
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     [context deleteObject:item];
     [BrtrDataSource saveAllData];
@@ -54,10 +54,28 @@
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
-    
+
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     [context deleteObject:item];
     [BrtrDataSource saveAllData];
+}
+
+// bruh_pls41@gmail.com
+// password
++(BrtrUser *)getUserForEmail:(NSString *)email
+{
+    BrtrUser *user = nil;
+    NSError *error = nil;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    if (!matches || error || ([matches count] > 1)) {
+        // handle error
+    } else if ([matches count]) {
+        user = [matches firstObject];
+    } else {
+        // handle error
+    }
+    return user;
 }
 
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
@@ -67,9 +85,9 @@
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-    
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    
+
     [request setURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -87,7 +105,7 @@
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-        
+
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -96,7 +114,7 @@
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
             NSLog(@"Response ==> %@", responseData);
-            
+
             NSError *error = nil;
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
@@ -108,7 +126,7 @@
             [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Create Failed!" :0];
             return NO;
         }
-        
+
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Create Failed!" :0];
@@ -134,7 +152,7 @@
     NSDictionary *jsonData;
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-        
+
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -143,14 +161,14 @@
         {
             NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
             NSLog(@"Response ==> %@", responseData);
-            
+
             NSError *error = nil;
             jsonData = [NSJSONSerialization
                                       JSONObjectWithData:urlData
                                       options:NSJSONReadingMutableContainers
                                       error:&error];
-            
-            
+
+
             NSLog(@"Login SUCCESS");
             // fetch from database
             NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
@@ -163,7 +181,7 @@
             } else if ([matches count]) {
                 user = [matches firstObject];
             } else {
-                
+
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;
@@ -175,7 +193,7 @@
             NSString *error_msg = (NSString *) jsonData[@"message"];
             [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
         }
-        
+
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
@@ -227,7 +245,7 @@
     BrtrUser* user  = nil;
     // first lookup if the user is already in the database
     if (!matches || error || ([matches count] > 1)) {
-    
+
     } else if (0 == [matches count]) { /* create a new user if no user */
         BrtrUser* user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                              inManagedObjectContext:context];
@@ -236,7 +254,7 @@
         user.about_me = @"I love this app";
         user.email = @"foo@bar.com";
         user.image = UIImageJPEGRepresentation([UIImage imageNamed:@"stock"], 1);
-        
+
         for (int i = 0; i < 6; ++i) {
             BrtrCardItem *cardItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem"
                 inManagedObjectContext:context];
@@ -278,14 +296,14 @@
         likeItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"ball"], 1.0);
         likeItem.name = @"Basketball";
         likeItem.info = @"Signed by Michael Jordan";
-        
+
         BrtrCardItem *likeItem2 = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem"
                                                                inManagedObjectContext:context];
         likeItem2.user = user;
         likeItem2.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"harry"], 1.0);
         likeItem2.name = @"Harry Potter and the Chamber of Secrets";
         likeItem2.info = @"The second book of the series!";
-        
+
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
@@ -297,47 +315,10 @@
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack
-
-    
 }
 
 + (void) saveAllData
 {
     [[JCDCoreData sharedInstance] saveContext];
 }
-
-/*
- + (Photo *)photoWithFlickrInfo:(NSDictionary *)photoDictionary
- inManagedObjectContext:(NSManagedObjectContext *)context
- {
- Photo *photo = nil;
- 
- NSString *unique = photoDictionary[FLICKR_PHOTO_ID];
- NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
- request.predicate = [NSPredicate predicateWithFormat:@"unique = %@", unique];
- 
- NSError *error;
- NSArray *matches = [context executeFetchRequest:request error:&error];
- 
- if (!matches || error || ([matches count] > 1)) {
- // handle error
- } else if ([matches count]) {
- photo = [matches firstObject];
- } else {
- photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo"
- inManagedObjectContext:context];
- photo.unique = unique;
- photo.title = [photoDictionary valueForKeyPath:FLICKR_PHOTO_TITLE];
- photo.subtitle = [photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
- photo.imageURL = [[FlickrFetcher URLforPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
- 
- NSString *photographerName = [photoDictionary valueForKeyPath:FLICKR_PHOTO_OWNER];
- photo.whoTook = [Photographer photographerWithName:photographerName
- inManagedObjectContext:context];
- 
- }
- 
- return photo;
- }
- */
 @end

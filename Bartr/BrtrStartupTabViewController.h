@@ -12,6 +12,4 @@
 
 @interface BrtrStartupTabViewController : UITabBarController<UITabBarControllerDelegate>
 
--(BrtrUser *) getUser;
-
 @end

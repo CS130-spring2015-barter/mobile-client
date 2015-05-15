@@ -12,6 +12,7 @@
 #import "DraggableViewBackground.h"
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
+#import "AppDelegate.h"
 @interface BrtrSwipeyViewController ()
 
 @end
@@ -20,9 +21,8 @@
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
-    
-    BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
-    user = [root getUser];
+    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    self.user = ad.user;
     
     //imageView.contentMode = UIViewContentModeScaleAspectFill;
     
