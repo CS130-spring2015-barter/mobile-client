@@ -9,14 +9,18 @@
 #import "AppDelegate.h"
 #import "JCDCoreData.h"
 #import "BrtrDataSource.h"
+#import <Security/Security.h>
+#import "KeychainItemWrapper.h"
 
 @interface AppDelegate ()
 @property BOOL authenticatedUser;
+@property (nonatomic)  KeychainItemWrapper *keychainItem;
 @end
 
 @implementation AppDelegate
 @synthesize user = _user;
 @synthesize authenticatedUser;
+@synthesize keychainItem = _keychainItem;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
@@ -34,6 +38,24 @@
 
     return YES;
 }
+
+-(NSDictionary *) getLoginCredentials
+{
+    NSString *email = [self.keychainItem objectForKey:(__bridge NSString*)kSecAttrAccount];
+    NSString *pass = [self.keychainItem objectForKey:(__bridge NSString*)kSecValueData];
+    if (nil == email || nil == pass) {
+        return nil;
+    }
+    return [[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:email    , pass       , nil]
+                                  forKeys:       [[NSArray alloc] initWithObjects:@"email" , @"password", nil]];
+}
+
+-(void) storeEmail:(NSString *) email password:(NSString *)password
+{
+    [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
+    [self.keychainItem setObject:email forKey:(__bridge id)(kSecAttrAccount)];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -59,12 +81,12 @@
      [[JCDCoreData sharedInstance] saveContext];
 }
 
--(BrtrUser *)user
+-(KeychainItemWrapper *) keychainItem
 {
-    if (nil == _user) {
-        _user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    if (nil == _keychainItem) {
+        _keychainItem = [[KeychainItemWrapper alloc] initWithIdentifier:@"BrtrUserData" accessGroup:nil];
     }
-    return _user;
+    return _keychainItem;
 }
 
 

@@ -15,6 +15,8 @@
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
+		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
+		84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */; };
 		842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */; };
 		8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176641AF5A90600B72AA3 /* BrtrDataSource.m */; };
 		842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */; };
@@ -65,6 +67,9 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		842176551AF585D700B72AA3 /* Bartr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bartr.xcdatamodel; sourceTree = "<group>"; };
 		842176631AF5A90600B72AA3 /* BrtrDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrDataSource.h; sourceTree = "<group>"; };
 		842176641AF5A90600B72AA3 /* BrtrDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrDataSource.m; sourceTree = "<group>"; };
@@ -110,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84185F7A1B056E7100C671EE /* Security.framework in Frameworks */,
 				8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */,
 				8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */,
 			);
@@ -128,8 +134,6 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
-				8434CF501B051E03008FFF07 /* CoreGraphics.framework */,
-				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
@@ -161,6 +165,9 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */,
+				84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */,
+				84185F7B1B056E8500C671EE /* Frameworks */,
 				8434CF4D1B051C26008FFF07 /* common.h */,
 				8434CF4E1B051C49008FFF07 /* common.m */,
 				526E9A001ADB822800615EFC /* AppDelegate.h */,
@@ -188,6 +195,16 @@
 				526E9A1A1ADB822800615EFC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84185F7B1B056E8500C671EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84185F791B056E7100C671EE /* Security.framework */,
+				8434CF501B051E03008FFF07 /* CoreGraphics.framework */,
+				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		84C8F3681AEC5F54005D7D65 /* JCDCoreData */ = {
@@ -242,8 +259,8 @@
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
-				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
+				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */,
 				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
@@ -377,6 +394,7 @@
 				8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */,
 				842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */,
 				842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */,
+				84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */,
 				842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */,
 				8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */,
 				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,

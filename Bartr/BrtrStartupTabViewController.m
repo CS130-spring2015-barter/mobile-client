@@ -65,15 +65,6 @@
     }
 }
 
-
--(BrtrUser *)getUser
-{
-    if (nil == self.user) {
-        self.user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
-    }
-    return self.user;
-}
-
 -(void) logout
 {
     // Delete User credential from NSUserDefaults and other data related to user

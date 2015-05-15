@@ -8,19 +8,51 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import <Security/Security.h>
+#import "KeychainItemWrapper.h"
+#import "BrtrDataSource.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *userFields;
 @property (weak, nonatomic) UITextField *emailField;
 @property (weak, nonatomic) UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
+- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
 @implementation LoginViewController
-- (IBAction)loginButtonPressed:(UIButton *)sender {
-    AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
 
-    appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+- (IBAction)loginButtonPressed:(UIButton *)sender {
+    BrtrUser *user = nil;
+    if([self.emailField.text isEqualToString:@""] || [self.passwordField.text isEqualToString:@""] ) {
+        
+        [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
+        
+    }
+    else {
+      //user = [BrtrDataSource getUserForEmail:self.emailField.text password:self.passwordField.text];
+    }
+    if (nil != user) {
+        AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+        appDelegateTemp.user = user;
+        // store user name and password
+        appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+    }
+    else {
+        self.passwordField.text = @"Password";
+        self.passwordField.secureTextEntry = NO;
+    }
+}
+- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                        message:msg
+                                                       delegate:self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil, nil];
+    alertView.tag = tag;
+    [alertView show];
 }
 
 -(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -18,6 +18,7 @@
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
+- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
 
@@ -59,20 +60,90 @@
     [BrtrDataSource saveAllData];
 }
 
-+(BrtrUser *)getUserForEmail:(NSString *)email
++(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
 {
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-    NSError *error = nil;
+    NSInteger success = 0;
+    NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];
+    NSLog(@"PostData: %@",post);
+
+    NSURL *url=[NSURL URLWithString:@"https://dipinkrishna.com/jsonlogin.php"];
+
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
     BrtrUser *user = nil;
-    if (!matches || error || ([matches count] > 1)) {
-        // handle error
-    } else if ([matches count]) {
-        user = [matches firstObject];
-    } else {
-        // handle error
+    @try {
+        //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
+        
+        NSError *error = [[NSError alloc] init];
+        NSHTTPURLResponse *response = nil;
+        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSLog(@"Response code: %ld", (long)[response statusCode]);
+        if ([response statusCode] >= 200 && [response statusCode] < 300)
+        {
+            NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+            NSLog(@"Response ==> %@", responseData);
+            
+            NSError *error = nil;
+            NSDictionary *jsonData = [NSJSONSerialization
+                                      JSONObjectWithData:urlData
+                                      options:NSJSONReadingMutableContainers
+                                      error:&error];
+            
+            success = [jsonData[@"success"] integerValue];
+            NSLog(@"Success: %ld",(long)success);
+            
+            if(success == 1)
+            {
+                NSLog(@"Login SUCCESS");
+                // fetch from database
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+                
+                BrtrUser *user = nil;
+                if (!matches || error || ([matches count] > 1)) {
+                    // handle error
+                } else if ([matches count]) {
+                    user = [matches firstObject];
+                } else {
+                    // handle error
+                }
+            }
+            else {
+                NSString *error_msg = (NSString *) jsonData[@"error_message"];
+                [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+            }
+            
+        }
+        else {
+            //if (error) NSLog(@"Error: %@", error);
+            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
+        }
+    }
+    @catch (NSException * e) {
+        NSLog(@"Exception: %@", e);
+        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
     }
     return user;
+}
+
+- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                        message:msg
+                                                       delegate:self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil, nil];
+    alertView.tag = tag;
+    [alertView show];
 }
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user
