@@ -31,7 +31,7 @@
         
     }
     else {
-      //user = [BrtrDataSource getUserForEmail:self.emailField.text password:self.passwordField.text];
+        user = [BrtrDataSource getUserForEmail:self.emailField.text password:self.passwordField.text];
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
@@ -42,6 +42,9 @@
     else {
         self.passwordField.text = @"Password";
         self.passwordField.secureTextEntry = NO;
+        self.passwordField.clearsOnBeginEditing = YES;
+        [self.passwordField resignFirstResponder];
+        self.userFields
     }
 }
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
