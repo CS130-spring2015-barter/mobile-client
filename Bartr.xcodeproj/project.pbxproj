@@ -12,7 +12,6 @@
 		253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EE1AEC500700DF7DE5 /* OverlayView.m */; };
 		256C0B371B058A4000677AF6 /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C0B361B058A4000677AF6 /* OverlayView.xib */; };
 		256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C0B391B058AA100677AF6 /* APLViewController.m */; };
-		256C0B3C1B058CA400677AF6 /* AddImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C0B3B1B058CA400677AF6 /* AddImageViewController.m */; };
 		526E99FF1ADB822800615EFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E99FE1ADB822800615EFC /* main.m */; };
 		526E9A021ADB822800615EFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A011ADB822800615EFC /* AppDelegate.m */; };
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
@@ -63,8 +62,6 @@
 		256C0B361B058A4000677AF6 /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = SOURCE_ROOT; };
 		256C0B381B058AA100677AF6 /* APLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLViewController.h; sourceTree = "<group>"; };
 		256C0B391B058AA100677AF6 /* APLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLViewController.m; sourceTree = "<group>"; };
-		256C0B3B1B058CA400677AF6 /* AddImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddImageViewController.m; sourceTree = "<group>"; };
-		256C0B3D1B058CBE00677AF6 /* AddImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddImageViewController.h; sourceTree = "<group>"; };
 		526E99F91ADB822800615EFC /* Bartr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bartr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E99FD1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E99FE1ADB822800615EFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -281,8 +278,6 @@
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
-				256C0B3B1B058CA400677AF6 /* AddImageViewController.m */,
-				256C0B3D1B058CBE00677AF6 /* AddImageViewController.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -411,7 +406,6 @@
 				842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */,
 				84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */,
 				842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */,
-				256C0B3C1B058CA400677AF6 /* AddImageViewController.m in Sources */,
 				8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */,
 				84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */,
 			);
