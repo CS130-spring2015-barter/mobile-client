@@ -25,19 +25,21 @@
 
 - (IBAction)loginButtonPressed:(UIButton *)sender {
     BrtrUser *user = nil;
-    if([self.emailField.text isEqualToString:@""] || [self.passwordField.text isEqualToString:@""] ) {
-        
+    NSString *email    = self.emailField.text;
+    NSString *password = self.passwordField.text;
+    if([email isEqualToString:@"Email"] || [password isEqualToString:@"Password"]
+    || [email isEqualToString:@""]      || [password isEqualToString:@""]) {
         [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
-        
     }
     else {
-        //user = [BrtrDataSource getUserForEmail:self.emailField.text password:self.passwordField.text];
+        //user = [BrtrDataSource getUserForEmail:email password:password];
         user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
         appDelegateTemp.user = user;
         // store user name and password
+        [appDelegateTemp storeEmail:email password:password];
         appDelegateTemp.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
     }
     else {
@@ -77,13 +79,15 @@
 -(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (1 == buttonIndex) {
+        NSString *email    = [alertView textFieldAtIndex:0].text;
+        NSString *password = [alertView textFieldAtIndex:1].text;
         if ([alertView.title isEqualToString:@"Create User"]) {
-            if ([[alertView textFieldAtIndex:0].text isEqualToString: @""] || [[alertView textFieldAtIndex:1].text isEqualToString: @""])
+            if ([ email isEqualToString: @""] || [password isEqualToString: @""])
             {
                 NSLog(@"Nope");
             }
             else {
-                // create user on backend
+                [BrtrDataSource createUserWithEmail:email password:password];
             }
         }
     }
@@ -188,49 +192,5 @@
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)userFields:(UITableView *)userFields canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)userFields:(UITableView *)userFields commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [userFields deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)userFields:(UITableView *)userFields moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)userFields:(UITableView *)userFields canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
