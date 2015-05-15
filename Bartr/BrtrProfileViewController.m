@@ -35,6 +35,7 @@ BOOL isEditMode;
         self.user.firstName = self.firstNameField.text;
         self.user.lastName = self.lastNameField.text;
         self.user.about_me = self.aboutMeField.text;
+        self.user.image    =  UIImagePNGRepresentation(self.picture.image);
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
@@ -74,6 +75,10 @@ BOOL isEditMode;
     self.firstNameField.text = self.user.firstName;
     self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
+    self.picture.image = [UIImage imageWithData: self.user.image];
+//    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
+//    self.picture.layer.masksToBounds = YES;
+//    self.picture.layer.borderWidth = 0;
     [self cancelEdit];
 }
 
@@ -98,7 +103,7 @@ BOOL isEditMode;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
-    //self.picture.image  = [UIImage imageWithData: self.user.image];
+    
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
     self.picture.userInteractionEnabled = NO;
@@ -158,8 +163,10 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.user.image = UIImagePNGRepresentation(selectedImage);
     self.picture.image = selectedImage;
+    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
+    self.picture.layer.masksToBounds = YES;
+    self.picture.layer.borderWidth = 0;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
