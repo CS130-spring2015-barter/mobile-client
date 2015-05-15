@@ -39,7 +39,26 @@
     [av show];
 }
 
+-(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (1 == buttonIndex) {
+        if ([alertView.title isEqualToString:@"Create User"]) {
+            if ([[alertView textFieldAtIndex:0].text isEqualToString: @""] || [[alertView textFieldAtIndex:1].text isEqualToString: @""])
+            {
+                NSLog(@"Nope");
+            }
+            else {
+                // create user on backend
+            }
+        }
+    }
+}
+
 - (IBAction)createAccountButtonPressed:(UIButton *)sender {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Create User" message:@"Please enter information below" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Enter", nil];
+    av.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [av textFieldAtIndex:0].delegate = self;
+    [av show];
 }
 
 - (void)viewDidLoad {
