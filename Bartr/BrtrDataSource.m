@@ -80,7 +80,6 @@
 
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
-
     NSLog(@"PostData: %@",post);
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
