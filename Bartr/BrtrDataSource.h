@@ -19,6 +19,7 @@
 +(NSArray *)getCardStackForUser:(BrtrUser *)user;
 +(NSArray *)getUserItemsForUser:(BrtrUser *)user;
 +(NSArray *)getLikedItemsForUser:(BrtrUser *)user;
++(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass;
 +(BrtrDataSource *)sharedInstance;
 
 -(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item;

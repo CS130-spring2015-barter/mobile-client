@@ -148,8 +148,7 @@ BOOL isEditMode;
         picker.delegate = self;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
-        
-        [self presentModalViewController:picker animated:YES];
+        [self presentViewController:picker animated:YES completion:nil];
     }
 }
 
