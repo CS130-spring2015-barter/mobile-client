@@ -38,7 +38,7 @@
 
 -(void)userClickedItem:(BrtrCardItem *)card
 {
-    [self performSegueWithIdentifier:@"ShowItem" sender:self];
+    //[self performSegueWithIdentifier:@"ShowItem" sender:self];
 }
 
 -(NSArray *) getMultipleCards {

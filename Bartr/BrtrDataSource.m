@@ -59,14 +59,14 @@
     [context deleteObject:item];
     [BrtrDataSource saveAllData];
 }
-
+// bruh_pls41@gmail.com
+// password
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
 {
-    NSInteger success = 0;
     NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];
     NSLog(@"PostData: %@",post);
 
-    NSURL *url=[NSURL URLWithString:@"https://dipinkrishna.com/jsonlogin.php"];
+    NSURL *url=[NSURL URLWithString:@"http://barter.elasticbeanstalk.com/user/login/"];
 
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 
@@ -80,6 +80,7 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:postData];
     BrtrUser *user = nil;
+    NSDictionary *jsonData;
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
         
@@ -93,36 +94,31 @@
             NSLog(@"Response ==> %@", responseData);
             
             NSError *error = nil;
-            NSDictionary *jsonData = [NSJSONSerialization
+            jsonData = [NSJSONSerialization
                                       JSONObjectWithData:urlData
                                       options:NSJSONReadingMutableContainers
                                       error:&error];
             
-            success = [jsonData[@"success"] integerValue];
-            NSLog(@"Success: %ld",(long)success);
             
-            if(success == 1)
-            {
-                NSLog(@"Login SUCCESS");
-                // fetch from database
-                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-                NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-                
-                BrtrUser *user = nil;
-                if (!matches || error || ([matches count] > 1)) {
-                    // handle error
-                } else if ([matches count]) {
-                    user = [matches firstObject];
-                } else {
-                    // handle error
-                }
-            }
-            else {
-                NSString *error_msg = (NSString *) jsonData[@"error_message"];
-                [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
-            }
+            NSLog(@"Login SUCCESS");
+            // fetch from database
+            NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+            NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
             
+            BrtrUser *user = nil;
+            if (!matches || error || ([matches count] > 1)) {
+                // handle error
+            } else if ([matches count]) {
+                user = [matches firstObject];
+            } else {
+                // handle error
+            }
         }
+        else if (nil != error) {
+            NSString *error_msg = (NSString *) jsonData[@"message"];
+            [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+        }
+        
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
