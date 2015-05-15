@@ -61,6 +61,23 @@
 }
 // bruh_pls41@gmail.com
 // password
+
++(BrtrUser *)getUserForEmail:(NSString *)email
+{
+    BrtrUser *user = nil;
+    NSError *error = nil;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    if (!matches || error || ([matches count] > 1)) {
+        // handle error
+    } else if ([matches count]) {
+        user = [matches firstObject];
+    } else {
+        // handle error
+    }
+    return user;
+}
+
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
 {
     NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];

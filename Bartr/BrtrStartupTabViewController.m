@@ -18,12 +18,14 @@
 @end
 
 @implementation BrtrStartupTabViewController
-
+@synthesize user;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [BrtrDataSource loadFakeData];
     self.delegate = self;
+    AppDelegate *ad = [[UIApplication sharedApplication] delegate];
+    self.user = ad.user;
     // Do any additional setup after loading the view.
 }
 
