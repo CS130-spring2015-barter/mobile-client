@@ -96,6 +96,18 @@
     return request;
 }
 
++(NSURLRequest *)getRequestWith:(NSString *)route
+{
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    return request;
+}
+
 
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass
 {
@@ -136,6 +148,46 @@
     }
     return YES;
 }
++(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
+{
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id]];
+    
+    NSDictionary *jsonData;
+    @try {
+        //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
+        
+        NSError *error = [[NSError alloc] init];
+        NSHTTPURLResponse *response = nil;
+        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSLog(@"Response code: %ld", (long)[response statusCode]);
+        if ([response statusCode] >= 200 && [response statusCode] < 300)
+        {
+            NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+            NSLog(@"Response ==> %@", responseData);
+            
+            NSError *error = nil;
+            jsonData = [NSJSONSerialization
+                        JSONObjectWithData:urlData
+                        options:NSJSONReadingMutableContainers
+                        error:&error];
+        }
+        else if (nil != error) {
+            NSString *error_msg = (NSString *) jsonData[@"message"];
+            [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+        }
+        
+        else {
+            //if (error) NSLog(@"Error: %@", error);
+            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
+        }
+    }
+    @catch (NSException * e) {
+        NSLog(@"Exception: %@", e);
+        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
+    }
+    return jsonData;
+}
+
 // bruh_pls41@gmail.com
 // password
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
@@ -176,10 +228,13 @@
                 // handle error
             } else if ([matches count]) {
                 user = [matches firstObject];
+                user.u_id = [jsonData objectForKey:@"user_id"];
             } else {
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;
+                user.u_id = [jsonData objectForKey:@"user_id"];
+                NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
                 [BrtrDataSource saveAllData];
             }
             return user;
