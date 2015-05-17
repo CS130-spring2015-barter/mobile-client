@@ -128,7 +128,7 @@
             CGFloat rotationAngel = (CGFloat) (ROTATION_ANGLE * rotationStrength);
             
             //%%% amount the height changes when you move the card up to a certain point
-            CGFloat scale = MAX(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX);
+            CGFloat scale = MAX(1 - fabs(rotationStrength) / SCALE_STRENGTH, SCALE_MAX);
             
             //%%% move the object's center by center + gesture coordinate
             self.center = CGPointMake(self.originalPoint.x + xFromCenter, self.originalPoint.y + yFromCenter);
@@ -165,7 +165,7 @@
         overlayView.mode = GGOverlayViewModeLeft;
     }
     
-    overlayView.alpha = MIN(fabsf(distance)/100, 0.4);
+    overlayView.alpha = MIN(fabs(distance)/100, 0.4);
 }
 
 //%%% called when the card is let go
