@@ -10,13 +10,13 @@
 		253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EA1AEC500700DF7DE5 /* DraggableView.m */; };
 		253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EC1AEC500700DF7DE5 /* DraggableViewBackground.m */; };
 		253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EE1AEC500700DF7DE5 /* OverlayView.m */; };
-		256C0B371B058A4000677AF6 /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256C0B361B058A4000677AF6 /* OverlayView.xib */; };
 		256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C0B391B058AA100677AF6 /* APLViewController.m */; };
 		526E99FF1ADB822800615EFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E99FE1ADB822800615EFC /* main.m */; };
 		526E9A021ADB822800615EFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A011ADB822800615EFC /* AppDelegate.m */; };
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
+		841206871B0712B1004FE8DD /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841206861B0712B1004FE8DD /* OverlayView.xib */; };
 		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
 		84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */; };
 		842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */; };
@@ -59,7 +59,6 @@
 		253238EC1AEC500700DF7DE5 /* DraggableViewBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableViewBackground.m; sourceTree = "<group>"; };
 		253238ED1AEC500700DF7DE5 /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
 		253238EE1AEC500700DF7DE5 /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
-		256C0B361B058A4000677AF6 /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayView.xib; sourceTree = SOURCE_ROOT; };
 		256C0B381B058AA100677AF6 /* APLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLViewController.h; sourceTree = "<group>"; };
 		256C0B391B058AA100677AF6 /* APLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLViewController.m; sourceTree = "<group>"; };
 		526E99F91ADB822800615EFC /* Bartr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bartr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +71,7 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		841206861B0712B1004FE8DD /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayView.xib; path = Bartr/OverlayView.xib; sourceTree = "<group>"; };
 		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
@@ -139,6 +139,7 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
+				841206861B0712B1004FE8DD /* OverlayView.xib */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
@@ -159,7 +160,6 @@
 			children = (
 				256C0B381B058AA100677AF6 /* APLViewController.h */,
 				256C0B391B058AA100677AF6 /* APLViewController.m */,
-				256C0B361B058A4000677AF6 /* OverlayView.xib */,
 				526E9A091ADB822800615EFC /* Main.storyboard */,
 				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				84F9E1931AF44492006E504D /* Views */,
@@ -363,7 +363,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */,
-				256C0B371B058A4000677AF6 /* OverlayView.xib in Resources */,
+				841206871B0712B1004FE8DD /* OverlayView.xib in Resources */,
 				84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */,
 				526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */,
 			);
