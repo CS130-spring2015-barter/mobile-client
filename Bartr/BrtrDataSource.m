@@ -78,8 +78,27 @@
     return user;
 }
 
+
+
++(BrtrUser *)getUserForEmail:(NSString *)email
+{
+    BrtrUser *user = nil;
+    NSError *error = nil;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    if (!matches || error || ([matches count] > 1)) {
+        // handle error
+    } else if ([matches count]) {
+        user = [matches firstObject];
+    } else {
+        // handle error
+    }
+    return user;
+}
+
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
+
     NSLog(@"PostData: %@",post);
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
