@@ -36,10 +36,19 @@
     return YES;
 }
 
+-(NSDictionary *)getCredDict
+{
+    NSData *cred_dict_rep = [self.keychainItem objectForKey:(__bridge NSString*)kSecValueData];
+    NSError* error;
+    NSDictionary* cred_dict = [NSPropertyListSerialization propertyListWithData:cred_dict_rep options:NSPropertyListImmutable format:nil error:&error];
+    return [cred_dict isKindOfClass:[NSDictionary class]] ? cred_dict : [[NSDictionary alloc] init];
+}
+
 -(NSDictionary *) getLoginCredentials
 {
     NSString *email = [self.keychainItem objectForKey:(__bridge NSString*)kSecAttrAccount];
-    NSString *pass = [self.keychainItem objectForKey:(__bridge NSString*)kSecValueData];
+    NSDictionary *cred_dict = [self getCredDict];
+    NSString *pass = [cred_dict objectForKey:@"password"];
     if (nil == email || nil == pass) {
         return nil;
     }
@@ -47,10 +56,33 @@
                                   forKeys:       [[NSArray alloc] initWithObjects:@"email" , @"password", nil]];
 }
 
+-(NSString *)getAuthToken
+{
+    NSDictionary *cred_dict = [self getCredDict];
+    return [cred_dict objectForKey:@"token"];
+}
+
 -(void) storeEmail:(NSString *) email password:(NSString *)password
 {
-    [self.keychainItem setObject:password forKey:(__bridge id)(kSecValueData)];
-    [self.keychainItem setObject:email forKey:(__bridge id)(kSecAttrAccount)];
+    NSDictionary *cred_dict = [self getCredDict];
+    NSMutableDictionary *mutable_cred_dict = [[NSMutableDictionary alloc] initWithDictionary:cred_dict];
+    [mutable_cred_dict setValue:password forKey:@"password"];
+    cred_dict = [mutable_cred_dict copy];
+    NSError *error;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:cred_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+    [self.keychainItem setObject:password forKey:(__bridge NSString *)(kSecValueData)];
+    [self.keychainItem setObject:data forKey:(__bridge id)(kSecAttrAccount)];
+}
+
+-(void)storeUserAuthToken:(NSString *)tok
+{
+    NSDictionary *cred_dict = [self getCredDict];
+    NSMutableDictionary *mutable_cred_dict;
+    mutable_cred_dict = [[NSMutableDictionary alloc] initWithDictionary:cred_dict];    [mutable_cred_dict setValue:tok forKey:@"token"];
+    cred_dict = [mutable_cred_dict copy];
+    NSError *error;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:cred_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+    [self.keychainItem setObject:data forKey:(__bridge NSString *)(kSecValueData)];
 }
 
 
