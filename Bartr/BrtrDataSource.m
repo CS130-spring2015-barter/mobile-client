@@ -60,9 +60,9 @@
     [BrtrDataSource saveAllData];
 }
 
+
 // bruh_pls41@gmail.com
 // password
-
 +(BrtrUser *)getUserForEmail:(NSString *)email
 {
     BrtrUser *user = nil;
@@ -78,13 +78,6 @@
     }
     return user;
 }
-
-+(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
-{
-    NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];
-    NSLog(@"PostData: %@",post);
->>>>>>> 721bba7a353093ce04a07196414814456b2e1f1a
-
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
 
@@ -94,7 +87,6 @@
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-
     [request setURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -112,7 +104,6 @@
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -121,7 +112,6 @@
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
             NSLog(@"Response ==> %@", responseData);
-
             NSError *error = nil;
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
@@ -133,7 +123,6 @@
             [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Create Failed!" :0];
             return NO;
         }
-
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Create Failed!" :0];
@@ -188,7 +177,6 @@
             } else if ([matches count]) {
                 user = [matches firstObject];
             } else {
-
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;

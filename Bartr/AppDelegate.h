@@ -18,5 +18,7 @@
 
 -(NSDictionary *) getLoginCredentials;
 -(void) storeEmail:(NSString *) email password:(NSString *)password;
+-(void)storeUserAuthToken:(NSString *)tok;
+-(NSString *)getAuthToken;
 @end
 
