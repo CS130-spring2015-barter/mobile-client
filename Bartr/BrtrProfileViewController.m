@@ -93,8 +93,8 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    BrtrStartupTabViewController *root = (BrtrStartupTabViewController *)self.tabBarController;
-    self.user = [root getUser];
+    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
@@ -148,8 +148,7 @@ BOOL isEditMode;
         picker.delegate = self;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
-        
-        [self presentModalViewController:picker animated:YES];
+        [self presentViewController:picker animated:YES completion:nil];
     }
 }
 
@@ -169,6 +168,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     CGRect frame = self.tableView.frame;
     frame.size.height = self.tableView.contentSize.height;
     self.tableView.frame = frame;
+    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
+    self.picture.layer.masksToBounds = YES;
+    self.picture.layer.borderWidth = 0;
     [self.tableView sizeToFit];
     self.picture.contentMode = UIViewContentModeScaleAspectFit;
 }

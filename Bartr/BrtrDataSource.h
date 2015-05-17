@@ -12,6 +12,7 @@
 
 @interface BrtrDataSource : NSObject
 
++(BrtrUser *)getUserForEmail:(NSString *)email;
 +(BrtrUser *) getUserForEmail:(NSString *)email password:(NSString *)pass;
 + (void) saveAllData;
 + (void) loadFakeData;
