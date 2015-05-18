@@ -10,3 +10,4 @@
 - (void) didReceiveData:(id) data response:(NSURLResponse *)response;
 - (void) fetchingDataFailed:(NSError *)error;
 @end
+
