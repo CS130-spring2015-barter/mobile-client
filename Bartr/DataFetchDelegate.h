@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
-#ifndef Bartr_DataFetchDelegate_h
-#define Bartr_DataFetchDelegate_h
-
-
-#endif
+@protocol DataFetchDelegate
+- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response;
+- (void) fetchingDataFailed:(NSError *)error;
+@end
