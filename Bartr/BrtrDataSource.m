@@ -95,15 +95,20 @@
     return request;
 }
 
-+(NSURLRequest *)getRequestWith:(NSString *)route
++(NSURLRequest *)getRequestWith:(NSString *)route andQuery:(NSString *)query
 {
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
-
+    NSString *urlString =[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route];
+    
+    urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[ap getAuthToken] forKey:@"Authorization"];
     return request;
 }
 
@@ -148,7 +153,7 @@
 }
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
 {
-    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id]];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id] andQuery:nil];
 
     NSDictionary *jsonData;
     @try {
