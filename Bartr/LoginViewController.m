@@ -32,8 +32,8 @@
         [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
     }
     else {
-        //user = [BrtrDataSource getUserForEmail:email password:password];
-        user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+        user = [BrtrDataSource getUserForEmail:email password:password];
+        //  user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
@@ -79,9 +79,9 @@
 -(void) alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (1 == buttonIndex) {
-        NSString *email    = [alertView textFieldAtIndex:0].text;
-        NSString *password = [alertView textFieldAtIndex:1].text;
         if ([alertView.title isEqualToString:@"Create User"]) {
+            NSString *email    = [alertView textFieldAtIndex:0].text;
+            NSString *password = [alertView textFieldAtIndex:1].text;
             if ([ email isEqualToString: @""] || [password isEqualToString: @""])
             {
                 NSLog(@"Nope");
