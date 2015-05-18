@@ -110,7 +110,7 @@
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[ap getAuthToken] forKey:@"Authorization"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
     return request;
 }
 
@@ -278,9 +278,25 @@
     [ap startLocationManager];
     
     CLLocation *location = [ap getGPSData];
-    NSString *routeAsString = [NSString stringWithFormat:@"item/geo"];
-
     
+    
+    NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/geo" andQuery:[NSString stringWithFormat:@"lat=%f&long=%f",location.coordinate.latitude, location.coordinate.latitude]];
+    NSError * error;
+    NSHTTPURLResponse *response;
+    NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSLog(@"Response code: %ld", (long)[response statusCode]);
+    NSDictionary *jsonData;
+    if ([response statusCode] >= 200 && [response statusCode] < 300)
+    {
+
+        
+        error = nil;
+        jsonData = [NSJSONSerialization
+                    JSONObjectWithData:urlData
+                    options:NSJSONReadingMutableContainers
+                    error:&error];
+        NSLog(@"Data ===>  %@", jsonData);
+    }
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
