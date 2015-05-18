@@ -98,7 +98,7 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -328,7 +328,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         if ([vc isKindOfClass:[BrtrItemsTableViewController class]]) {
             itvc = (BrtrItemsTableViewController *) vc;
             itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
-            AppDelegate *ad = [UIApplication sharedApplication].delegate;
+            AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
         }
