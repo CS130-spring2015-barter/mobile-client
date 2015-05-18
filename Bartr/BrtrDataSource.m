@@ -115,7 +115,7 @@
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-        NSError *errorl
+        NSError *error;
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSLog(@"Response code: %ld", (long)[response statusCode]);
