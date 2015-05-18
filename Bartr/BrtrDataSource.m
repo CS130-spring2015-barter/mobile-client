@@ -18,6 +18,7 @@
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
+@property (nonatomic, strong) NSArray *data_fetchers;
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
@@ -25,6 +26,7 @@
 @implementation BrtrDataSource
 @synthesize liked_items  = _likedItems;
 @synthesize rejected_items = _rejectedItems;
+@synthesize data_fetchers = _data_fetchers;
 
 +(BrtrDataSource *)sharedInstance
 {
@@ -272,6 +274,13 @@
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user
 {
+    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    [ap startLocationManager];
+    
+    CLLocation *location = [ap getGPSData];
+    NSString *routeAsString = [NSString stringWithFormat:@"item/geo"];
+
+    
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
@@ -366,6 +375,20 @@
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack
+}
+
+- (void) reapDataFetcher:(DataFetcher * ) dataFetcher
+{
+    NSInteger index = [self.data_fetchers indexOfObject:dataFetcher];
+    if(index != NSNotFound) {
+        NSLog(@"BrtrDataSource: Reaped data fetch at index %ld", (long)index);
+        NSMutableArray *mutable_data_fetchers = [[NSMutableArray alloc] initWithArray:self.data_fetchers];
+        [mutable_data_fetchers removeObjectAtIndex:index];
+        self.data_fetchers = [mutable_data_fetchers copy];
+    }
+    else {
+        NSLog(@"BrtrDataSource ERROR: was not able to reap data fetcher");
+    }
 }
 
 + (void) saveAllData

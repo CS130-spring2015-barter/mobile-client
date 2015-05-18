@@ -13,7 +13,9 @@
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
 #import "AppDelegate.h"
-@interface BrtrSwipeyViewController ()
+#import "DataFetchDelegate.h"
+
+@interface BrtrSwipeyViewController () <DataFetchDelegate>
 
 @end
 
@@ -55,10 +57,45 @@
 {
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
 }
+
+- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
+{
+    NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
+    //NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[response ]);
+    
+//    if ([response statusCode] >= 200 && [response statusCode] < 300)
+//    {
+//        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+//        NSLog(@"Response ==> %@", responseData);
+//        
+//        NSError *error = nil;
+//        jsonData = [NSJSONSerialization
+//                    JSONObjectWithData:urlData
+//                    options:NSJSONReadingMutableContainers
+//                    error:&error];
+//    }
+//    else if (nil != error) {
+//        NSString *error_msg = (NSString *) jsonData[@"message"];
+//        [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+//    }
+//    
+//    else {
+//        //if (error) NSLog(@"Error: %@", error);
+//        [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
+//    }
+}
+
+- (void) fetchingDataFailed:(NSError *)error;
+{
+    NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 
 @end
