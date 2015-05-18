@@ -103,7 +103,7 @@
     
     urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
     NSURL *url = [NSURL URLWithString:urlString];
-    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
@@ -226,7 +226,7 @@
             // fetch from database
             NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
             NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-            AppDelegate *ap = [UIApplication sharedApplication].delegate;
+            AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
             BrtrUser *user = nil;
             [ap storeUserAuthToken:[jsonData objectForKey:@"token"]];
             if (!matches || error || ([matches count] > 1)) {
@@ -274,7 +274,7 @@
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user
 {
-    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
     
     CLLocation *location = [ap getGPSData];
@@ -380,7 +380,7 @@
         likeItem2.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"harry"], 1.0);
         likeItem2.name = @"Harry Potter and the Chamber of Secrets";
         likeItem2.info = @"The second book of the series!";
-
+        
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);

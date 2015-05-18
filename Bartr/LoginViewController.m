@@ -36,7 +36,7 @@
         //  user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     }
     if (nil != user) {
-        AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+        AppDelegate *appDelegateTemp = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         appDelegateTemp.user = user;
         // store user name and password
         [appDelegateTemp storeEmail:email password:password];

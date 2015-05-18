@@ -24,7 +24,7 @@
     [super viewDidLoad];
     [BrtrDataSource loadFakeData];
     self.delegate = self;
-    AppDelegate *ad = [[UIApplication sharedApplication] delegate];
+    AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.user = ad.user;
     // Do any additional setup after loading the view.
 }
@@ -71,7 +71,7 @@
 {
     // Delete User credential from NSUserDefaults and other data related to user
     
-    AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+    AppDelegate *appDelegateTemp = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     UIViewController* rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     

@@ -23,7 +23,7 @@
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     
     //imageView.contentMode = UIViewContentModeScaleAspectFill;
