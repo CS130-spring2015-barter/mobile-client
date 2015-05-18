@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BrtrUser.h"
 #import "BrtrCardItem.h"
+#import "DataFetcher.h"
 
 @interface BrtrDataSource : NSObject
 
@@ -24,4 +25,5 @@
 
 -(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item;
+-(void) reapDataFetcher:(DataFetcher * ) dataFetcher;
 @end
