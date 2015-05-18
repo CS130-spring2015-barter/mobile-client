@@ -32,8 +32,8 @@
         [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
     }
     else {
-        //user = [BrtrDataSource getUserForEmail:email password:password];
-        user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+        user = [BrtrDataSource getUserForEmail:email password:password];
+        //  user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
