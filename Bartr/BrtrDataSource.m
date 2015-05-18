@@ -117,7 +117,7 @@
 
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass
 {
-    NSString *post =[[NSString alloc] initWithFormat:@"first=%@&last=%@&email=%@&password=%@&about_me=%@&image=%@", @"First", @"Last", email, pass, @"About me", @"image"];
+    NSString *post =[[NSString alloc] initWithFormat:@"first_name=%@&last_name=%@&email=%@&password=%@&about_me=%@&image=%@", @"First", @"Last", email, pass, @"About me", @"image"];
     NSDictionary *jsonData;
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
