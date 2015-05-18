@@ -11,15 +11,23 @@
 #import "BrtrDataSource.h"
 #import <Security/Security.h>
 #import "KeychainItemWrapper.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
 
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLLocation *lastLocation;
 @end
 
 @implementation AppDelegate
 @synthesize user = _user;
 @synthesize keychainItem = _keychainItem;
+@synthesize locationManager = _locationManager;
+
+
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
@@ -36,6 +44,26 @@
     }
 
     return YES;
+}
+
+-(void) startLocationManager
+{
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager startUpdatingLocation];
+}
+
+-(CLLocation *) getGPSData
+{
+    return self.lastLocation;
+}
+
+-(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    if ([locations count] > 0) {
+        self.lastLocation = [locations lastObject];
+        [self.locationManager stopUpdatingLocation];
+    }
 }
 
 -(NSDictionary *)getCredDict
