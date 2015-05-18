@@ -16,6 +16,8 @@
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
+		7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 7643E7341B09857700FC1B08 /* DataFetcher.m */; };
+		7643E7371B099D5A00FC1B08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7643E7361B099D5A00FC1B08 /* CoreLocation.framework */; };
 		841206871B0712B1004FE8DD /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841206861B0712B1004FE8DD /* OverlayView.xib */; };
 		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
 		84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */; };
@@ -71,6 +73,10 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetchDelegate.h; sourceTree = "<group>"; };
+		7643E7331B09857700FC1B08 /* DataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetcher.h; sourceTree = "<group>"; };
+		7643E7341B09857700FC1B08 /* DataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataFetcher.m; sourceTree = "<group>"; };
+		7643E7361B099D5A00FC1B08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		841206861B0712B1004FE8DD /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayView.xib; path = Bartr/OverlayView.xib; sourceTree = "<group>"; };
 		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -120,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7643E7371B099D5A00FC1B08 /* CoreLocation.framework in Frameworks */,
 				84185F7A1B056E7100C671EE /* Security.framework in Frameworks */,
 				8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */,
 				8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */,
@@ -139,6 +146,7 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
+				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				841206861B0712B1004FE8DD /* OverlayView.xib */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
@@ -257,6 +265,8 @@
 				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
+				7643E7331B09857700FC1B08 /* DataFetcher.h */,
+				7643E7341B09857700FC1B08 /* DataFetcher.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -267,8 +277,8 @@
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
-				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
+				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
 				84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */,
 				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
@@ -278,6 +288,7 @@
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
+				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -386,6 +397,7 @@
 				8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */,
 				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,
 				253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */,
+				7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */,
 				8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */,
