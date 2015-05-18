@@ -97,15 +97,20 @@
     return request;
 }
 
-+(NSURLRequest *)getRequestWith:(NSString *)route
++(NSURLRequest *)getRequestWith:(NSString *)route andQuery:(NSString *)query
 {
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
-
+    NSString *urlString =[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route];
+    
+    urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[ap getAuthToken] forKey:@"Authorization"];
     return request;
 }
 
@@ -150,7 +155,7 @@
 }
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
 {
-    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id]];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id] andQuery:nil];
 
     NSDictionary *jsonData;
     @try {
@@ -234,7 +239,7 @@
                                               inManagedObjectContext:context];
                 user.email = email;
                 user.u_id = [jsonData objectForKey:@"user_id"];
-                NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
+                //NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
                 [BrtrDataSource saveAllData];
             }
             return user;
@@ -299,7 +304,6 @@
     NSError *error;
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     NSArray *matches = [context executeFetchRequest:request error:&error];
-    BrtrUser* user  = nil;
     // first lookup if the user is already in the database
     if (!matches || error || ([matches count] > 1)) {
 
@@ -368,7 +372,6 @@
         userItem.info = @"Sexy men's blue boxers. Great comfort!";
         [BrtrDataSource saveAllData];
     } else {
-        user = [matches firstObject];
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack
