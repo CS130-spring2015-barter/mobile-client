@@ -29,21 +29,13 @@
     NSString *password = self.passwordField.text;
     if([email isEqualToString:@"Email"] || [password isEqualToString:@"Password"]
     || [email isEqualToString:@""]      || [password isEqualToString:@""]) {
-<<<<<<< HEAD
         [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
     }
     else {
-        user = [BrtrDataSource getUserForEmail:email password:password];
-        //user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
-=======
-
-        [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
-
-    }
-    else {
-//        user = [BrtrDataSource getUserForEmail:email password:password];
+        //user = [BrtrDataSource getUserForEmail:email password:password];
         user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
->>>>>>> 4d7c1e9c33bfb26ca2019d1cac935bbc0a09c880
+        [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
+
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];

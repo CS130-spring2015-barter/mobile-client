@@ -78,24 +78,6 @@
     return user;
 }
 
-
-
-+(BrtrUser *)getUserForEmail:(NSString *)email
-{
-    BrtrUser *user = nil;
-    NSError *error = nil;
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-    if (!matches || error || ([matches count] > 1)) {
-        // handle error
-    } else if ([matches count]) {
-        user = [matches firstObject];
-    } else {
-        // handle error
-    }
-    return user;
-}
-
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
 
@@ -103,9 +85,7 @@
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-
     [request setURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -135,8 +115,7 @@
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-
-        NSError *error = [[NSError alloc] init];
+        NSError *errorl
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSLog(@"Response code: %ld", (long)[response statusCode]);
@@ -144,8 +123,6 @@
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
             NSLog(@"Response ==> %@", responseData);
-
-            NSError *error = nil;
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
                         options:NSJSONReadingMutableContainers
@@ -156,7 +133,6 @@
             [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Create Failed!" :0];
             return NO;
         }
-
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Create Failed!" :0];
@@ -173,11 +149,11 @@
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
 {
     NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id]];
-    
+
     NSDictionary *jsonData;
     @try {
         //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-        
+
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -186,7 +162,7 @@
         {
             NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
             NSLog(@"Response ==> %@", responseData);
-            
+
             NSError *error = nil;
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
@@ -197,7 +173,7 @@
             NSString *error_msg = (NSString *) jsonData[@"message"];
             [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
         }
-        
+
         else {
             //if (error) NSLog(@"Error: %@", error);
             [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
@@ -252,7 +228,6 @@
                 user = [matches firstObject];
                 user.u_id = [jsonData objectForKey:@"user_id"];
             } else {
-
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;
