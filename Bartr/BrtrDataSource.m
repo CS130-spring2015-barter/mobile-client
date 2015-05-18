@@ -142,15 +142,20 @@
         }
         else {
             //if (error) NSLog(@"Error: %@", error);
-            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Create Failed!" :0];
+            jsonData = [NSJSONSerialization
+                        JSONObjectWithData:urlData
+                        options:NSJSONReadingMutableContainers
+                        error:&error];
+            [[BrtrDataSource sharedInstance] alertStatus:@"Create account fail" :[jsonData objectForKey:@"message"]: 0];
             return NO;
         }
     }
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
-        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
+        
         return NO;
     }
+    [[BrtrDataSource sharedInstance] alertStatus:@"Create account successful" :[jsonData objectForKey:@"message"]: 0];
     return YES;
 }
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
