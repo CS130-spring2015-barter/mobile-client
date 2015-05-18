@@ -235,6 +235,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     NSLog(@"W:%f, H:%f", self.imageView.frame.size.width, self.imageView.frame.size.height);
 }
 

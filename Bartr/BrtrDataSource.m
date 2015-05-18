@@ -232,7 +232,7 @@
                                               inManagedObjectContext:context];
                 user.email = email;
                 user.u_id = [jsonData objectForKey:@"user_id"];
-                NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
+                //NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
                 [BrtrDataSource saveAllData];
             }
             return user;
@@ -290,7 +290,6 @@
     NSError *error;
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     NSArray *matches = [context executeFetchRequest:request error:&error];
-    BrtrUser* user  = nil;
     // first lookup if the user is already in the database
     if (!matches || error || ([matches count] > 1)) {
 
@@ -359,7 +358,6 @@
         userItem.info = @"Sexy men's blue boxers. Great comfort!";
         [BrtrDataSource saveAllData];
     } else {
-        user = [matches firstObject];
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack

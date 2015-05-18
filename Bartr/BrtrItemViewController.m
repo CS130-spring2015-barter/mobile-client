@@ -32,7 +32,7 @@
 @synthesize editable = _editable;
 
 - (void)viewDidLoad {
-    
+    [super viewDidLoad];
     // sets description of item
     UIImage *image = [UIImage imageWithData:self.item.picture];
     self.itemImageView.image = image;
