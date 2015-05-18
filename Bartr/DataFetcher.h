@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DataFetchDelegate.h"
 
 @interface DataFetcher : NSObject
-
+@property (weak, nonatomic) id<DataFetchDelegate> delegate;
+- (void)fetchData: (NSString *)urlAsString error:(NSError **)error;
 @end
