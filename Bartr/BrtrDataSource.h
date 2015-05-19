@@ -27,7 +27,10 @@
 
 -(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item;
+<<<<<<< HEAD
 -(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 -(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 
+=======
+>>>>>>> Backend integration to get cards, haven't persisted the data to local DB yet
 @end
