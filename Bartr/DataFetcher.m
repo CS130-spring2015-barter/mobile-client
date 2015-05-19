@@ -28,8 +28,7 @@
         else {
             [self.delegate didReceiveResponse:data response:response];
         }
-        
-        [sharedDataSource reapDataFetcher:self];
+
     }];
 }
 @end

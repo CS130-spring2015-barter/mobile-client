@@ -17,7 +17,7 @@
 +(BrtrUser *) getUserForEmail:(NSString *)email password:(NSString *)pass;
 + (void) saveAllData;
 + (void) loadFakeData;
-+(NSArray *)getCardStackForUser:(BrtrUser *)user;
++(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
 +(NSArray *)getUserItemsForUser:(BrtrUser *)user;
 +(NSArray *)getLikedItemsForUser:(BrtrUser *)user;
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass;
@@ -25,5 +25,4 @@
 
 -(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item;
--(void) reapDataFetcher:(DataFetcher * ) dataFetcher;
 @end
