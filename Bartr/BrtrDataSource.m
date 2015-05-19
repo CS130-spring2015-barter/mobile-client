@@ -60,6 +60,15 @@
     [BrtrDataSource saveAllData];
 }
 
+-(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    
+}
+-(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    
+}
+
 // bruh_pls41@gmail.com
 // password
 +(BrtrUser *)getUserForEmail:(NSString *)email
