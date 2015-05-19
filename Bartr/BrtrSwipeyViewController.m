@@ -14,6 +14,7 @@
 #import "BrtrDataSource.h"
 #import "AppDelegate.h"
 #import "DataFetchDelegate.h"
+#import "JCDCoreData.h"
 
 @interface BrtrSwipeyViewController () <DataFetchDelegate>
 
@@ -45,7 +46,7 @@
 
 -(NSArray *) getMultipleCards {
 
-    return [BrtrDataSource getCardStackForUser:user];
+    return [BrtrDataSource getCardStackForUser:user delegate:self];
 }
 
 -(void) itemSwipedRight:(BrtrCardItem *)item
@@ -60,34 +61,48 @@
 
 - (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
 {
-    NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
-    //NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[response ]);
+    NSHTTPURLResponse *httpResponse = nil;
+    NSDictionary *jsonData = nil;
+    if([response isKindOfClass:[NSHTTPURLResponse class]])
+    {
+        NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
+        httpResponse = (NSHTTPURLResponse *)response;
+    }
+    else
+    {
+        // FIXME
+        NSLog(@"BrtrSwipeyView: ERROR did not receive HTTPResponse");
+        return;
+    }
     
-//    if ([response statusCode] >= 200 && [response statusCode] < 300)
-//    {
-//        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-//        NSLog(@"Response ==> %@", responseData);
-//        
-//        NSError *error = nil;
-//        jsonData = [NSJSONSerialization
-//                    JSONObjectWithData:urlData
-//                    options:NSJSONReadingMutableContainers
-//                    error:&error];
-//    }
-//    else if (nil != error) {
-//        NSString *error_msg = (NSString *) jsonData[@"message"];
-//        [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
-//    }
-//    
-//    else {
-//        //if (error) NSLog(@"Error: %@", error);
-//        [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
-//    }
+    NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[httpResponse statusCode]);
+    if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+    {
+        // creates json object out of HTTPResponse
+        NSError *error = nil;
+        jsonData = [NSJSONSerialization
+                    JSONObjectWithData:data
+                    options:NSJSONReadingMutableContainers
+                    error:&error];
+        NSLog(@"Data ===>  %@", jsonData);
+        //NSString *i_id = [jsonData objectForKey:@"item_description"];
+        
+        // persists the data retrieved
+        //NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+//        NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", i_id]];
+    }
+    else
+    {
+        // FIXME
+        NSLog(@"BrtrSwipeyView: Error in response code");
+        return;
+    }
 }
 
 - (void) fetchingDataFailed:(NSError *)error;
 {
-    NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    //NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    NSLog(@"BrtrSwipeyView: Error when trying to fetch cards");
 }
 
 - (void)didReceiveMemoryWarning {

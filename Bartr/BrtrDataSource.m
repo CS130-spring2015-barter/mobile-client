@@ -18,7 +18,6 @@
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
-@property (nonatomic, strong) NSArray *data_fetchers;
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
@@ -26,7 +25,6 @@
 @implementation BrtrDataSource
 @synthesize liked_items  = _likedItems;
 @synthesize rejected_items = _rejectedItems;
-@synthesize data_fetchers = _data_fetchers;
 
 +(BrtrDataSource *)sharedInstance
 {
@@ -277,31 +275,26 @@
     [alertView show];
 }
 
-+(NSArray *)getCardStackForUser:(BrtrUser *)user
++(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
+    NSLog(@"BrtrDataSource: Getting card stack for user");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
-    
     CLLocation *location = [ap getGPSData];
     
-    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
     NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/geo" andQuery:[NSString stringWithFormat:@"lat=%f&long=%f",location.coordinate.latitude, location.coordinate.latitude]];
-    NSError * error;
-    NSHTTPURLResponse *response;
-    NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSLog(@"Response code: %ld", (long)[response statusCode]);
-    NSDictionary *jsonData;
-    if ([response statusCode] >= 200 && [response statusCode] < 300)
-    {
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            [theDelegate didReceiveResponse:data response:response];
+        }
+    }];
 
-        
-        error = nil;
-        jsonData = [NSJSONSerialization
-                    JSONObjectWithData:urlData
-                    options:NSJSONReadingMutableContainers
-                    error:&error];
-        NSLog(@"Data ===>  %@", jsonData);
-    }
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
@@ -396,20 +389,6 @@
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack
-}
-
-- (void) reapDataFetcher:(DataFetcher * ) dataFetcher
-{
-    NSInteger index = [self.data_fetchers indexOfObject:dataFetcher];
-    if(index != NSNotFound) {
-        NSLog(@"BrtrDataSource: Reaped data fetch at index %ld", (long)index);
-        NSMutableArray *mutable_data_fetchers = [[NSMutableArray alloc] initWithArray:self.data_fetchers];
-        [mutable_data_fetchers removeObjectAtIndex:index];
-        self.data_fetchers = [mutable_data_fetchers copy];
-    }
-    else {
-        NSLog(@"BrtrDataSource ERROR: was not able to reap data fetcher");
-    }
 }
 
 + (void) saveAllData
