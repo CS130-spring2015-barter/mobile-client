@@ -103,14 +103,14 @@
     
     urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
     NSURL *url = [NSURL URLWithString:urlString];
-    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[ap getAuthToken] forKey:@"Authorization"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
     return request;
 }
 
@@ -142,15 +142,20 @@
         }
         else {
             //if (error) NSLog(@"Error: %@", error);
-            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Create Failed!" :0];
+            jsonData = [NSJSONSerialization
+                        JSONObjectWithData:urlData
+                        options:NSJSONReadingMutableContainers
+                        error:&error];
+            [[BrtrDataSource sharedInstance] alertStatus:@"Create account fail" :[jsonData objectForKey:@"message"]: 0];
             return NO;
         }
     }
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
-        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
+        
         return NO;
     }
+    [[BrtrDataSource sharedInstance] alertStatus:@"Create account successful" :[jsonData objectForKey:@"message"]: 0];
     return YES;
 }
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
@@ -226,7 +231,7 @@
             // fetch from database
             NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
             NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-            AppDelegate *ap = [UIApplication sharedApplication].delegate;
+            AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
             BrtrUser *user = nil;
             [ap storeUserAuthToken:[jsonData objectForKey:@"token"]];
             if (!matches || error || ([matches count] > 1)) {
@@ -274,13 +279,29 @@
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user
 {
-    AppDelegate *ap = [UIApplication sharedApplication].delegate;
+    AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
     
     CLLocation *location = [ap getGPSData];
-    NSString *routeAsString = [NSString stringWithFormat:@"item/geo"];
-
     
+    
+    NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/geo" andQuery:[NSString stringWithFormat:@"lat=%f&long=%f",location.coordinate.latitude, location.coordinate.latitude]];
+    NSError * error;
+    NSHTTPURLResponse *response;
+    NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSLog(@"Response code: %ld", (long)[response statusCode]);
+    NSDictionary *jsonData;
+    if ([response statusCode] >= 200 && [response statusCode] < 300)
+    {
+
+        
+        error = nil;
+        jsonData = [NSJSONSerialization
+                    JSONObjectWithData:urlData
+                    options:NSJSONReadingMutableContainers
+                    error:&error];
+        NSLog(@"Data ===>  %@", jsonData);
+    }
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
@@ -364,7 +385,7 @@
         likeItem2.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"harry"], 1.0);
         likeItem2.name = @"Harry Potter and the Chamber of Secrets";
         likeItem2.info = @"The second book of the series!";
-
+        
         BrtrUserItem *userItem = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
         userItem.owner = user;
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
