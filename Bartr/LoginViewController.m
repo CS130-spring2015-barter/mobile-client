@@ -42,7 +42,6 @@
         else {
             user = [BrtrDataSource getUserForEmail:email password:password];
         }
-        //  user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     }
     if (nil != user) {
         AppDelegate *appDelegateTemp = (AppDelegate *)[[UIApplication sharedApplication]delegate];
