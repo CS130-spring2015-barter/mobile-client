@@ -33,6 +33,7 @@
 		8434CF4F1B051C49008FFF07 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4E1B051C49008FFF07 /* common.m */; };
 		8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434CF501B051E03008FFF07 /* CoreGraphics.framework */; };
 		8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */; };
+		84438A021B0C40AD0033F1A1 /* AddItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */; };
 		8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
@@ -102,6 +103,8 @@
 		8434CF4E1B051C49008FFF07 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = common.m; sourceTree = "<group>"; };
 		8434CF501B051E03008FFF07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		84438A001B0C40AD0033F1A1 /* AddItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemsViewController.h; sourceTree = "<group>"; };
+		84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemsViewController.m; sourceTree = "<group>"; };
 		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				84438A001B0C40AD0033F1A1 /* AddItemsViewController.h */,
+				84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */,
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
@@ -404,6 +409,7 @@
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */,
+				84438A021B0C40AD0033F1A1 /* AddItemsViewController.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
