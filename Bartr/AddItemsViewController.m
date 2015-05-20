@@ -44,37 +44,68 @@
 }
 
 
-- (TextFormCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TextFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddItemCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *reuseId = indexPath.row == 0 ? @"AddItemCell" : @"AddItemDescCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId forIndexPath:indexPath];
+    
     if (nil == cell) {
-        cell =(TextFormCell *)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddItemCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
+        /* only called when cell is created */
     }
-    UITextField *textField = cell.textField;
-    textField.delegate = self;
-    textField.userInteractionEnabled = YES;
-    cell.userInteractionEnabled = YES;
+
     switch (indexPath.row) {
-        case 0:
+        case 0: {
+            UITextField* textField = [cell viewWithTag:100];
             cell.textLabel.text = @"Name";
-            textField.text = @"foo";
+            textField = [[UITextField alloc] initWithFrame:CGRectMake(175,15,260,40)];
+            textField.delegate = self;
+            textField.clearButtonMode = YES;
+            textField.tag = 100; /* I would recommend a cell subclass with a textfield member over the tag method in real code*/
+            [textField setReturnKeyType:UIReturnKeyDone];
+            [cell addSubview:textField];
             break;
-        case 1:
+        }
+        case 1: {
             cell.textLabel.text = @"Description";
-            textField.text = @"bar";
+            UITextView *textView = [cell viewWithTag:100];
+            textView = [[UITextView alloc] initWithFrame:CGRectMake(175,15,260,40)];
+            textView.delegate = self;
+            textView.tag = 100; /* I would recommend a cell subclass with a textfield member over the tag method in real code*/
+            [textView setReturnKeyType:UIReturnKeyDone];
+            [cell addSubview:textView];
             break;
+        }
         default:
             break;
     }
-    
+    [cell sizeToFit];
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TextFormCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell.textField becomeFirstResponder];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    id textField = (UITextField *)[cell viewWithTag:100];
+    [textField becomeFirstResponder];
 }
 
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (0 == indexPath.row) {
+        // size for 0
+        return 40;
+    }
+    else {
+        // size for desc
+        return 100;
+    }
+}
 
 /*
 // Override to support rearranging the table view.
@@ -101,12 +132,5 @@
  
 */
 
-
--(BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-    
 
 @end
