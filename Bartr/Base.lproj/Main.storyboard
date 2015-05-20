@@ -94,6 +94,14 @@
             </objects>
             <point key="canvasLocation" x="2841" y="517"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="8tT-K3-4Tr">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="H82-6y-yEE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AkR-Sh-duM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2332" y="1828"/>
+        </scene>
         <!--Brtr-->
         <scene sceneID="ini-7j-j5r">
             <objects>

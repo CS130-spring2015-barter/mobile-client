@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddItemsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface AddItemsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
 
 @end
