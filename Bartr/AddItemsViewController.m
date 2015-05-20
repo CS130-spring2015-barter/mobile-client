@@ -7,43 +7,30 @@
 //
 
 #import "AddItemsViewController.h"
-<<<<<<< HEAD
 #import "BrtrDataSource.h"
 #import "APLViewController.h"
 #import "AppDelegate.h"
 
-@interface AddItemsViewController ()
+@interface AddItemsViewController()
 @property IBOutlet UITableView *tableView;
 @property UITextField *itemNameField;
 @property UITextView  *itemDescriptionField;
 @property UIBarButtonItem *doneButton;
-=======
-#import "TextFormCell.h"
-@interface AddItemsViewController ()
-@property IBOutlet UITableView *tableView;
->>>>>>> c46c0dc... Make AddItemViewController cells editable
 @end
 
 @implementation AddItemsViewController
 @synthesize tableView = _tableView;
-<<<<<<< HEAD
 @synthesize itemName;
 @synthesize itemDescription;
 @synthesize itemDescriptionField;
 @synthesize itemNameField;
 
-=======
->>>>>>> c46c0dc... Make AddItemViewController cells editable
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-<<<<<<< HEAD
     self.doneButton = self.navigationItem.rightBarButtonItem;
     [self updateStatusOfDoneButton];
-=======
-    
->>>>>>> c46c0dc... Make AddItemViewController cells editable
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -68,8 +55,6 @@
     return 2;
 }
 
-
-<<<<<<< HEAD
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *reuseId = indexPath.row == 0 ? @"AddItemCell" : @"AddItemDescCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseId forIndexPath:indexPath];
@@ -100,36 +85,11 @@
             break;
     }
     [cell sizeToFit];
-=======
-- (TextFormCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TextFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddItemCell" forIndexPath:indexPath];
-    if (nil == cell) {
-        cell =(TextFormCell *)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddItemCell"];
-    }
-    UITextField *textField = cell.textField;
-    textField.delegate = self;
-    textField.userInteractionEnabled = YES;
-    cell.userInteractionEnabled = YES;
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"Name";
-            textField.text = @"foo";
-            break;
-        case 1:
-            cell.textLabel.text = @"Description";
-            textField.text = @"bar";
-            break;
-        default:
-            break;
-    }
-    
->>>>>>> c46c0dc... Make AddItemViewController cells editable
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-<<<<<<< HEAD
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     id textField = [cell viewWithTag:100];
     [textField becomeFirstResponder];
@@ -197,47 +157,5 @@
         return 100;
     }
 }
-
-
-
-=======
-    TextFormCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell.textField becomeFirstResponder];
-}
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
- 
-*/
-
-
--(BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-    
->>>>>>> c46c0dc... Make AddItemViewController cells editable
 
 @end
