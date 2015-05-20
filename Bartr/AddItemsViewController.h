@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+<<<<<<< HEAD
 @interface AddItemsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
 @property NSString *itemName;
 @property NSString *itemDescription;
 @property UIImage  *itemImage;
+=======
+@interface AddItemsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
+>>>>>>> c46c0dc... Make AddItemViewController cells editable
 @end
