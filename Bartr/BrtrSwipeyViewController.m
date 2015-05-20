@@ -53,7 +53,19 @@
 
 -(void) itemSwipedLeft:(BrtrCardItem *)item
 {
-    [[BrtrDataSource sharedInstance] user:user didRejectItem:item];
+    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
+}
+
+- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
+{
+    NSLog(@"BrtrSwipeyView: Received response");
+}
+
+- (void) fetchingDataFailed:(NSError *)error;
+{
+    //NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    NSLog(@"BrtrSwipeyView: Error when trying to fetch cards");
+>>>>>>> Moved json parsing to BrtrDataSource and gets response for cards from the server
 }
 
 - (void)didReceiveMemoryWarning {
