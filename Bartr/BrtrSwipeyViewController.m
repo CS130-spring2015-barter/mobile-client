@@ -61,42 +61,7 @@
 
 - (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
 {
-    NSHTTPURLResponse *httpResponse = nil;
-    NSDictionary *jsonData = nil;
-    if([response isKindOfClass:[NSHTTPURLResponse class]])
-    {
-        NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
-        httpResponse = (NSHTTPURLResponse *)response;
-    }
-    else
-    {
-        // FIXME
-        NSLog(@"BrtrSwipeyView: ERROR did not receive HTTPResponse");
-        return;
-    }
-    
-    NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[httpResponse statusCode]);
-    if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
-    {
-        // creates json object out of HTTPResponse
-        NSError *error = nil;
-        jsonData = [NSJSONSerialization
-                    JSONObjectWithData:data
-                    options:NSJSONReadingMutableContainers
-                    error:&error];
-        NSLog(@"Data ===>  %@", jsonData);
-        //NSString *i_id = [jsonData objectForKey:@"item_description"];
-        
-        // persists the data retrieved
-        //NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-//        NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", i_id]];
-    }
-    else
-    {
-        // FIXME
-        NSLog(@"BrtrSwipeyView: Error in response code");
-        return;
-    }
+    NSLog(@"BrtrSwipeyView: Received response");
 }
 
 - (void) fetchingDataFailed:(NSError *)error;
