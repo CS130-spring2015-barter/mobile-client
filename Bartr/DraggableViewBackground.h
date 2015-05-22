@@ -33,16 +33,17 @@
 #import <UIKit/UIKit.h>
 #import "DraggableView.h"
 #import "BrtrCardItem.h"
+#import "DataFetchDelegate.h"
 
 @protocol DraggableViewBackgroundDelegate <NSObject>
--(NSMutableArray *) getMultipleCards;
+-(NSMutableArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate> )delegate;
 -(void) itemSwipedRight:(BrtrCardItem *)item;
 -(void) itemSwipedLeft:(BrtrCardItem *)item;
 -(void)userClickedItem:(BrtrCardItem *)card;
 
 @end
 
-@interface DraggableViewBackground : UIView <DraggableViewDelegate>
+@interface DraggableViewBackground : UIView <DraggableViewDelegate, DataFetchDelegate>
 
 //methods called in DraggableView
 -(void)cardSwipedLeft:(UIView *)card;

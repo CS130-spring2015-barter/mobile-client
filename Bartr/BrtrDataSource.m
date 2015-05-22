@@ -62,7 +62,7 @@
 
 -(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
-    
+    NSLog(@"BrtrDataSource: Liked an item");
 }
 -(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
@@ -301,20 +301,20 @@
         }
         else {
             NSHTTPURLResponse *httpResponse = nil;
-            NSDictionary *jsonData = nil;
+            NSArray *jsonData = nil;
             if([response isKindOfClass:[NSHTTPURLResponse class]])
             {
-                NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
                 httpResponse = (NSHTTPURLResponse *)response;
             }
             else
             {
                 // FIXME
-                NSLog(@"BrtrSwipeyView: ERROR did not receive HTTPResponse");
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
                 return;
             }
             
-            NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[httpResponse statusCode]);
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
             if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
             {
                 // creates json object out of HTTPResponse
@@ -323,23 +323,51 @@
                             JSONObjectWithData:data
                             options:NSJSONReadingMutableContainers
                             error:&error];
-                NSLog(@"Data ===>  %@", jsonData);
-                
+                //NSLog(@"Data ===>  %@", jsonData);
+                AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                BrtrUser *user = ad.user;
                 for (NSDictionary *item in jsonData) {
-                    // FIXME
+            
+                    NSNumber *user_id = [item valueForKey: @"user_id"];
+                    NSNumber *item_id = [item valueForKey: @"id"];
+                    NSString *item_title = [item valueForKey: @"item_title"];
+                    NSString *item_description = [item valueForKey: @"item_description"];
+                    NSDictionary *item_image = [item valueForKey: @"item_image"];
+                    NSArray *picture_buffer = [item_image valueForKey:@"data"];
+                    
+                    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", item_id]];
+                    unsigned char *buffer  = malloc([picture_buffer count]);
+                    for (unsigned i = 0; i < [picture_buffer count]; ++i) {
+                        buffer[i] = (char)[picture_buffer objectAtIndex:i];
+                    }
+                    BrtrCardItem *fetched_item;
+                    if (matches && [matches count] == 1) {
+                        fetched_item = [matches objectAtIndex: 0];
+
+                    } else if (0 == [matches count]) {
+                        fetched_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem" inManagedObjectContext:context];
+                        
+                    } else {
+                        NSLog(@"Error in get card items");
+                    }
+                    fetched_item.user = user;
+                    fetched_item.i_id = item_id;
+                    fetched_item.info = item_description;
+                    fetched_item.name = item_title;
+                    fetched_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
                 }
-                
-                // persists the data retrieved
-                //NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-                //        NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", i_id]];
             }
             else
             {
                 // FIXME
-                NSLog(@"BrtrSwipeyView: Error in response code");
+                [theDelegate fetchingDataFailed:nil];
                 return;
             }
-            [theDelegate didReceiveResponse:data response:response];
+            [BrtrDataSource saveAllData];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [theDelegate didReceiveResponse:nil response:nil];
+            }];
         }
     }];
 

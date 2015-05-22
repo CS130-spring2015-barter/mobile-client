@@ -16,11 +16,8 @@
 #import "DataFetchDelegate.h"
 #import "JCDCoreData.h"
 
-@interface BrtrSwipeyViewController () <DataFetchDelegate>
-
-@end
-
 @implementation BrtrSwipeyViewController
+
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
@@ -44,9 +41,8 @@
     //[self performSegueWithIdentifier:@"ShowItem" sender:self];
 }
 
--(NSArray *) getMultipleCards {
-
-    return [BrtrDataSource getCardStackForUser:user delegate:self];
+-(NSArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate>) delegate {
+    return [BrtrDataSource getCardStackForUser:user delegate:delegate];
 }
 
 -(void) itemSwipedRight:(BrtrCardItem *)item
@@ -57,17 +53,6 @@
 -(void) itemSwipedLeft:(BrtrCardItem *)item
 {
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
-}
-
-- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
-{
-    NSLog(@"BrtrSwipeyView: Received response");
-}
-
-- (void) fetchingDataFailed:(NSError *)error;
-{
-    //NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
-    NSLog(@"BrtrSwipeyView: Error when trying to fetch cards");
 }
 
 - (void)didReceiveMemoryWarning {
