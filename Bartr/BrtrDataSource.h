@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BrtrUser.h"
 #import "BrtrCardItem.h"
-#import "DataFetcher.h"
+#import "DataFetchDelegate.h"
 
 @interface BrtrDataSource : NSObject
 
