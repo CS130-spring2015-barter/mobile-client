@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <CoreLocation/CoreLocation.h>
+#import <LayerKit/LayerKit.h>
 #import "BrtrUser.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
