@@ -337,9 +337,10 @@
                     
                     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
                     NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", item_id]];
-                    unsigned char *buffer  = malloc([picture_buffer count]);
+                    Byte *buffer  = malloc([picture_buffer count]);
                     for (unsigned i = 0; i < [picture_buffer count]; ++i) {
-                        buffer[i] = (char)[picture_buffer objectAtIndex:i];
+                        NSNumber *num = [picture_buffer objectAtIndex:i];
+                        buffer[i] = (Byte)[num intValue];
                     }
                     BrtrCardItem *fetched_item;
                     if (matches && [matches count] == 1) {
