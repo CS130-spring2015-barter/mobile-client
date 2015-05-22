@@ -13,18 +13,20 @@
 #import "KeychainItemWrapper.h"
 
 @interface AppDelegate ()
-@property BOOL authenticatedUser;
+
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
 @end
 
 @implementation AppDelegate
 @synthesize user = _user;
-@synthesize authenticatedUser;
 @synthesize keychainItem = _keychainItem;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
-    if (self.authenticatedUser)
+    NSDictionary *creds = [self getLoginCredentials];
+    self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:@"email"] password:[creds objectForKey:@"password"]];
+    
+    if (self.user)
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
     }
