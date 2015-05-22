@@ -284,7 +284,7 @@
     [alertView show];
 }
 
-+(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
++(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Getting card stack for user");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -323,11 +323,9 @@
                             JSONObjectWithData:data
                             options:NSJSONReadingMutableContainers
                             error:&error];
-                //NSLog(@"Data ===>  %@", jsonData);
                 AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
                 BrtrUser *user = ad.user;
                 for (NSDictionary *item in jsonData) {
-            
                     NSNumber *user_id = [item valueForKey: @"user_id"];
                     NSNumber *item_id = [item valueForKey: @"id"];
                     NSString *item_title = [item valueForKey: @"item_title"];
@@ -345,7 +343,7 @@
                     BrtrCardItem *fetched_item;
                     if (matches && [matches count] == 1) {
                         fetched_item = [matches objectAtIndex: 0];
-
+                        
                     } else if (0 == [matches count]) {
                         fetched_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrCardItem" inManagedObjectContext:context];
                         
@@ -372,8 +370,20 @@
         }
     }];
 
+}
+
++(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
+{
+    
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    return [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+    NSArray *matches =  [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+    if (!matches || 0 == [matches count]) {
+        [BrtrDataSource performBackgroundFetchForCardFetchWithDelegate:theDelegate];
+        return nil;
+    }
+    else {
+        return matches; 
+    }
 }
 
 +(NSArray *)getUserItemsForUser:(BrtrUser *)user
