@@ -7,6 +7,6 @@
 //
 
 @protocol DataFetchDelegate
-- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response;
+- (void) didReceiveData:(id) data response:(NSURLResponse *)response;
 - (void) fetchingDataFailed:(NSError *)error;
 @end

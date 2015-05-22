@@ -301,7 +301,7 @@
         }
         else {
             NSHTTPURLResponse *httpResponse = nil;
-            NSArray *jsonData = nil;
+            NSMutableArray *jsonData = nil;
             if([response isKindOfClass:[NSHTTPURLResponse class]])
             {
                 NSLog(@"BrtrDataSource: Received a HTTPResponse");
@@ -325,6 +325,7 @@
                             error:&error];
                 AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
                 BrtrUser *user = ad.user;
+                NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
                     NSNumber *user_id = [item valueForKey: @"user_id"];
                     NSNumber *item_id = [item valueForKey: @"id"];
@@ -355,7 +356,12 @@
                     fetched_item.info = item_description;
                     fetched_item.name = item_title;
                     fetched_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    [cards addObject:fetched_item];
                 }
+                [BrtrDataSource saveAllData];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [theDelegate didReceiveData:[cards  copy] response:response];
+                }];
             }
             else
             {
@@ -363,10 +369,6 @@
                 [theDelegate fetchingDataFailed:nil];
                 return;
             }
-            [BrtrDataSource saveAllData];
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [theDelegate didReceiveResponse:nil response:nil];
-            }];
         }
     }];
 
