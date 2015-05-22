@@ -16,6 +16,7 @@
 #import "DataFetchDelegate.h"
 #import "JCDCoreData.h"
 
+
 @implementation BrtrSwipeyViewController
 
 @synthesize user;
@@ -47,12 +48,12 @@
 
 -(void) itemSwipedRight:(BrtrCardItem *)item
 {
-    [[BrtrDataSource sharedInstance] user:self.user didLikedItem:item];
+    [[BrtrDataSource sharedInstance] user:user didLikedItem:item];
 }
 
 -(void) itemSwipedLeft:(BrtrCardItem *)item
 {
-    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
+    [[BrtrDataSource sharedInstance] user:user didRejectItem:item];
 }
 
 - (void)didReceiveMemoryWarning {

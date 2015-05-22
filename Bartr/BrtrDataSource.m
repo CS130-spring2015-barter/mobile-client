@@ -18,6 +18,7 @@
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
+@property (nonatomic, strong) NSArray *data_fetchers;
 - (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
@@ -25,6 +26,7 @@
 @implementation BrtrDataSource
 @synthesize liked_items  = _likedItems;
 @synthesize rejected_items = _rejectedItems;
+@synthesize data_fetchers = _data_fetchers;
 
 +(BrtrDataSource *)sharedInstance
 {
@@ -286,6 +288,7 @@
 
 +(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate
 {
+
     NSLog(@"BrtrDataSource: Getting card stack for user");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
@@ -376,6 +379,12 @@
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
+    AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [ap startLocationManager];
+    
+    CLLocation *location = [ap getGPSData];
+    NSString *routeAsString = [NSString stringWithFormat:@"item/geo"];
+
     
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
     NSArray *matches =  [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
@@ -479,6 +488,8 @@
     [BrtrDataSource saveAllData];
     // next populate the item stack
 }
+
+
 
 + (void) saveAllData
 {
