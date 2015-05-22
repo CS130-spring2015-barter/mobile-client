@@ -10,7 +10,7 @@
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
 
-@implementation DraggableViewBackground{
+@implementation DraggableViewBackground {
     NSInteger cardsLoadedIndex; //%%% the index of the card you have loaded into the loadedCards array last
     NSMutableArray *loadedCards; //%%% the array of card loaded (change max_buffer_size to increase or decrease the number of cards this holds)
     
@@ -34,7 +34,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         self.delegate = delegate;
         [super layoutSubviews];
         [self setupView];
-        exampleCardLabels=[self.delegate getMultipleCards];
+        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
         loadedCards = [[NSMutableArray alloc] init];
         allCards = [[NSMutableArray alloc] init];
         cardsLoadedIndex = 0;
@@ -42,6 +42,18 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     }
     return self;
 }
+
+- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
+{
+    NSLog(@"BrtrSwipeyView: Received response");
+}
+
+- (void) fetchingDataFailed:(NSError *)error;
+{
+    //NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    NSLog(@"BrtrSwipeyView: Error when trying to fetch cards");
+}
+
 
 //%%% sets up the extra buttons on the screen
 -(void)setupView
