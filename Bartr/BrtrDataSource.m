@@ -18,14 +18,15 @@
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
-- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
++ (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 @end
 
-
 @implementation BrtrDataSource
+
 @synthesize liked_items  = _likedItems;
 @synthesize rejected_items = _rejectedItems;
 
+#pragma mark - Management
 +(BrtrDataSource *)sharedInstance
 {
     static BrtrDataSource *_sharedInstance;
@@ -38,58 +39,25 @@
     return _sharedInstance;
 }
 
--(void) user:(BrtrUser *)user didLikedItem:(BrtrCardItem *)item
++ (void) saveAllData
 {
-    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
-    [newLikedItems addObject:item];
-    self.liked_items = [newLikedItems copy];
-
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
+    [[JCDCoreData sharedInstance] saveContext];
 }
 
--(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item
+#pragma mark - Utility Methods
++ (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
 {
-    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
-    [newLikedItems addObject:item];
-    self.liked_items = [newLikedItems copy];
-
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
-}
-
--(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
-{
-    NSLog(@"BrtrDataSource: Liked an item");
-}
--(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
-{
-    
-}
-
-// bruh_pls41@gmail.com
-// password
-+(BrtrUser *)getUserForEmail:(NSString *)email
-{
-    BrtrUser *user = nil;
-    NSError *error = nil;
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
-    if (!matches || error || ([matches count] > 1)) {
-        // handle error
-    } else if ([matches count]) {
-        user = [matches firstObject];
-    } else {
-        // handle error
-    }
-    return user;
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                        message:msg
+                                                       delegate:[BrtrDataSource sharedInstance]
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil, nil];
+    alertView.tag = tag;
+    [alertView show];
 }
 
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
-
     NSLog(@"PostData: %@",post);
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -121,7 +89,65 @@
     return request;
 }
 
+#pragma mark - Item Data Source
++(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches =  [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+    if (!matches || 0 == [matches count]) {
+        [BrtrDataSource performBackgroundFetchForCardFetchWithDelegate:theDelegate];
+        return nil;
+    }
+    else {
+        return matches;
+    }
+}
 
++(NSArray *)getUserItemsForUser:(BrtrUser *)user
+{
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    return [context fetchObjectsWithEntityName:@"BrtrUserItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+}
+
++(NSArray *)getLikedItemsForUser:(BrtrUser *)user
+{
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
+}
+
+-(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
+    [newLikedItems addObject:item];
+    self.liked_items = [newLikedItems copy];
+
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:item];
+    [BrtrDataSource saveAllData];
+}
+
+-(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
+    [newLikedItems addObject:item];
+    self.liked_items = [newLikedItems copy];
+
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:item];
+    [BrtrDataSource saveAllData];
+}
+
+-(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSLog(@"BrtrDataSource: Added an item");
+}
+
+-(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSLog(@"BrtrDataSource: Deleted an item");
+}
+
+#pragma mark - User Data Source
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass
 {
     NSString *post =[[NSString alloc] initWithFormat:@"first_name=%@&last_name=%@&email=%@&password=%@&about_me=%@&image=%@", @"First", @"Last", email, pass, @"About me", @"image"];
@@ -144,7 +170,7 @@
         }
         else if (nil != error) {
             NSString *error_msg = (NSString *) jsonData[@"message"];
-            [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Create Failed!" :0];
+            [BrtrDataSource alertStatus:error_msg :@"Create Failed!" :0];
             return NO;
         }
         else {
@@ -153,7 +179,7 @@
                         JSONObjectWithData:urlData
                         options:NSJSONReadingMutableContainers
                         error:&error];
-            [[BrtrDataSource sharedInstance] alertStatus:@"Create account fail" :[jsonData objectForKey:@"message"]: 0];
+            [BrtrDataSource alertStatus:@"Create account fail" :[jsonData objectForKey:@"message"]: 0];
             return NO;
         }
     }
@@ -162,17 +188,33 @@
         
         return NO;
     }
-    [[BrtrDataSource sharedInstance] alertStatus:@"Create account successful" :[jsonData objectForKey:@"message"]: 0];
+    [BrtrDataSource alertStatus:@"Create account successful" :[jsonData objectForKey:@"message"]: 0];
     return YES;
 }
+
++(BrtrUser *)getUserForEmail:(NSString *)email
+{
+    BrtrUser *user = nil;
+    NSError *error = nil;
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrUser" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"email = %@", email]];
+    if (!matches || error || ([matches count] > 1)) {
+        // handle error
+    } else if ([matches count]) {
+        user = [matches firstObject];
+    } else {
+        // handle error
+    }
+    return user;
+}
+
+
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
 {
     NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id] andQuery:nil];
 
     NSDictionary *jsonData;
     @try {
-        //[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
@@ -190,23 +232,21 @@
         }
         else if (nil != error) {
             NSString *error_msg = (NSString *) jsonData[@"message"];
-            [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+            [BrtrDataSource alertStatus:error_msg :@"Sign in Failed!" :0];
         }
 
         else {
             //if (error) NSLog(@"Error: %@", error);
-            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
+            [BrtrDataSource alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
         }
     }
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
-        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
+        [BrtrDataSource alertStatus:@"Sign in Failed." :@"Error!" :0];
     }
     return jsonData;
 }
 
-// bruh_pls41@gmail.com
-// password
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
 {
     NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];
@@ -258,30 +298,19 @@
         }
         else if (nil != error) {
             NSString *error_msg = (NSString *) jsonData[@"message"];
-            [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
+            [BrtrDataSource alertStatus:error_msg :@"Sign in Failed!" :0];
         }
 
         else {
             //if (error) NSLog(@"Error: %@", error);
-            [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
+            [BrtrDataSource alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
         }
     }
     @catch (NSException * e) {
         NSLog(@"Exception: %@", e);
-        [[BrtrDataSource sharedInstance] alertStatus:@"Sign in Failed." :@"Error!" :0];
+        [BrtrDataSource alertStatus:@"Sign in Failed." :@"Error!" :0];
     }
     return user;
-}
-
-- (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
-                                                        message:msg
-                                                       delegate:self
-                                              cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil, nil];
-    alertView.tag = tag;
-    [alertView show];
 }
 
 +(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate
@@ -327,7 +356,7 @@
                 BrtrUser *user = ad.user;
                 NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
-                    NSNumber *user_id = [item valueForKey: @"user_id"];
+                    //NSNumber *user_id = [item valueForKey: @"user_id"];
                     NSNumber *item_id = [item valueForKey: @"id"];
                     NSString *item_title = [item valueForKey: @"item_title"];
                     NSString *item_description = [item valueForKey: @"item_description"];
@@ -374,31 +403,6 @@
 
 }
 
-+(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
-{
-    
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    NSArray *matches =  [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-    if (!matches || 0 == [matches count]) {
-        [BrtrDataSource performBackgroundFetchForCardFetchWithDelegate:theDelegate];
-        return nil;
-    }
-    else {
-        return matches; 
-    }
-}
-
-+(NSArray *)getUserItemsForUser:(BrtrUser *)user
-{
-   NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-   return [context fetchObjectsWithEntityName:@"BrtrUserItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-}
-
-+(NSArray *)getLikedItemsForUser:(BrtrUser *)user
-{
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-}
 
 +(void) loadFakeData
 {
@@ -473,15 +477,11 @@
         userItem.picture = UIImageJPEGRepresentation([UIImage imageNamed:@"boxer"], 1.0);
         userItem.name = @"Boxers";
         userItem.info = @"Sexy men's blue boxers. Great comfort!";
-        [BrtrDataSource saveAllData];
     } else {
     }
     [BrtrDataSource saveAllData];
     // next populate the item stack
 }
 
-+ (void) saveAllData
-{
-    [[JCDCoreData sharedInstance] saveContext];
-}
+
 @end

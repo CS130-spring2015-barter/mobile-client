@@ -250,6 +250,7 @@
 		84F9E1941AF444B2006E504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
 				8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */,
 				8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */,
@@ -280,7 +281,6 @@
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
-				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,

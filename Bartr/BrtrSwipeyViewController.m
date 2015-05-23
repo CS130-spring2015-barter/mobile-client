@@ -45,14 +45,14 @@
     return [BrtrDataSource getCardStackForUser:user delegate:delegate];
 }
 
--(void) itemSwipedRight:(BrtrCardItem *)item
+-(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>)delegate
 {
-    [[BrtrDataSource sharedInstance] user:self.user didLikedItem:item];
+    [[BrtrDataSource sharedInstance] user:self.user didLikeItem:item delegate:delegate];
 }
 
--(void) itemSwipedLeft:(BrtrCardItem *)item
+-(void) itemSwipedLeft:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate
 {
-    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
+    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item delegate:delegate];
 }
 
 - (void)didReceiveMemoryWarning {

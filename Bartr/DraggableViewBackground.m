@@ -162,7 +162,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
     DraggableView *itemCard = (DraggableView *)card;
-    [self.delegate itemSwipedLeft:itemCard.item];
+    [self.delegate itemSwipedLeft:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
     if (cardsLoadedIndex < [allCards count]) { //%%% if we haven't reached the end of all cards, put another into the loaded cards
@@ -182,7 +182,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
      DraggableView *itemCard = (DraggableView *)card;
-    [self.delegate itemSwipedRight:itemCard.item];
+    [self.delegate itemSwipedRight:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
     if (cardsLoadedIndex < [allCards count]) { //%%% if we haven't reached the end of all cards, put another into the loaded cards

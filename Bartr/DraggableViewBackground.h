@@ -37,8 +37,8 @@
 
 @protocol DraggableViewBackgroundDelegate <NSObject>
 -(NSMutableArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate> )delegate;
--(void) itemSwipedRight:(BrtrCardItem *)item;
--(void) itemSwipedLeft:(BrtrCardItem *)item;
+-(void) itemSwipedLeft:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate;
+-(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate;
 -(void)userClickedItem:(BrtrCardItem *)card;
 
 @end
