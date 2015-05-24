@@ -14,6 +14,7 @@
 #import "JCDCoreData.h"
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
+#import "BrtrBackendFields.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -22,7 +23,6 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
-@property (strong, nonatomic) NSDictionary *editedFields;
 @end
 
 @implementation BrtrProfileViewController
@@ -31,14 +31,27 @@ BOOL isEditMode;
 
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
-        if (![self.usernameField isEqual:self.user.email]) {
+        NSMutableDictionary *edittedFields = [[NSMutableDictionary alloc] init];
+        if (![self.usernameField.text isEqualToString:self.user.email]) {
+            [edittedFields setObject:self.usernameField forKey:KEY_USER_EMAIL];
             self.user.email = self.usernameField.text;
         }
-        
-        self.user.firstName = self.firstNameField.text;
-        self.user.lastName = self.lastNameField.text;
-        self.user.about_me = self.aboutMeField.text;
-        self.user.image    =  UIImagePNGRepresentation(self.picture.image);
+        if (![self.firstNameField.text isEqualToString: self.user.firstName]) {
+            [edittedFields setObject:self.firstNameField.text forKey:KEY_USER_FIRST_NAME];
+            self.user.firstName = self.firstNameField.text;
+        }
+        if (![self.lastNameField.text isEqualToString:self.user.lastName]) {
+            [edittedFields setObject:self.lastNameField.text forKey:KEY_USER_LAST_NAME];
+            self.user.lastName = self.lastNameField.text;
+        }
+        if (![self.aboutMeField.text isEqualToString:self.user.about_me]) {
+            [edittedFields setObject:self.aboutMeField.text forKey:KEY_USER_ABOUTME];
+            self.user.about_me = self.aboutMeField.text;
+        }
+        NSData *new_image_data = UIImagePNGRepresentation(self.picture.image);
+        if (![self.user.image isEqualToData:new_image_data]) {
+            self.user.image = new_image_data;
+        }
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
@@ -309,6 +322,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 #pragma mark - Navigation
