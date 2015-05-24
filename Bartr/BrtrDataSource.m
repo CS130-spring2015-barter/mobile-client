@@ -17,7 +17,6 @@
 #include "AppDelegate.h"
 #include "BrtrBackendFields.h"
 
-
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
@@ -357,6 +356,7 @@
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
     CLLocation *location = [ap getGPSData];
+
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
