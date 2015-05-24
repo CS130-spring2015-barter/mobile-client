@@ -164,8 +164,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.picture.image = [self centerCropImage: selectedImage];
     self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-    self.picture.layer.masksToBounds = YES;
-    self.picture.layer.borderWidth = 0;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

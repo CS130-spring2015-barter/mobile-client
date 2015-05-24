@@ -15,6 +15,7 @@
 #import "BrtrUserItem.h"
 #import "BrtrBackendFields.h"
 #include "AppDelegate.h"
+#include "BrtrBackendFields.h"
 
 
 @interface BrtrDataSource()
@@ -82,7 +83,6 @@
     urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
     NSURL *url = [NSURL URLWithString:urlString];
     AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
-    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
@@ -341,11 +341,8 @@
 
 +(void) updateUser:(BrtrUser *)user withDelegate:(id<DataFetchDelegate>)delegate
 {
-    NSLog(@"BrtrDataSource: updating user data");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
-    CLLocation *location = [ap getGPSData];
-    
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
     NSURLRequest *request = [BrtrDataSource putRequestWith:[[NSString alloc] initWithFormat:ROUTE_USER_UPDATE, user.u_id]
