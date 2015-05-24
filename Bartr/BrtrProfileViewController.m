@@ -12,7 +12,6 @@
 #import "BrtrUser.h"
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
-#import "BrtrStartupTabViewController.h"
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
 
@@ -23,6 +22,7 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
+@property (strong, nonatomic) NSDictionary *editedFields;
 @end
 
 @implementation BrtrProfileViewController
@@ -31,7 +31,10 @@ BOOL isEditMode;
 
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
-        self.user.email = self.usernameField.text;
+        if (![self.usernameField isEqual:self.user.email]) {
+            self.user.email = self.usernameField.text;
+        }
+        
         self.user.firstName = self.firstNameField.text;
         self.user.lastName = self.lastNameField.text;
         self.user.about_me = self.aboutMeField.text;
@@ -95,7 +98,7 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -325,7 +328,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         if ([vc isKindOfClass:[BrtrItemsTableViewController class]]) {
             itvc = (BrtrItemsTableViewController *) vc;
             itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
-            AppDelegate *ad = [UIApplication sharedApplication].delegate;
+            AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
         }

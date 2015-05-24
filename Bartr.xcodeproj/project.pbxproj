@@ -16,7 +16,6 @@
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
-		7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 7643E7341B09857700FC1B08 /* DataFetcher.m */; };
 		7643E7371B099D5A00FC1B08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7643E7361B099D5A00FC1B08 /* CoreLocation.framework */; };
 		841206871B0712B1004FE8DD /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841206861B0712B1004FE8DD /* OverlayView.xib */; };
 		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
@@ -74,8 +73,6 @@
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
 		7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetchDelegate.h; sourceTree = "<group>"; };
-		7643E7331B09857700FC1B08 /* DataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetcher.h; sourceTree = "<group>"; };
-		7643E7341B09857700FC1B08 /* DataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataFetcher.m; sourceTree = "<group>"; };
 		7643E7361B099D5A00FC1B08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		841206861B0712B1004FE8DD /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayView.xib; path = Bartr/OverlayView.xib; sourceTree = "<group>"; };
 		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -102,6 +99,7 @@
 		8434CF4E1B051C49008FFF07 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = common.m; sourceTree = "<group>"; };
 		8434CF501B051E03008FFF07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		84788EC01B115C9000BC4828 /* BrtrBackendFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrBackendFields.h; sourceTree = "<group>"; };
 		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
@@ -181,6 +179,8 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84788EC01B115C9000BC4828 /* BrtrBackendFields.h */,
+				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
 				84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */,
 				84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */,
 				84185F7B1B056E8500C671EE /* Frameworks */,
@@ -265,8 +265,6 @@
 				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
-				7643E7331B09857700FC1B08 /* DataFetcher.h */,
-				7643E7341B09857700FC1B08 /* DataFetcher.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -284,11 +282,10 @@
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
-				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
-				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
+				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -397,7 +394,6 @@
 				8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */,
 				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,
 				253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */,
-				7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */,
 				8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */,
