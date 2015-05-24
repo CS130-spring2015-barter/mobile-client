@@ -40,5 +40,5 @@
 - (void)removeItem_stackObject:(BrtrItem *)value;
 - (void)addItem_stack:(NSSet *)values;
 - (void)removeItem_stack:(NSSet *)values;
-
+-(NSDictionary *)getDictWithUserData;
 @end

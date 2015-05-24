@@ -13,12 +13,15 @@
 #import "BrtrUser.h"
 #import "BrtrCardItem.h"
 #import "BrtrUserItem.h"
+#import "BrtrBackendFields.h"
 #include "AppDelegate.h"
+
 
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
 @property (nonatomic, strong) NSArray *rejected_items;
 + (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
++(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate;
 @end
 
 @implementation BrtrDataSource
@@ -59,7 +62,7 @@
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
     NSLog(@"PostData: %@",post);
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route]];
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -74,7 +77,7 @@
 
 +(NSURLRequest *)getRequestWith:(NSString *)route andQuery:(NSString *)query
 {
-    NSString *urlString =[NSString stringWithFormat: @"http://barter.elasticbeanstalk.com/%@" ,route];
+    NSString *urlString = [NSString stringWithFormat: @"%@%@" , ENDPOINT, route];
     
     urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -86,6 +89,23 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    return request;
+}
+
++(NSURLRequest *)putRequestWith:(NSString *)route andBody:(NSData *)body
+{
+    NSString *urlString = [NSString stringWithFormat: @"%@%@" , ENDPOINT, route];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPBody:body];
     return request;
 }
 
@@ -150,7 +170,12 @@
 #pragma mark - User Data Source
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass
 {
-    NSString *post =[[NSString alloc] initWithFormat:@"first_name=%@&last_name=%@&email=%@&password=%@&about_me=%@&image=%@", @"First", @"Last", email, pass, @"About me", @"image"];
+    NSString *post =[[NSString alloc] initWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@", KEY_USER_FIRST_NAME, @"First",
+                                                                                             KEY_USER_LAST_NAME, @"Last",
+                                                                                             KEY_USER_EMAIL, email,
+                                                                                             KEY_USER_PASSWORD, pass,
+                                                                                             KEY_USER_ABOUTME, @"About me",
+                                                                                             KEY_USER_IMAGE  , @"image"];
     NSDictionary *jsonData;
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
@@ -211,7 +236,7 @@
 
 +(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
 {
-    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@", user.u_id] andQuery:nil];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:ROUTE_USER_GET, user.u_id] andQuery:nil];
 
     NSDictionary *jsonData;
     @try {
@@ -249,10 +274,10 @@
 
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
 {
-    NSString *post =[[NSString alloc] initWithFormat:@"email=%@&password=%@", email, pass];
+    NSString *post =[[NSString alloc] initWithFormat:@"%@=%@&%@=%@", KEY_USER_EMAIL, email, KEY_USER_PASSWORD, pass];
     NSLog(@"PostData: %@",post);
 
-    NSURLRequest *request = [BrtrDataSource postRequestWith:@"user/login" post:post];
+    NSURLRequest *request = [BrtrDataSource postRequestWith:ROUTE_USER_LOGIN post:post];
     BrtrUser *user = nil;
     NSDictionary *jsonData;
     @try {
@@ -286,12 +311,13 @@
             } else if ([matches count]) {
                 user = [matches firstObject];
                 user.u_id = [jsonData objectForKey:@"user_id"];
+           //     NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
             } else {
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;
                 user.u_id = [jsonData objectForKey:@"user_id"];
-                //NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
+            //    NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
                 [BrtrDataSource saveAllData];
             }
             return user;
@@ -313,7 +339,22 @@
     return user;
 }
 
-+(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate
++(void) updateUser:(BrtrUser *)user withDelegate:(id<DataFetchDelegate>)delegate
+{
+    NSLog(@"BrtrDataSource: updating user data");
+    AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [ap startLocationManager];
+    CLLocation *location = [ap getGPSData];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+    NSURLRequest *request = [BrtrDataSource putRequestWith:[[NSString alloc] initWithFormat:ROUTE_USER_UPDATE, user.u_id]
+                                                   andBody:nil];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    }];
+}
+
++(void)performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Getting card stack for user");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -322,7 +363,7 @@
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
-    NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/geo" andQuery:[NSString stringWithFormat:@"lat=%f&long=%f",location.coordinate.latitude, location.coordinate.latitude]];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:ROUTE_ITEM_GET andQuery:[NSString stringWithFormat:@"%@=%f&%@=%f",KEY_USER_LOC_LAT, location.coordinate.latitude, KEY_USER_LOC_LONG, location.coordinate.latitude]];
     
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if(error) {
@@ -357,10 +398,10 @@
                 NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
                     //NSNumber *user_id = [item valueForKey: @"user_id"];
-                    NSNumber *item_id = [item valueForKey: @"id"];
-                    NSString *item_title = [item valueForKey: @"item_title"];
-                    NSString *item_description = [item valueForKey: @"item_description"];
-                    NSDictionary *item_image = [item valueForKey: @"item_image"];
+                    NSNumber *item_id = [item valueForKey: KEY_ITEM_ID];
+                    NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
+                    NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
+                    NSDictionary *item_image = [item valueForKey: KEY_ITEM_IMAGE];
                     NSArray *picture_buffer = [item_image valueForKey:@"data"];
                     
                     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
@@ -400,7 +441,6 @@
             }
         }
     }];
-
 }
 
 
@@ -482,6 +522,5 @@
     [BrtrDataSource saveAllData];
     // next populate the item stack
 }
-
 
 @end

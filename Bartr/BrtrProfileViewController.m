@@ -12,7 +12,6 @@
 #import "BrtrUser.h"
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
-#import "BrtrStartupTabViewController.h"
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
 
@@ -23,6 +22,7 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
+@property (strong, nonatomic) NSDictionary *editedFields;
 @end
 
 @implementation BrtrProfileViewController
@@ -31,7 +31,10 @@ BOOL isEditMode;
 
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
-        self.user.email = self.usernameField.text;
+        if (![self.usernameField isEqual:self.user.email]) {
+            self.user.email = self.usernameField.text;
+        }
+        
         self.user.firstName = self.firstNameField.text;
         self.user.lastName = self.lastNameField.text;
         self.user.about_me = self.aboutMeField.text;
