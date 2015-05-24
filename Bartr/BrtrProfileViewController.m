@@ -78,10 +78,7 @@ BOOL isEditMode;
     self.firstNameField.text = self.user.firstName;
     self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
-    self.picture.image = [UIImage imageWithData: self.user.image];
-//    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-//    self.picture.layer.masksToBounds = YES;
-//    self.picture.layer.borderWidth = 0;
+    self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
     [self cancelEdit];
 }
 
@@ -165,10 +162,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.picture.image = selectedImage;
-    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-    self.picture.layer.masksToBounds = YES;
-    self.picture.layer.borderWidth = 0;
+    self.picture.image = [self centerCropImage: selectedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
