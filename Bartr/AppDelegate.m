@@ -25,10 +25,6 @@
 @synthesize keychainItem = _keychainItem;
 @synthesize locationManager = _locationManager;
 
-
-
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FirstRun"]) {
@@ -38,8 +34,8 @@
     }
     
     NSDictionary *creds = [self getLoginCredentials];
-    if (creds && [creds objectForKey:@"email"] && [creds objectForKey:@"password"]) {
-        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:@"email"] password:[creds objectForKey:@"password"]];
+    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
+        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
     }
     if (self.user)
     {
@@ -85,12 +81,12 @@
 {
     NSString *email = [self.keychainItem objectForKey:(__bridge NSString*)kSecAttrAccount];
     NSDictionary *cred_dict = [self getCredDict];
-    NSString *pass = [cred_dict objectForKey:@"password"];
+    NSString *pass = [cred_dict objectForKey:KEY_AUTH_CREDS];
     if (nil == email || nil == pass) {
         return nil;
     }
     return [[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:email    , pass       , nil]
-                                  forKeys:       [[NSArray alloc] initWithObjects:@"email" , @"password", nil]];
+                                  forKeys:       [[NSArray alloc] initWithObjects:KEY_USER_NAME, KEY_AUTH_CREDS, nil]];
 }
 
 -(NSString *)getAuthToken
