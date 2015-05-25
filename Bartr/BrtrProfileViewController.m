@@ -14,6 +14,7 @@
 #import "JCDCoreData.h"
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
+#import "BrtrBackendFields.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -22,7 +23,6 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
-@property (strong, nonatomic) NSDictionary *editedFields;
 @end
 
 @implementation BrtrProfileViewController
@@ -31,14 +31,33 @@ BOOL isEditMode;
 
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
-        if (![self.usernameField isEqual:self.user.email]) {
+        NSMutableDictionary *edittedFields = [[NSMutableDictionary alloc] init];
+        // determine which values were changed so we may propogate them to the backend
+        if (![self.usernameField.text isEqualToString:self.user.email]) {
+            [edittedFields setObject:self.usernameField forKey:KEY_USER_EMAIL];
             self.user.email = self.usernameField.text;
         }
-        
-        self.user.firstName = self.firstNameField.text;
-        self.user.lastName = self.lastNameField.text;
-        self.user.about_me = self.aboutMeField.text;
-        self.user.image    =  UIImagePNGRepresentation(self.picture.image);
+        if (![self.firstNameField.text isEqualToString: self.user.firstName]) {
+            [edittedFields setObject:self.firstNameField.text forKey:KEY_USER_FIRST_NAME];
+            self.user.firstName = self.firstNameField.text;
+        }
+        if (![self.lastNameField.text isEqualToString:self.user.lastName]) {
+            [edittedFields setObject:self.lastNameField.text forKey:KEY_USER_LAST_NAME];
+            self.user.lastName = self.lastNameField.text;
+        }
+        if (![self.aboutMeField.text isEqualToString:self.user.about_me]) {
+            [edittedFields setObject:self.aboutMeField.text forKey:KEY_USER_ABOUTME];
+            self.user.about_me = self.aboutMeField.text;
+        }
+        // Because the cropped version is displayed we must crop both for comparasion
+        NSData *new_image_data = UIImagePNGRepresentation(self.picture.image);
+        NSData *old_image_data = UIImagePNGRepresentation([self centerCropImage: [UIImage imageWithData: self.user.image]]);
+        if (![new_image_data isEqualToData:old_image_data]) {
+            self.user.image = new_image_data;
+            NSString *encoded_image_data = [new_image_data base64EncodedStringWithOptions:kNilOptions];
+            [edittedFields setObject:encoded_image_data forKey:KEY_USER_IMAGE];
+        }
+        [BrtrDataSource updateUser:self.user withChanges:edittedFields withDelegate:nil];
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
@@ -163,9 +182,6 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.picture.image = [self centerCropImage: selectedImage];
-    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-    self.picture.layer.masksToBounds = YES;
-    self.picture.layer.borderWidth = 0;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -311,6 +327,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 #pragma mark - Navigation
