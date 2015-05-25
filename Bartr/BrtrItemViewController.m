@@ -12,7 +12,6 @@
 @interface BrtrItemViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *itemImageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *ownerTextField;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 //- (void) centerContent;
@@ -27,7 +26,6 @@
 @synthesize itemImageView = _itemImageView;
 @synthesize scrollView = _scrollView;
 @synthesize nameTextField = _nameTextField;
-@synthesize ownerTextField = _ownerTextField;
 @synthesize descriptionTextView = _descriptionTextView;
 @synthesize editable = _editable;
 
@@ -36,11 +34,17 @@
     // sets description of item
     UIImage *image = [UIImage imageWithData:self.item.picture];
     self.itemImageView.image = image;
+    self.itemImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.nameTextField.text = self.item.name;
     self.descriptionTextView.text = self.item.info;
-    self.nameTextField.userInteractionEnabled = self.editable;
-    self.descriptionTextView.userInteractionEnabled = self.editable;
-    self.itemImageView.userInteractionEnabled = self.editable;
+    
+    self.descriptionTextView.userInteractionEnabled = YES;
+    self.descriptionTextView.editable = NO;
+    self.descriptionTextView.scrollEnabled = YES;
+
+//    self.nameTextField.userInteractionEnabled = self.editable;
+//    self.descriptionTextView.userInteractionEnabled = self.editable;
+//    self.itemImageView.userInteractionEnabled = self.editable;
 }
 
 //@synthesize pictureScrollView = _pictureScrollView;
