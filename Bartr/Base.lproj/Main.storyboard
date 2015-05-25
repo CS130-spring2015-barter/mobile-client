@@ -497,15 +497,15 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xqR-Nf-IuS" id="OhG-ab-mZm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Is this the real life ..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Is this the real life ..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
                                                     <rect key="frame" x="108" y="8" width="209" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="93" id="0lb-CY-N5S"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" constant="-7" id="nJ1-G1-9D0"/>
+                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="100" id="0lb-CY-N5S"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" id="nJ1-G1-9D0"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="An6-bO-RS0" secondAttribute="bottom" constant="-3" id="vBm-5g-cIu"/>
                                                 <constraint firstItem="An6-bO-RS0" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="topMargin" id="wWi-eA-GPh"/>
                                             </constraints>
@@ -577,7 +577,7 @@
         <!--Brtr-->
         <scene sceneID="UaW-Va-T9l">
             <objects>
-                <viewController title="Brtr" id="ABA-QR-pUX" customClass="BrtrItemViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItemViewController" title="Brtr" id="ABA-QR-pUX" customClass="BrtrItemViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8yL-1U-EaZ"/>
                         <viewControllerLayoutGuide type="bottom" id="Maf-bs-DEC"/>
@@ -634,9 +634,10 @@
                     </scrollView>
                     <navigationItem key="navigationItem" id="BbS-ja-c2F"/>
                     <connections>
-                        <outlet property="descriptionTextView" destination="2E3-TT-knZ" id="ws6-eg-OE4"/>
-                        <outlet property="itemImageView" destination="0tc-0o-rLV" id="AhP-Yv-YNK"/>
+                        <outlet property="descriptionTextView" destination="2E3-TT-knZ" id="e1w-lU-tba"/>
+                        <outlet property="itemImageView" destination="0tc-0o-rLV" id="dah-mL-YNK"/>
                         <outlet property="nameTextField" destination="s5a-zZ-NwI" id="Ytp-hD-mKe"/>
+                        <outlet property="ownerTextField" destination="s5a-zZ-NwI" id="3a5-u3-Oq0"/>
                         <outlet property="scrollView" destination="VeP-qE-hv6" id="lax-8D-zbS"/>
                     </connections>
                 </viewController>
