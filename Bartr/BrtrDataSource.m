@@ -187,7 +187,6 @@
         NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
-            NSLog(@"Response ==> %@", responseData);
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
                         options:NSJSONReadingMutableContainers
@@ -311,7 +310,6 @@
             } else if ([matches count]) {
                 user = [matches firstObject];
                 user.u_id = [jsonData objectForKey:@"user_id"];
-           //     NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
             } else {
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
