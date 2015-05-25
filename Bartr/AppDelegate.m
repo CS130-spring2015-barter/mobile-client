@@ -13,8 +13,7 @@
 #import "KeychainItemWrapper.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface AppDelegate ()
-
+@interface AppDelegate()
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *lastLocation;
@@ -150,6 +149,7 @@
         }];
     }];
 }
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
