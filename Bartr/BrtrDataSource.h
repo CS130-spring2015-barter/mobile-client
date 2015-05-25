@@ -15,6 +15,7 @@
 
 +(BrtrUser *)getUserForEmail:(NSString *)email;
 +(BrtrUser *) getUserForEmail:(NSString *)email password:(NSString *)pass;
++(void) updateUser:(BrtrUser *)user withChanges:(NSDictionary *)userInfo withDelegate:(id<DataFetchDelegate>)delegate;
 + (void) saveAllData;
 + (void) loadFakeData;
 +(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;

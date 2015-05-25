@@ -32,6 +32,7 @@ BOOL isEditMode;
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
         NSMutableDictionary *edittedFields = [[NSMutableDictionary alloc] init];
+        // determine which values were changed so we may propogate them to the backend
         if (![self.usernameField.text isEqualToString:self.user.email]) {
             [edittedFields setObject:self.usernameField forKey:KEY_USER_EMAIL];
             self.user.email = self.usernameField.text;
@@ -48,10 +49,15 @@ BOOL isEditMode;
             [edittedFields setObject:self.aboutMeField.text forKey:KEY_USER_ABOUTME];
             self.user.about_me = self.aboutMeField.text;
         }
+        // Because the cropped version is displayed we must crop both for comparasion
         NSData *new_image_data = UIImagePNGRepresentation(self.picture.image);
-        if (![self.user.image isEqualToData:new_image_data]) {
+        NSData *old_image_data = UIImagePNGRepresentation([self centerCropImage: [UIImage imageWithData: self.user.image]]);
+        if (![new_image_data isEqualToData:old_image_data]) {
             self.user.image = new_image_data;
+            NSString *encoded_image_data = [new_image_data base64EncodedStringWithOptions:kNilOptions];
+            [edittedFields setObject:encoded_image_data forKey:KEY_USER_IMAGE];
         }
+        [BrtrDataSource updateUser:self.user withChanges:edittedFields withDelegate:nil];
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
