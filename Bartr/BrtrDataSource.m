@@ -15,7 +15,7 @@
 #import "BrtrUserItem.h"
 #import "BrtrBackendFields.h"
 #include "AppDelegate.h"
-
+#include "BrtrBackendFields.h"
 
 @interface BrtrDataSource()
 @property (nonatomic, strong) NSArray *liked_items;
@@ -82,7 +82,6 @@
     urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
     NSURL *url = [NSURL URLWithString:urlString];
     AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
-    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"GET"];
@@ -98,12 +97,13 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
-    
+    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[body length]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
     [request setHTTPMethod:@"PUT"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:body];
     return request;
@@ -187,7 +187,6 @@
         NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
-            NSLog(@"Response ==> %@", responseData);
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
                         options:NSJSONReadingMutableContainers
@@ -246,8 +245,8 @@
         NSLog(@"Response code: %ld", (long)[response statusCode]);
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
-            NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-            NSLog(@"Response ==> %@", responseData);
+           // NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+           // NSLog(@"Response ==> %@", responseData);
 
             NSError *error = nil;
             jsonData = [NSJSONSerialization
@@ -311,13 +310,17 @@
             } else if ([matches count]) {
                 user = [matches firstObject];
                 user.u_id = [jsonData objectForKey:@"user_id"];
-           //     NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
             } else {
                 user = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUser"
                                               inManagedObjectContext:context];
                 user.email = email;
                 user.u_id = [jsonData objectForKey:@"user_id"];
-            //    NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
+                NSDictionary *userInfo = [BrtrDataSource getUserInfoForUser:user];
+                user.firstName = [userInfo objectForKey:KEY_USER_FIRST_NAME];
+                user.lastName  = [userInfo objectForKey:KEY_USER_LAST_NAME];
+                user.about_me  = [userInfo objectForKey:KEY_USER_ABOUTME];
+                user.image     = UIImagePNGRepresentation([UIImage imageNamed:@"Icon-user"]);
+                
                 [BrtrDataSource saveAllData];
             }
             return user;
@@ -339,18 +342,46 @@
     return user;
 }
 
-+(void) updateUser:(BrtrUser *)user withDelegate:(id<DataFetchDelegate>)delegate
++(void) updateUser:(BrtrUser *)user withChanges:(NSDictionary *)userInfo withDelegate:(id<DataFetchDelegate>)delegate
 {
-    NSLog(@"BrtrDataSource: updating user data");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
-    CLLocation *location = [ap getGPSData];
-    
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    queue.name = @"FetchDataQueue";
-    NSURLRequest *request = [BrtrDataSource putRequestWith:[[NSString alloc] initWithFormat:ROUTE_USER_UPDATE, user.u_id]
-                                                   andBody:nil];
+    queue.name = @"UserOperationsQueue";
+    NSError *error;
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo options:0 error:&error];
+    NSURLRequest *request = [BrtrDataSource putRequestWith:[[NSString alloc] initWithFormat:ROUTE_USER_UPDATE, user.u_id] andBody:jsonData];
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            [delegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            NSMutableArray *jsonData = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                // FIXME
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+            {
+                NSError *error = nil;
+                jsonData = [NSJSONSerialization
+                            JSONObjectWithData:data
+                            options:NSJSONReadingMutableContainers
+                            error:&error];
+                NSLog(@"Response ==> %@", jsonData);
+            }
+        }
     }];
 }
 
@@ -360,6 +391,7 @@
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [ap startLocationManager];
     CLLocation *location = [ap getGPSData];
+
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
