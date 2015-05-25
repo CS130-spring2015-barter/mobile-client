@@ -228,32 +228,30 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    UILabel *labelField = (UILabel *)[cell viewWithTag:1];
+    UITextField *textField = (UITextField *)[cell viewWithTag:2];
+    textField.delegate = self;
     switch (row) {
         case 0: {
             ProfileTableCell *aboutCell = (ProfileTableCell *)cell;
             [aboutCell.titleLabel setText:@"About me"];
             self.aboutMeField = aboutCell.subtitleLabel;
             self.aboutMeField.text = self.user.about_me;
-            
         } break;
         case 1: {
             UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"Email";
-            self.usernameField = (UITextField *)[cell viewWithTag:2];
+            self.usernameField = textField;
             self.usernameField.text = self.user.email;
-            
         } break;
         case 2: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"First";
-            self.firstNameField = (UITextField *)[cell viewWithTag:2];
+            self.firstNameField = textField;
             self.firstNameField.text = self.user.firstName;
         } break;
         case 3: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"Last";
-            self.lastNameField = (UITextField *)[cell viewWithTag:2];
+            self.lastNameField = textField;
             self.lastNameField.text = self.user.lastName;
         } break;
         default: {
@@ -329,6 +327,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 
+#pragma mark - TextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 #pragma mark - Navigation
 
