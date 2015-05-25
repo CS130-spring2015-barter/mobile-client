@@ -31,9 +31,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
-    NSDictionary *creds = [self getLoginCredentials];
-    self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:@"email"] password:[creds objectForKey:@"password"]];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FirstRun"]) {
+        [self.keychainItem resetKeychainItem];
+        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
+    NSDictionary *creds = [self getLoginCredentials];
+    if (creds && [creds objectForKey:@"email"] && [creds objectForKey:@"password"]) {
+        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:@"email"] password:[creds objectForKey:@"password"]];
+    }
     if (self.user)
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
