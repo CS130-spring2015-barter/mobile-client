@@ -283,9 +283,9 @@
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
+				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
-				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
