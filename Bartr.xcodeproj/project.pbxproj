@@ -144,7 +144,6 @@
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
-				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				841206861B0712B1004FE8DD /* OverlayView.xib */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
@@ -216,6 +215,7 @@
 		84185F7B1B056E8500C671EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				84185F791B056E7100C671EE /* Security.framework */,
 				8434CF501B051E03008FFF07 /* CoreGraphics.framework */,
 				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
