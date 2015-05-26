@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZGP-H2-mBU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gjj-gP-tpe">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -282,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oCz-iY-YRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="846" y="517"/>
+            <point key="canvasLocation" x="806" y="445"/>
         </scene>
         <!--Brtr Startup Tab View Controller-->
         <scene sceneID="2eo-6b-qdP">
@@ -508,7 +508,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ZGP-H2-mBU" kind="push" id="w5C-tz-SmD"/>
+                                    <segue destination="ZGP-H2-mBU" kind="push" identifier="ShowItemInfoVC" id="w5C-tz-SmD"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -537,7 +537,7 @@
             </objects>
             <point key="canvasLocation" x="2704" y="1138"/>
         </scene>
-        <!--Add Items View Controller-->
+        <!--Item Info-->
         <scene sceneID="X1M-s9-TWW">
             <objects>
                 <viewController id="ZGP-H2-mBU" customClass="AddItemsViewController" sceneMemberID="viewController">
@@ -558,16 +558,17 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xqR-Nf-IuS" id="OhG-ab-mZm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Is this the real life ..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
                                                     <rect key="frame" x="108" y="8" width="209" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="An6-bO-RS0" secondAttribute="centerY" constant="-1.5" id="VJW-r4-dEJ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" id="bkO-ny-i7j"/>
-                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="100" id="vH4-Aj-6r8"/>
+                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="93" id="0lb-CY-N5S"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" constant="-7" id="nJ1-G1-9D0"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="An6-bO-RS0" secondAttribute="bottom" constant="-3" id="vBm-5g-cIu"/>
+                                                <constraint firstItem="An6-bO-RS0" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="topMargin" id="wWi-eA-GPh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -576,8 +577,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="syH-Yi-anD" id="UYR-iR-7Qj">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paL-w2-Cwo">
-                                                    <rect key="frame" x="115" y="13" width="202" height="22"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" text="or is it just fantasy?" translatesAutoresizingMaskIntoConstraints="NO" id="paL-w2-Cwo">
+                                                    <rect key="frame" x="105" y="8" width="202" height="22"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -594,12 +595,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="TO8-Eg-gBf"/>
+                    <navigationItem key="navigationItem" title="Item Info" id="TO8-Eg-gBf">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="eEP-SI-KEt"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Tvr-TX-vlm">
+                            <connections>
+                                <segue destination="bJG-sZ-bBM" kind="unwind" unwindAction="unwindToThisViewController:" id="qYs-9C-pDv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="jch-TX-VcV" id="pff-rg-OVh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YRq-nQ-T43" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bJG-sZ-bBM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3128" y="1152"/>
         </scene>

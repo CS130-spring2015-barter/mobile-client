@@ -171,8 +171,6 @@
 		526E99FB1ADB822800615EFC /* Bartr */ = {
 			isa = PBXGroup;
 			children = (
-				256C0B381B058AA100677AF6 /* APLViewController.h */,
-				256C0B391B058AA100677AF6 /* APLViewController.m */,
 				526E9A091ADB822800615EFC /* Main.storyboard */,
 				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				84F9E1931AF44492006E504D /* Views */,
@@ -279,6 +277,8 @@
 			children = (
 				84438A001B0C40AD0033F1A1 /* AddItemsViewController.h */,
 				84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */,
+				256C0B381B058AA100677AF6 /* APLViewController.h */,
+				256C0B391B058AA100677AF6 /* APLViewController.m */,
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,

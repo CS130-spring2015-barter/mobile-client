@@ -7,18 +7,27 @@
 //
 
 #import "AddItemsViewController.h"
-#import "TextFormCell.h"
+#import "APLViewController.h"
+
 @interface AddItemsViewController ()
 @property IBOutlet UITableView *tableView;
+
+@property UIBarButtonItem *backButton;
 @end
 
 @implementation AddItemsViewController
 @synthesize tableView = _tableView;
+@synthesize itemName;
+@synthesize itemDescription;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    self.navigationItem.hidesBackButton = YES;
+    self.backButton = self.navigationItem.leftBarButtonItem;
+    self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem;
+    [self updateStatusOfBackButton];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -58,11 +67,13 @@
             cell.textLabel.text = @"Name";
             UITextField* textField = (UITextField *)[cell viewWithTag:100];
             textField.delegate = self;
+            textField.text = self.itemName;
             [textField setReturnKeyType:UIReturnKeyDone];            
         } break;
         case 1: {
             cell.textLabel.text = @"Description";
             UITextView *textView = (UITextView *)[cell viewWithTag:100];
+            textView.text = self.itemDescription;
             textView.delegate = self;
             
         } break;
@@ -86,6 +97,31 @@
     return YES;
 }
 
+-(void) textFieldDidEndEditing:(UITextField *)textField
+{
+    self.itemName = textField.text;
+    [self updateStatusOfBackButton];
+}
+
+-(void) textViewDidEndEditing:(UITextView *)textView
+{
+    self.itemDescription = textView.text;
+    [self updateStatusOfBackButton];
+}
+
+-(void) updateStatusOfBackButton
+{
+    if (self.itemDescription && self.itemName
+    && ![self.itemDescription isEqualToString:@""]
+    && ![self.itemName isEqualToString:@""] )
+    {
+        self.navigationItem.leftBarButtonItem = self.backButton;
+    }
+    else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (0 == indexPath.row) {
@@ -98,30 +134,7 @@
     }
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
- 
-*/
 
 
 @end
