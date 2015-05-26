@@ -11,7 +11,6 @@
 #import "BrtrDataSource.h"
 #import <Security/Security.h>
 #import "KeychainItemWrapper.h"
-#import "ConversationListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
