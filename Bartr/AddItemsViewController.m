@@ -11,23 +11,24 @@
 
 @interface AddItemsViewController ()
 @property IBOutlet UITableView *tableView;
-
-@property UIBarButtonItem *backButton;
+@property UITextField *itemNameField;
+@property UITextView  *itemDescriptionField;
+@property UIBarButtonItem *doneButton;
 @end
 
 @implementation AddItemsViewController
 @synthesize tableView = _tableView;
 @synthesize itemName;
 @synthesize itemDescription;
+@synthesize itemDescriptionField;
+@synthesize itemNameField;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.navigationItem.hidesBackButton = YES;
-    self.backButton = self.navigationItem.leftBarButtonItem;
-    self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem;
-    [self updateStatusOfBackButton];
+    self.doneButton = self.navigationItem.rightBarButtonItem;
+    [self updateStatusOfDoneButton];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -68,12 +69,14 @@
             UITextField* textField = (UITextField *)[cell viewWithTag:100];
             textField.delegate = self;
             textField.text = self.itemName;
+            self.itemNameField = textField;
             [textField setReturnKeyType:UIReturnKeyDone];            
         } break;
         case 1: {
             cell.textLabel.text = @"Description";
             UITextView *textView = (UITextView *)[cell viewWithTag:100];
             textView.text = self.itemDescription;
+            self.itemDescriptionField = textView;
             textView.delegate = self;
             
         } break;
@@ -100,25 +103,37 @@
 -(void) textFieldDidEndEditing:(UITextField *)textField
 {
     self.itemName = textField.text;
-    [self updateStatusOfBackButton];
+    [self updateStatusOfDoneButton];
 }
 
 -(void) textViewDidEndEditing:(UITextView *)textView
 {
     self.itemDescription = textView.text;
-    [self updateStatusOfBackButton];
+    [self updateStatusOfDoneButton];
 }
 
--(void) updateStatusOfBackButton
+-(void) updateStatusOfDoneButton
 {
     if (self.itemDescription && self.itemName
     && ![self.itemDescription isEqualToString:@""]
     && ![self.itemName isEqualToString:@""] )
     {
-        self.navigationItem.leftBarButtonItem = self.backButton;
+        self.navigationItem.rightBarButtonItem = self.doneButton;
     }
     else {
-        self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+- (IBAction)userDidPressDoneButton:(UIBarButtonItem *)sender {
+    NSLog(@"Done");
+    self.itemImage = nil;
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if  ([segue.identifier isEqualToString:@"unwind"]) {
+        self.itemName = itemNameField.text;
+        self.itemDescription = itemDescriptionField.text;
     }
 }
 

@@ -62,8 +62,6 @@
     [BrtrDataSource saveAllData];
 }
 
-// bruh_pls41@gmail.com
-// password
 +(BrtrUser *)getUserForEmail:(NSString *)email
 {
     BrtrUser *user = nil;

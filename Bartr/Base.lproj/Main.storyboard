@@ -596,10 +596,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Item Info" id="TO8-Eg-gBf">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="eEP-SI-KEt"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Tvr-TX-vlm">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="ebK-Qj-0En">
                             <connections>
-                                <segue destination="bJG-sZ-bBM" kind="unwind" unwindAction="unwindToThisViewController:" id="qYs-9C-pDv"/>
+                                <segue destination="bJG-sZ-bBM" kind="unwind" identifier="unwind" unwindAction="unwindToThisViewController:" id="AiO-5x-trs"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Tvr-TX-vlm">
+                            <connections>
+                                <action selector="userDidPressDoneButton:" destination="ZGP-H2-mBU" id="iK0-cH-Mpf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

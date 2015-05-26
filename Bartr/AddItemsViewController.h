@@ -11,4 +11,5 @@
 @interface AddItemsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
 @property NSString *itemName;
 @property NSString *itemDescription;
+@property UIImage  *itemImage;
 @end
