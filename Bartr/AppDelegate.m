@@ -11,6 +11,7 @@
 #import "BrtrDataSource.h"
 #import <Security/Security.h>
 #import "KeychainItemWrapper.h"
+#import "ConversationListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
@@ -47,7 +48,23 @@
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
-
+    NSUUID *appID = [[NSUUID alloc] initWithUUIDString:@"c219d8fa-002d-11e5-8cc1-8b63dd004c78"];
+    self.layerClient = [LYRClient clientWithAppID:appID];
+    [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"Failed to connect to Layer: %@", error);
+        } else {
+            // For the purposes of this Quick Start project, let's authenticate as a user named 'Device'.  Alternatively, you can authenticate as a user named 'Simulator' if you're running on a Simulator.
+            NSString *userIDString = @"Device";
+            // Once connected, authenticate user.
+            // Check Authenticate step for authenticateLayerWithUserID source
+            [self authenticateLayerWithUserID:userIDString completion:^(BOOL success, NSError *error) {
+                if (!success) {
+                    NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+                }
+            }];
+        }
+    }];
     return YES;
 }
 
