@@ -587,10 +587,29 @@
             </objects>
             <point key="canvasLocation" x="3128" y="1152"/>
         </scene>
-        <!--Chat View Controller-->
+        <!--Conversation View Controller-->
+        <scene sceneID="iay-Cb-YCe">
+            <objects>
+                <viewController id="rBb-n0-1a2" customClass="ConversationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IeA-nt-AB6"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fd2-6k-bLZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jzo-WA-QQi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="2f3-pu-ItH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xnD-kR-hdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2270" y="2562"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="mso-YJ-6Jz">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="1z1-pX-YgR" customClass="ChatViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="1z1-pX-YgR" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2VD-me-vTY"/>
                         <viewControllerLayoutGuide type="bottom" id="AU2-P8-Jex"/>
@@ -716,7 +735,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZs-vX-NMT" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2119" y="2562"/>
+            <point key="canvasLocation" x="2807" y="2426"/>
         </scene>
         <!--Messages-->
         <scene sceneID="Hgd-Mw-57k">
@@ -730,7 +749,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1z1-pX-YgR" kind="relationship" relationship="rootViewController" id="NBc-3m-1dQ"/>
+                        <segue destination="rBb-n0-1a2" kind="relationship" relationship="rootViewController" id="NdD-Z1-F5E"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3u-mI-fff" userLabel="First Responder" sceneMemberID="firstResponder"/>
