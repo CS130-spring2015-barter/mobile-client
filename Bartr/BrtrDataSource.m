@@ -18,8 +18,8 @@
 #include "BrtrBackendFields.h"
 
 @interface BrtrDataSource()
-@property (nonatomic, strong) NSArray *liked_items;
-@property (nonatomic, strong) NSArray *rejected_items;
+@property (atomic, strong) NSArray *liked_items;
+@property (atomic, strong) NSArray *rejected_items;
 + (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 +(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate;
 @end
@@ -161,35 +161,23 @@
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
     // FIXME
-//    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
-//    [newLikedItems addObject:item];
-//    self.liked_items = [newLikedItems copy];
+    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
+    [newLikedItems addObject:item];
+    self.liked_items = [newLikedItems copy];
     
     NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
-    //NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/liked"]];
-    [BrtrDataSource performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
-
-    // FIXME
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
+    [self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 }
 
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
     // FIXME
-//    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
-//    [newLikedItems addObject:item];
-//    self.liked_items = [newLikedItems copy];
+    NSMutableArray *newSeenItems = [[NSMutableArray alloc] initWithArray:self.rejected_items];
+    [newSeenItems addObject:item];
+    self.rejected_items = [newSeenItems copy];
     
-    NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
-    //NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/seen"]];
-    [BrtrDataSource performBackgroundFetchWith:@"item/seen" AndUser:user andItem:item WithDelegate:theDelegate];
-
-    // FIXME
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
+    NSLog(@"BrtrDataSource: Attemping to reject item number %@", item.i_id);
+    [self performBackgroundFetchWith:@"item/seen" AndUser:user andItem:item WithDelegate:theDelegate];
 }
 
 
@@ -553,26 +541,26 @@
     }];
 }
 
-+(void)performBackgroundFetchWith:(NSString *)route AndUser:(BrtrUser *)user andItem:(BrtrCardItem *)item WithDelegate:(id<DataFetchDelegate>)theDelegate
+-(void)performBackgroundFetchWith:(NSString *)route AndUser:(BrtrUser *)user andItem:(BrtrCardItem *)item WithDelegate:(id<DataFetchDelegate>)theDelegate
 {
     NSMutableDictionary *item_dict = [[NSMutableDictionary alloc] init];
-    NSArray *items = [NSArray arrayWithObjects:item.i_id, nil];
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    __block NSArray* items_arr;
+    if([route  isEqual: @"item/liked"]) {
+        items_arr = self.liked_items;
+        for (BrtrCardItem* item in self.liked_items) {
+            [items addObject:[item.i_id stringValue]];
+        }
+    }
+    else {
+        items_arr = self.rejected_items;
+        for (BrtrCardItem* item in self.rejected_items) {
+            [items addObject:[item.i_id stringValue]];
+        }
+    }
+    
     [item_dict setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:@"user_id"];
     [item_dict setObject:items forKey:@"item_ids"];
-//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:item_dict options:0 error:&error];
-//    
-//    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
-//    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
-//    
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//    [request setURL:url];
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
-//    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
-//    [request setHTTPBody:jsonData];
-    
     
     NSURLRequest *request = [BrtrDataSource postRequestWith:route dict:item_dict];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -586,25 +574,45 @@
             NSHTTPURLResponse *httpResponse = nil;
             if([response isKindOfClass:[NSHTTPURLResponse class]])
             {
-                NSLog(@"BrtrDataSource: Received a HTTPResponse for liked item");
+                NSLog(@"BrtrDataSource: Received a HTTPResponse for liked/rejected item");
                 httpResponse = (NSHTTPURLResponse *)response;
             }
             else
             {
                 // FIXME
-                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse for liked item");
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse for liked/rejected item");
                 return;
             }
             
             NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
             if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
             {
-                NSLog(@"BrtrDataSource: Successfully liked item");
+                NSLog(@"BrtrDataSource: Successfully liked/rejected item");
+                
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                NSMutableArray *mut_items_arr = [[NSMutableArray alloc] initWithArray:items_arr];
+                for (NSString *item_id in items) {
+                    for (BrtrCardItem* i in items_arr) {
+                        if([item_id isEqual:[i.i_id stringValue]]) {
+                            [mut_items_arr removeObject:i];
+                            [context deleteObject:i];
+                            break;
+                        }
+                    }
+                }
+                [BrtrDataSource saveAllData];
+                
+                if([route isEqual:@"item/liked"]) {
+                    self.liked_items = [mut_items_arr copy];
+                }
+                else {
+                    self.rejected_items = [mut_items_arr copy];
+                }
             }
             else
             {
                 // FIXME
-                NSLog(@"BrtrDataSource: Did not successfully like item");
+                NSLog(@"BrtrDataSource: Did not successfully like/reject item");
                 return;
             }
         }
