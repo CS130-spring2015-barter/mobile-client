@@ -199,6 +199,7 @@
     if  ([segue.identifier isEqualToString:@"ShowItemInfoVC"]) {
         itemInfoVC = (AddItemsViewController *)segue.destinationViewController;
         itemInfoVC.itemName = self.itemName;
+        itemInfoVC.itemImage = self.imageView.image;
         itemInfoVC.itemDescription = self.itemDescription;
     }
 }
@@ -294,6 +295,11 @@
         itemInfoVC = (AddItemsViewController *) unwindSegue.sourceViewController;
         self.itemName = itemInfoVC.itemName;
         self.itemDescription = itemInfoVC.itemDescription;
+        self.imageView.image = itemInfoVC.itemImage;
+        if (self.imageView.image == nil) {
+            // TODO
+            self.nextButton.hidden = YES;
+        }
     }
     
 }
