@@ -6,11 +6,13 @@
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
+#import <CoreFoundation/CoreFoundation.h>
+#import <UIKit/UIKit.h>
 #import "BrtrUser.h"
 #import "BrtrItem.h"
 #import "BrtrLikedItem.h"
 #import "BrtrUserItem.h"
-
+#import "AppDelegate.h"
 
 @implementation BrtrUser
 
@@ -23,5 +25,6 @@
 @dynamic liked_items;
 @dynamic my_items;
 @dynamic item_stack;
+
 
 @end

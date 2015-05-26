@@ -12,9 +12,9 @@
 #import "BrtrUser.h"
 #import "BrtrDataSource.h"
 #import "JCDCoreData.h"
-#import "BrtrStartupTabViewController.h"
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
+#import "BrtrBackendFields.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -31,11 +31,33 @@ BOOL isEditMode;
 
 - (IBAction)didPushEditButton:(id)sender {
     if(isEditMode) {
-        self.user.email = self.usernameField.text;
-        self.user.firstName = self.firstNameField.text;
-        self.user.lastName = self.lastNameField.text;
-        self.user.about_me = self.aboutMeField.text;
-        self.user.image    =  UIImagePNGRepresentation(self.picture.image);
+        NSMutableDictionary *edittedFields = [[NSMutableDictionary alloc] init];
+        // determine which values were changed so we may propogate them to the backend
+        if (![self.usernameField.text isEqualToString:self.user.email]) {
+            [edittedFields setObject:self.usernameField forKey:KEY_USER_EMAIL];
+            self.user.email = self.usernameField.text;
+        }
+        if (![self.firstNameField.text isEqualToString: self.user.firstName]) {
+            [edittedFields setObject:self.firstNameField.text forKey:KEY_USER_FIRST_NAME];
+            self.user.firstName = self.firstNameField.text;
+        }
+        if (![self.lastNameField.text isEqualToString:self.user.lastName]) {
+            [edittedFields setObject:self.lastNameField.text forKey:KEY_USER_LAST_NAME];
+            self.user.lastName = self.lastNameField.text;
+        }
+        if (![self.aboutMeField.text isEqualToString:self.user.about_me]) {
+            [edittedFields setObject:self.aboutMeField.text forKey:KEY_USER_ABOUTME];
+            self.user.about_me = self.aboutMeField.text;
+        }
+        // Because the cropped version is displayed we must crop both for comparasion
+        NSData *new_image_data = UIImagePNGRepresentation(self.picture.image);
+        NSData *old_image_data = UIImagePNGRepresentation([self centerCropImage: [UIImage imageWithData: self.user.image]]);
+        if (![new_image_data isEqualToData:old_image_data]) {
+            self.user.image = new_image_data;
+            NSString *encoded_image_data = [new_image_data base64EncodedStringWithOptions:kNilOptions];
+            [edittedFields setObject:encoded_image_data forKey:KEY_USER_IMAGE];
+        }
+        [BrtrDataSource updateUser:self.user withChanges:edittedFields withDelegate:nil];
         [BrtrDataSource saveAllData];
         [self.tableView reloadData];
         [self cancelEdit];
@@ -75,10 +97,7 @@ BOOL isEditMode;
     self.firstNameField.text = self.user.firstName;
     self.lastNameField.text = self.user.lastName;
     self.aboutMeField.text = self.user.about_me;
-    self.picture.image = [UIImage imageWithData: self.user.image];
-//    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-//    self.picture.layer.masksToBounds = YES;
-//    self.picture.layer.borderWidth = 0;
+    self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
     [self cancelEdit];
 }
 
@@ -98,7 +117,7 @@ BOOL isEditMode;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -162,10 +181,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
-    self.picture.image = selectedImage;
-    self.picture.layer.cornerRadius = self.picture.frame.size.height /2;
-    self.picture.layer.masksToBounds = YES;
-    self.picture.layer.borderWidth = 0;
+    self.picture.image = [self centerCropImage: selectedImage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -212,32 +228,30 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    UILabel *labelField = (UILabel *)[cell viewWithTag:1];
+    UITextField *textField = (UITextField *)[cell viewWithTag:2];
+    textField.delegate = self;
     switch (row) {
         case 0: {
             ProfileTableCell *aboutCell = (ProfileTableCell *)cell;
             [aboutCell.titleLabel setText:@"About me"];
             self.aboutMeField = aboutCell.subtitleLabel;
             self.aboutMeField.text = self.user.about_me;
-            
         } break;
         case 1: {
             UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"Email";
-            self.usernameField = (UITextField *)[cell viewWithTag:2];
+            self.usernameField = textField;
             self.usernameField.text = self.user.email;
-            
         } break;
         case 2: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"First";
-            self.firstNameField = (UITextField *)[cell viewWithTag:2];
+            self.firstNameField = textField;
             self.firstNameField.text = self.user.firstName;
         } break;
         case 3: {
-            UILabel *labelField = (UILabel *)[cell viewWithTag:1];
             labelField.text = @"Last";
-            self.lastNameField = (UITextField *)[cell viewWithTag:2];
+            self.lastNameField = textField;
             self.lastNameField.text = self.user.lastName;
         } break;
         default: {
@@ -313,6 +327,14 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 }
 
 
+#pragma mark - TextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -328,7 +350,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         if ([vc isKindOfClass:[BrtrItemsTableViewController class]]) {
             itvc = (BrtrItemsTableViewController *) vc;
             itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
-            AppDelegate *ad = [UIApplication sharedApplication].delegate;
+            AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
         }

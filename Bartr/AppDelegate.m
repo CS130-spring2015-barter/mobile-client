@@ -14,8 +14,7 @@
 #import "ConversationListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface AppDelegate ()
-@property BOOL authenticatedUser;
+@interface AppDelegate()
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *lastLocation;
@@ -24,10 +23,8 @@
 
 @implementation AppDelegate
 @synthesize user = _user;
-@synthesize authenticatedUser;
 @synthesize keychainItem = _keychainItem;
 @synthesize locationManager = _locationManager;
-
 
 - (void)requestIdentityTokenForUserID:(NSString *)userID appID:(NSString *)appID nonce:(NSString *)nonce completion:(void(^)(NSString *identityToken, NSError *error))completion
 {
@@ -155,10 +152,19 @@
 }
 
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
-    if (self.authenticatedUser)
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"FirstRun"]) {
+        [self.keychainItem resetKeychainItem];
+        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    NSDictionary *creds = [self getLoginCredentials];
+    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
+        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
+    }
+    if (self.user)
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
     }
@@ -220,12 +226,12 @@
 {
     NSString *email = [self.keychainItem objectForKey:(__bridge NSString*)kSecAttrAccount];
     NSDictionary *cred_dict = [self getCredDict];
-    NSString *pass = [cred_dict objectForKey:@"password"];
+    NSString *pass = [cred_dict objectForKey:KEY_AUTH_CREDS];
     if (nil == email || nil == pass) {
         return nil;
     }
     return [[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:email    , pass       , nil]
-                                  forKeys:       [[NSArray alloc] initWithObjects:@"email" , @"password", nil]];
+                                  forKeys:       [[NSArray alloc] initWithObjects:KEY_USER_NAME, KEY_AUTH_CREDS, nil]];
 }
 
 -(NSString *)getAuthToken
@@ -242,8 +248,8 @@
     cred_dict = [mutable_cred_dict copy];
     NSError *error;
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:cred_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
-    [self.keychainItem setObject:password forKey:(__bridge NSString *)(kSecValueData)];
-    [self.keychainItem setObject:data forKey:(__bridge id)(kSecAttrAccount)];
+    [self.keychainItem setObject:data forKey:(__bridge NSString *)(kSecValueData)];
+    [self.keychainItem setObject:email forKey:(__bridge NSString *)(kSecAttrAccount)];
 }
 
 -(void)storeUserAuthToken:(NSString *)tok

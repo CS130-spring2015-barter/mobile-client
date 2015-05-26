@@ -49,11 +49,6 @@
 @property (nonatomic,strong)UIImageView* image;
 @property (nonatomic,strong)BrtrCardItem* item;
 
-/*
-@property (nonatomic, retain) IBOutlet UIImageView *image;
-@property (nonatomic, retain) IBOutlet UILabel *name;
-@property (nonatomic, retain) IBOutlet UILabel *info;
- */
 
 @property (weak) id <DraggableViewDelegate> delegate;
 

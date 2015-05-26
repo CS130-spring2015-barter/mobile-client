@@ -10,7 +10,7 @@
 #import "BrtrCardItem.h"
 #import "BrtrDataSource.h"
 
-@implementation DraggableViewBackground{
+@implementation DraggableViewBackground {
     NSInteger cardsLoadedIndex; //%%% the index of the card you have loaded into the loadedCards array last
     NSMutableArray *loadedCards; //%%% the array of card loaded (change max_buffer_size to increase or decrease the number of cards this holds)
     
@@ -34,7 +34,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         self.delegate = delegate;
         [super layoutSubviews];
         [self setupView];
-        exampleCardLabels=[self.delegate getMultipleCards];
+        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
         loadedCards = [[NSMutableArray alloc] init];
         allCards = [[NSMutableArray alloc] init];
         cardsLoadedIndex = 0;
@@ -42,6 +42,26 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     }
     return self;
 }
+
+
+
+-(void) didReceiveData:(id)data response:(NSURLResponse *)response
+{
+    NSArray *cards = (NSArray *)data;
+    NSMutableArray *newCards = [[NSMutableArray alloc ] initWithArray:exampleCardLabels];
+    [newCards addObjectsFromArray:cards];
+    self.exampleCardLabels = [newCards copy];
+    
+    [self loadCards];
+    [self setNeedsDisplay];
+}
+
+- (void) fetchingDataFailed:(NSError *)error;
+{
+    //NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    NSLog(@"BrtrSwipeyView: Error when trying to fetch cards");
+}
+
 
 //%%% sets up the extra buttons on the screen
 -(void)setupView
@@ -141,16 +161,17 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 {
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
-    
+    DraggableView *itemCard = (DraggableView *)card;
+    [self.delegate itemSwipedLeft:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
     if (cardsLoadedIndex < [allCards count]) { //%%% if we haven't reached the end of all cards, put another into the loaded cards
         [loadedCards addObject:[allCards objectAtIndex:cardsLoadedIndex]];
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
+    } else {
+        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
     }
-    DraggableView *itemCard = (DraggableView *)card;
-    [self.delegate itemSwipedLeft:itemCard.item];
 }
 
 //warning include own action here!
@@ -160,7 +181,8 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 {
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
-    
+     DraggableView *itemCard = (DraggableView *)card;
+    [self.delegate itemSwipedRight:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
     if (cardsLoadedIndex < [allCards count]) { //%%% if we haven't reached the end of all cards, put another into the loaded cards
@@ -168,9 +190,12 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
     }
-    DraggableView *itemCard = (DraggableView *)card;
+    else {
+        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
+    }
+   
     
-    [self.delegate itemSwipedRight:itemCard.item];
+    
 }
 
 //%%% when you hit the right button, this is called and substitutes the swipe

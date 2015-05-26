@@ -14,16 +14,14 @@
 #import "BrtrDataSource.h"
 #import "AppDelegate.h"
 #import "DataFetchDelegate.h"
-
-@interface BrtrSwipeyViewController () <DataFetchDelegate>
-
-@end
+#import "JCDCoreData.h"
 
 @implementation BrtrSwipeyViewController
+
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = [UIApplication sharedApplication].delegate;
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     
     //imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -43,51 +41,18 @@
     //[self performSegueWithIdentifier:@"ShowItem" sender:self];
 }
 
--(NSArray *) getMultipleCards {
-
-    return [BrtrDataSource getCardStackForUser:user];
+-(NSArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate>) delegate {
+    return [BrtrDataSource getCardStackForUser:user delegate:delegate];
 }
 
--(void) itemSwipedRight:(BrtrCardItem *)item
+-(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>)delegate
 {
-    [[BrtrDataSource sharedInstance] user:self.user didLikedItem:item];
+    [[BrtrDataSource sharedInstance] user:self.user didLikeItem:item delegate:delegate];
 }
 
--(void) itemSwipedLeft:(BrtrCardItem *)item
+-(void) itemSwipedLeft:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate
 {
-    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item];
-}
-
-- (void) didReceiveResponse:(NSData *) data response:(NSURLResponse *)response
-{
-    NSLog(@"BrtrSwipeyView: Received a HTTPResponse");
-    //NSLog(@"BrtrSwipeyView: Response code: %ld", (long)[response ]);
-    
-//    if ([response statusCode] >= 200 && [response statusCode] < 300)
-//    {
-//        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-//        NSLog(@"Response ==> %@", responseData);
-//        
-//        NSError *error = nil;
-//        jsonData = [NSJSONSerialization
-//                    JSONObjectWithData:urlData
-//                    options:NSJSONReadingMutableContainers
-//                    error:&error];
-//    }
-//    else if (nil != error) {
-//        NSString *error_msg = (NSString *) jsonData[@"message"];
-//        [[BrtrDataSource sharedInstance] alertStatus:error_msg :@"Sign in Failed!" :0];
-//    }
-//    
-//    else {
-//        //if (error) NSLog(@"Error: %@", error);
-//        [[BrtrDataSource sharedInstance]  alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
-//    }
-}
-
-- (void) fetchingDataFailed:(NSError *)error;
-{
-    NSLog(@"BrtrSwipeyView: Error %@; %@", error, [error localizedDescription]);
+    [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item delegate:delegate];
 }
 
 - (void)didReceiveMemoryWarning {

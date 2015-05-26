@@ -16,7 +16,6 @@
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
-		7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 7643E7341B09857700FC1B08 /* DataFetcher.m */; };
 		7643E7371B099D5A00FC1B08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7643E7361B099D5A00FC1B08 /* CoreLocation.framework */; };
 		841206871B0712B1004FE8DD /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841206861B0712B1004FE8DD /* OverlayView.xib */; };
 		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
@@ -33,7 +32,6 @@
 		8434CF4F1B051C49008FFF07 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4E1B051C49008FFF07 /* common.m */; };
 		8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434CF501B051E03008FFF07 /* CoreGraphics.framework */; };
 		8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */; };
-		84438A021B0C40AD0033F1A1 /* AddItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */; };
 		8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
@@ -43,6 +41,7 @@
 		84CAA8161AE4C92C00253D2A /* BrtrSwipeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */; };
 		D24C83E71B00768200E73524 /* ProfileTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D24C83E61B00768200E73524 /* ProfileTableCell.m */; };
 		D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */; };
+		EC9CCF3A7E844733F1954FF9 /* libPods-Bartr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C579D4BE3FDB9CDFE38BA33A /* libPods-Bartr.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,9 +73,8 @@
 		526E9A151ADB822800615EFC /* BartrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E9A1A1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E9A1B1ADB822800615EFC /* BartrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BartrTests.m; sourceTree = "<group>"; };
+		6ED66D7B79B3DFCD5764E908 /* Pods-Bartr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bartr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bartr/Pods-Bartr.release.xcconfig"; sourceTree = "<group>"; };
 		7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetchDelegate.h; sourceTree = "<group>"; };
-		7643E7331B09857700FC1B08 /* DataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetcher.h; sourceTree = "<group>"; };
-		7643E7341B09857700FC1B08 /* DataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataFetcher.m; sourceTree = "<group>"; };
 		7643E7361B099D5A00FC1B08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		841206861B0712B1004FE8DD /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayView.xib; path = Bartr/OverlayView.xib; sourceTree = "<group>"; };
 		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -103,8 +101,7 @@
 		8434CF4E1B051C49008FFF07 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = common.m; sourceTree = "<group>"; };
 		8434CF501B051E03008FFF07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		84438A001B0C40AD0033F1A1 /* AddItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemsViewController.h; sourceTree = "<group>"; };
-		84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemsViewController.m; sourceTree = "<group>"; };
+		84788EC01B115C9000BC4828 /* BrtrBackendFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrBackendFields.h; sourceTree = "<group>"; };
 		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
@@ -118,6 +115,8 @@
 		84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemsTableViewController.m; sourceTree = "<group>"; };
 		84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrSwipeyViewController.h; sourceTree = "<group>"; };
 		84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrSwipeyViewController.m; sourceTree = "<group>"; };
+		88A2F13D6B9FE7818282DB85 /* Pods-Bartr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bartr.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bartr/Pods-Bartr.debug.xcconfig"; sourceTree = "<group>"; };
+		C579D4BE3FDB9CDFE38BA33A /* libPods-Bartr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bartr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D24C83E21B00566E00E73524 /* ProfileTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileTableCell.h; sourceTree = "<group>"; };
 		D24C83E61B00768200E73524 /* ProfileTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableCell.m; sourceTree = "<group>"; };
 		D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItemViewController.m; sourceTree = "<group>"; };
@@ -133,6 +132,7 @@
 				84185F7A1B056E7100C671EE /* Security.framework in Frameworks */,
 				8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */,
 				8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */,
+				EC9CCF3A7E844733F1954FF9 /* libPods-Bartr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,14 +146,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02FC0B9A176ECED7AD58DDAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C579D4BE3FDB9CDFE38BA33A /* libPods-Bartr.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1F556C097FBC784C9F0A8F7A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				88A2F13D6B9FE7818282DB85 /* Pods-Bartr.debug.xcconfig */,
+				6ED66D7B79B3DFCD5764E908 /* Pods-Bartr.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		526E99F01ADB822800615EFC = {
 			isa = PBXGroup;
 			children = (
-				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				841206861B0712B1004FE8DD /* OverlayView.xib */,
 				526E99FB1ADB822800615EFC /* Bartr */,
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
+				1F556C097FBC784C9F0A8F7A /* Pods */,
+				02FC0B9A176ECED7AD58DDAC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,6 +202,8 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84788EC01B115C9000BC4828 /* BrtrBackendFields.h */,
+				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
 				84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */,
 				84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */,
 				84185F7B1B056E8500C671EE /* Frameworks */,
@@ -219,6 +239,7 @@
 		84185F7B1B056E8500C671EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				84185F791B056E7100C671EE /* Security.framework */,
 				8434CF501B051E03008FFF07 /* CoreGraphics.framework */,
 				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
@@ -268,8 +289,6 @@
 				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
-				7643E7331B09857700FC1B08 /* DataFetcher.h */,
-				7643E7341B09857700FC1B08 /* DataFetcher.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -277,8 +296,6 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				84438A001B0C40AD0033F1A1 /* AddItemsViewController.h */,
-				84438A011B0C40AD0033F1A1 /* AddItemsViewController.m */,
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
@@ -289,11 +306,10 @@
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
-				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
 				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
 				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
-				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
+				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -305,9 +321,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 526E9A1F1ADB822800615EFC /* Build configuration list for PBXNativeTarget "Bartr" */;
 			buildPhases = (
+				2426C0E78D49ED93250B2321 /* Check Pods Manifest.lock */,
 				526E99F51ADB822800615EFC /* Sources */,
 				526E99F61ADB822800615EFC /* Frameworks */,
 				526E99F71ADB822800615EFC /* Resources */,
+				15C4C567A7FAAB4A7270913F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -394,6 +412,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		15C4C567A7FAAB4A7270913F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bartr/Pods-Bartr-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2426C0E78D49ED93250B2321 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		526E99F51ADB822800615EFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -402,14 +453,12 @@
 				8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */,
 				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,
 				253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */,
-				7643E7351B09857700FC1B08 /* DataFetcher.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */,
 				8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */,
-				84438A021B0C40AD0033F1A1 /* AddItemsViewController.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
@@ -539,6 +588,7 @@
 		};
 		526E9A201ADB822800615EFC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88A2F13D6B9FE7818282DB85 /* Pods-Bartr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -551,6 +601,7 @@
 		};
 		526E9A211ADB822800615EFC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6ED66D7B79B3DFCD5764E908 /* Pods-Bartr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

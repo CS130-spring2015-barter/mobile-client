@@ -32,12 +32,21 @@
         [self alertStatus:@"Please enter Email and Password" :@"Sign in Failed!" :0];
     }
     else {
-
+        // Validate emails
+        NSError* error;
+        NSRegularExpression *regex = [[NSRegularExpression alloc ]initWithPattern:@"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" options:NSRegularExpressionCaseInsensitive error:&error];
+        NSTextCheckingResult *result = [regex firstMatchInString:email options:0 range:NSMakeRange(0, [email length])];
+        if (nil == result) {
+            [self alertStatus:@"Invalid email" :@"Sign in Failed" :0];
+        }
+        else {
+            user = [BrtrDataSource getUserForEmail:email password:password];
+        }
         //user = [BrtrDataSource getUserForEmail:email password:password];
-          user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+
     }
     if (nil != user) {
-        AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+        AppDelegate *appDelegateTemp = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         appDelegateTemp.user = user;
         // store user name and password
         [appDelegateTemp storeEmail:email password:password];
