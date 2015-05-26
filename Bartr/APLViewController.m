@@ -226,6 +226,7 @@
         {
             // Camera took a single picture.
             self.imageView.frame = CGRectMake(0, 0, screen_width/2, screen_width/2);
+            [self.imageView setClipsToBounds:YES];
             [self.imageView.layer setBorderColor: [[UIColor grayColor] CGColor]];
             [self.imageView.layer setBorderWidth: 2.0];
             self.imageView.contentMode = UIViewContentModeScaleAspectFill;
