@@ -11,8 +11,8 @@
 #import "BrtrUser.h"
 #import "BrtrUserItem.h"
 #import "BrtrItem.h"
-#import "ItemTableViewCell.h"
 #import "BrtrItemViewController.h"
+#import "ItemTableViewCell.h"
 #import "AppDelegate.h"
 
 @interface BrtrItemsTableViewController ()

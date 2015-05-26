@@ -46,7 +46,7 @@
  */
 
 #import "APLViewController.h"
-
+#import "AddItemsViewController.h"
 
 @interface APLViewController ()
 
@@ -78,7 +78,7 @@
     [super viewDidLoad];
     self.nextButton.hidden = YES;
     self.capturedImages = [[NSMutableArray alloc] init];
-    
+    self.navigationController.delegate = self;
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
@@ -193,6 +193,16 @@
     [self.cameraTimer fire]; // Start taking pictures right away.
 }
 
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    AddItemsViewController *itemInfoVC;
+    if  ([segue.identifier isEqualToString:@"ShowItemInfoVC"]) {
+        itemInfoVC = (AddItemsViewController *)segue.destinationViewController;
+        itemInfoVC.itemName = self.itemName;
+        itemInfoVC.itemDescription = self.itemDescription;
+    }
+}
+
 
 - (IBAction)stopTakingPicturesAtIntervals:(id)sender
 {
@@ -277,6 +287,16 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    AddItemsViewController *itemInfoVC;
+    if ([unwindSegue.sourceViewController isKindOfClass:[AddItemsViewController class]]) {
+        itemInfoVC = (AddItemsViewController *) unwindSegue.sourceViewController;
+        self.itemName = itemInfoVC.itemName;
+        self.itemDescription = itemInfoVC.itemDescription;
+    }
+    
+}
 
 @end
 

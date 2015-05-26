@@ -240,7 +240,7 @@
                                 <rect key="frame" x="120" y="264" width="80" height="39"/>
                                 <color key="backgroundColor" red="0.54985587770330246" green="0.86063170241286868" blue="0.49928052745275014" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Log in">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -282,7 +282,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oCz-iY-YRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="846" y="517"/>
+            <point key="canvasLocation" x="806" y="445"/>
         </scene>
         <!--Brtr Startup Tab View Controller-->
         <scene sceneID="2eo-6b-qdP">
@@ -508,7 +508,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ZGP-H2-mBU" kind="push" id="w5C-tz-SmD"/>
+                                    <segue destination="ZGP-H2-mBU" kind="push" identifier="ShowItemInfoVC" id="w5C-tz-SmD"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -537,7 +537,7 @@
             </objects>
             <point key="canvasLocation" x="2704" y="1138"/>
         </scene>
-        <!--Add Items View Controller-->
+        <!--Item Info-->
         <scene sceneID="X1M-s9-TWW">
             <objects>
                 <viewController id="ZGP-H2-mBU" customClass="AddItemsViewController" sceneMemberID="viewController">
@@ -553,47 +553,37 @@
                                 <rect key="frame" x="-2" y="64" width="325" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddItemCell" id="xqR-Nf-IuS" customClass="TextFormCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddItemCell" id="xqR-Nf-IuS">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xqR-Nf-IuS" id="OhG-ab-mZm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Is this the real life ..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
                                                     <rect key="frame" x="108" y="8" width="209" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="An6-bO-RS0" secondAttribute="centerY" constant="-1.5" id="VJW-r4-dEJ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" id="bkO-ny-i7j"/>
-                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="100" id="vH4-Aj-6r8"/>
+                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="93" id="0lb-CY-N5S"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" constant="-7" id="nJ1-G1-9D0"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="An6-bO-RS0" secondAttribute="bottom" constant="-3" id="vBm-5g-cIu"/>
+                                                <constraint firstItem="An6-bO-RS0" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="topMargin" id="wWi-eA-GPh"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddItemDescCell" id="syH-Yi-anD" customClass="TextFormCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddItemDescCell" id="syH-Yi-anD">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="syH-Yi-anD" id="UYR-iR-7Qj">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oHj-le-v2Z">
-                                                    <rect key="frame" x="108" y="8" width="209" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="paL-w2-Cwo">
-                                                    <rect key="frame" x="81" y="11" width="163" height="22"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" text="or is it just fantasy?" translatesAutoresizingMaskIntoConstraints="NO" id="paL-w2-Cwo">
+                                                    <rect key="frame" x="105" y="8" width="202" height="22"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="oHj-le-v2Z" secondAttribute="centerY" constant="-1.5" id="bde-se-h2Q"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="oHj-le-v2Z" secondAttribute="trailing" id="y0t-e2-PBe"/>
-                                                <constraint firstItem="oHj-le-v2Z" firstAttribute="leading" secondItem="UYR-iR-7Qj" secondAttribute="leadingMargin" constant="100" id="ykv-Ps-jZA"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -605,12 +595,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="TO8-Eg-gBf"/>
+                    <navigationItem key="navigationItem" title="Item Info" id="TO8-Eg-gBf">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="eEP-SI-KEt"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="Tvr-TX-vlm">
+                            <connections>
+                                <segue destination="bJG-sZ-bBM" kind="unwind" unwindAction="unwindToThisViewController:" id="qYs-9C-pDv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="jch-TX-VcV" id="pff-rg-OVh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YRq-nQ-T43" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bJG-sZ-bBM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3128" y="1152"/>
         </scene>
