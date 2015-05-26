@@ -75,6 +75,26 @@
     return request;
 }
 
++(NSURLRequest *)postRequestWith:(NSString *)route dict:(NSDictionary *)dict
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, route]];
+    
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPBody:jsonData];
+    return request;
+}
+
 +(NSURLRequest *)getRequestWith:(NSString *)route andQuery:(NSString *)query
 {
     NSString *urlString = [NSString stringWithFormat: @"%@%@" , ENDPOINT, route];
@@ -146,8 +166,8 @@
 //    self.liked_items = [newLikedItems copy];
     
     NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/liked"]];
-    [BrtrDataSource performBackgroundFetchWith:url AndUser:user andItem:item WithDelegate:theDelegate];
+    //NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/liked"]];
+    [BrtrDataSource performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 
     // FIXME
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
@@ -163,8 +183,8 @@
 //    self.liked_items = [newLikedItems copy];
     
     NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/seen"]];
-    [BrtrDataSource performBackgroundFetchWith:url AndUser:user andItem:item WithDelegate:theDelegate];
+    //NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, @"item/seen"]];
+    [BrtrDataSource performBackgroundFetchWith:@"item/seen" AndUser:user andItem:item WithDelegate:theDelegate];
 
     // FIXME
     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
@@ -178,65 +198,133 @@
 {
     NSLog(@"BrtrDataSource: Attempting to add item");
     
+    NSMutableDictionary *item_info = [[NSMutableDictionary alloc] init];
     NSString *encoded_pic_data = [item.picture base64EncodedStringWithOptions:kNilOptions];
-    NSString *post = [[NSString alloc] initWithFormat:@"user_id=%@&item_title=%@&item_description=%@&item_picture=%@",
-                      @"FIXME", item.name, item.info, encoded_pic_data];
-    NSURLRequest *request = [BrtrDataSource postRequestWith:@"item" post:post];
-    NSDictionary *jsonData;
-    @try {
-        NSError *error;
-        NSHTTPURLResponse *response = nil;
-        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        NSLog(@"Response code: %ld", (long)[response statusCode]);
-        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-        if ([response statusCode] >= 200 && [response statusCode] < 300)
-        {
-            NSLog(@"Response ==> %@", responseData);
-            jsonData = [NSJSONSerialization
-                        JSONObjectWithData:urlData
-                        options:NSJSONReadingMutableContainers
-                        error:&error];
-        }
-        else if (nil != error) {
-            NSString *error_msg = (NSString *) jsonData[@"message"];
-            NSLog(@"BrtrDataSource: Could not add item");
-            NSLog(@"Error: %@", error_msg);
-            return;
-            //return NO;
+    
+    [item_info setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:@"user_id"];
+    [item_info setObject:item.name forKey:@"item_title"];
+    [item_info setObject:item.info forKey:@"item_description"];
+    [item_info setObject:encoded_pic_data forKey:@"item_picture"];
+    
+    NSURLRequest *request = [BrtrDataSource postRequestWith:@"item" dict:item_info];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            [theDelegate fetchingDataFailed:error];
         }
         else {
-            jsonData = [NSJSONSerialization
-                        JSONObjectWithData:urlData
-                        options:NSJSONReadingMutableContainers
-                        error:&error];
-            NSLog(@"BrtrDataSource: Could not add item");
-            NSLog(@"Message: %@", [jsonData objectForKey:@"message"]);
-            return;
-            //return NO;
+            NSHTTPURLResponse *httpResponse = nil;
+            NSDictionary *jsonData = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                // FIXME
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            NSString *responseData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            NSError *serialError;
+            jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                       options:NSJSONReadingMutableContainers
+                                                       error:&serialError];
+            
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300) {
+                NSLog(@"Response ==> %@", responseData);
+                NSLog(@"BrtrDataSource: Successfully added an item");
+                
+                // Creates new object in DB and persists it
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
+                new_item.name = item.name;
+                new_item.info = item.info;
+                new_item.picture = item.picture;
+                
+                // FIXME what are these fields?
+                new_item.i_id = item.i_id;
+                new_item.user = item.user;
+                new_item.owner = user;
+                
+                [BrtrDataSource saveAllData];
+                [theDelegate didReceiveData:nil response:response];
+            }
+            else if(error != nil) {
+                NSString *error_msg = (NSString *) jsonData[@"message"];
+                NSLog(@"BrtrDataSource: Could not add item");
+                NSLog(@"Error: %@", error_msg);
+                [theDelegate fetchingDataFailed:error];
+                return;
+            }
+            else {
+                // FIXME
+                [theDelegate fetchingDataFailed:nil];
+                return;
+            }
         }
-    }
-    @catch (NSException * e) {
-        NSLog(@"BrtrDataSource: Exception when adding item: %@", e);
-        return;
-        //return NO;
-    }
+    }];
+
     
-    NSLog(@"BrtrDataSource: Successfully added an item");
+//    @try {
+//        NSError *error;
+//        NSHTTPURLResponse *response = nil;
+//        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//        NSLog(@"Response code: %ld", (long)[response statusCode]);
+//        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+//        if ([response statusCode] >= 200 && [response statusCode] < 300)
+//        {
+//            NSLog(@"Response ==> %@", responseData);
+//            jsonData = [NSJSONSerialization
+//                        JSONObjectWithData:urlData
+//                        options:NSJSONReadingMutableContainers
+//                        error:&error];
+//        }
+//        else if (nil != error) {
+//            NSString *error_msg = (NSString *) jsonData[@"message"];
+//            NSLog(@"BrtrDataSource: Could not add item");
+//            NSLog(@"Error: %@", error_msg);
+//            return;
+//            //return NO;
+//        }
+//        else {
+//            jsonData = [NSJSONSerialization
+//                        JSONObjectWithData:urlData
+//                        options:NSJSONReadingMutableContainers
+//                        error:&error];
+//            NSLog(@"BrtrDataSource: Could not add item");
+//            NSLog(@"Message: %@", [jsonData objectForKey:@"message"]);
+//            return;
+//            //return NO;
+//        }
+//    }
+//    @catch (NSException * e) {
+//        NSLog(@"BrtrDataSource: Exception when adding item: %@", e);
+//        return;
+//        //return NO;
+//    }
     
-    // Creates new object in DB and persists it
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
-    new_item.name = item.name;
-    new_item.info = item.info;
-    new_item.picture = item.picture;
-    
-    // FIXME what are these fields?
-    new_item.i_id = item.i_id;
-    new_item.user = item.user;
-    new_item.owner = user;
-    
-    [BrtrDataSource saveAllData];
-    return;
+//    NSLog(@"BrtrDataSource: Successfully added an item");
+//    
+//    // Creates new object in DB and persists it
+//    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+//    BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
+//    new_item.name = item.name;
+//    new_item.info = item.info;
+//    new_item.picture = item.picture;
+//    
+//    // FIXME what are these fields?
+//    new_item.i_id = item.i_id;
+//    new_item.user = item.user;
+//    new_item.owner = user;
+//    
+//    [BrtrDataSource saveAllData];
+//    return;
     //return YES;
 }
 
@@ -465,29 +553,28 @@
     }];
 }
 
-+(void)performBackgroundFetchWith:(NSURL *)url AndUser:(BrtrUser *)user andItem:(BrtrCardItem *)item WithDelegate:(id<DataFetchDelegate>)theDelegate
++(void)performBackgroundFetchWith:(NSString *)route AndUser:(BrtrUser *)user andItem:(BrtrCardItem *)item WithDelegate:(id<DataFetchDelegate>)theDelegate
 {
-    NSError *error;
-    
     NSMutableDictionary *item_dict = [[NSMutableDictionary alloc] init];
     NSArray *items = [NSArray arrayWithObjects:item.i_id, nil];
     [item_dict setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:@"user_id"];
     [item_dict setObject:items forKey:@"item_ids"];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:item_dict options:0 error:&error];
+//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:item_dict options:0 error:&error];
+//    
+//    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+//    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
+//    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    [request setURL:url];
+//    [request setHTTPMethod:@"POST"];
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
+//    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+//    [request setHTTPBody:jsonData];
     
-    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
-    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPBody:jsonData];
-    
-    
+    NSURLRequest *request = [BrtrDataSource postRequestWith:route dict:item_dict];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
     
