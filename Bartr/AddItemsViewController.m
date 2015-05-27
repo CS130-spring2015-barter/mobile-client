@@ -11,7 +11,7 @@
 #import "APLViewController.h"
 #import "AppDelegate.h"
 
-@interface AddItemsViewController ()
+@interface AddItemsViewController()
 @property IBOutlet UITableView *tableView;
 @property UITextField *itemNameField;
 @property UITextView  *itemDescriptionField;
@@ -54,7 +54,6 @@
     // Return the number of rows in the section.
     return 2;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *reuseId = indexPath.row == 0 ? @"AddItemCell" : @"AddItemDescCell";
@@ -158,8 +157,5 @@
         return 100;
     }
 }
-
-
-
 
 @end
