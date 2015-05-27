@@ -26,6 +26,7 @@
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
     AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     
@@ -41,6 +42,10 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+ [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 
 
 -(NSArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate>) delegate {
@@ -62,7 +67,7 @@
 {
     BrtrItemViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemViewController"];
     ivc.item = card;
-    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController pushViewController:ivc animated:YES];
 }
 
