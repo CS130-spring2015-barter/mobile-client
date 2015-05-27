@@ -8,7 +8,6 @@
 
 #import "BrtrItemViewController.h"
 
-
 @interface BrtrItemViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemImageView;
@@ -16,11 +15,6 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *ownerTextField;
 @property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
-
-//- (void) centerContent;
-//- (void) scrollViewDoubleTapped:(UITapGestureRecognizer *)recognizer;
-//- (void) scrollViewTwoFingerTapped:(UITapGestureRecognizer *)recognizer;
-
 @end
 
 

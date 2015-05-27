@@ -183,7 +183,7 @@
 
 
 // FIXME thinking about whether or not these should be synchronous calls that return a BOOL
--(void) user:(BrtrUser *)user didAddItemWith:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
++(void) user:(BrtrUser *)user didAddItemWithName:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Attempting to add item");
     
