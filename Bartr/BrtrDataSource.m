@@ -182,19 +182,19 @@
 
 
 // FIXME thinking about whether or not these should be synchronous calls that return a BOOL
--(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+-(void) user:(BrtrUser *)user didAddItemWith:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Attempting to add item");
     
     NSMutableDictionary *item_info = [[NSMutableDictionary alloc] init];
-    NSString *encoded_pic_data = [item.picture base64EncodedStringWithOptions:kNilOptions];
+    NSString *encoded_pic_data = [image base64EncodedStringWithOptions:kNilOptions];
     
-    [item_info setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:@"user_id"];
-    [item_info setObject:item.name forKey:@"item_title"];
-    [item_info setObject:item.info forKey:@"item_description"];
-    [item_info setObject:encoded_pic_data forKey:@"item_picture"];
+    [item_info setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:KEY_USER_ID];
+    [item_info setObject:name forKey:KEY_ITEM_TITLE];
+    [item_info setObject:info forKey:KEY_ITEM_DESC];
+    [item_info setObject:encoded_pic_data forKey:KEY_ITEM_IMAGE];
+    NSURLRequest *request = [BrtrDataSource postRequestWith:ROUTE_ITEM_ADD dict:item_info];
     
-    NSURLRequest *request = [BrtrDataSource postRequestWith:@"item" dict:item_info];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
 
@@ -231,13 +231,10 @@
                 // Creates new object in DB and persists it
                 NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
                 BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
-                new_item.name = item.name;
-                new_item.info = item.info;
-                new_item.picture = item.picture;
-                
-                // FIXME what are these fields?
-                new_item.i_id = item.i_id;
-                new_item.user = item.user;
+                new_item.name = name;
+                new_item.info = info;
+                new_item.picture = image;
+                new_item.i_id = [jsonData objectForKey:@"item_id"];
                 new_item.owner = user;
                 
                 [BrtrDataSource saveAllData];
@@ -257,63 +254,6 @@
             }
         }
     }];
-
-    
-//    @try {
-//        NSError *error;
-//        NSHTTPURLResponse *response = nil;
-//        NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//        NSLog(@"Response code: %ld", (long)[response statusCode]);
-//        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-//        if ([response statusCode] >= 200 && [response statusCode] < 300)
-//        {
-//            NSLog(@"Response ==> %@", responseData);
-//            jsonData = [NSJSONSerialization
-//                        JSONObjectWithData:urlData
-//                        options:NSJSONReadingMutableContainers
-//                        error:&error];
-//        }
-//        else if (nil != error) {
-//            NSString *error_msg = (NSString *) jsonData[@"message"];
-//            NSLog(@"BrtrDataSource: Could not add item");
-//            NSLog(@"Error: %@", error_msg);
-//            return;
-//            //return NO;
-//        }
-//        else {
-//            jsonData = [NSJSONSerialization
-//                        JSONObjectWithData:urlData
-//                        options:NSJSONReadingMutableContainers
-//                        error:&error];
-//            NSLog(@"BrtrDataSource: Could not add item");
-//            NSLog(@"Message: %@", [jsonData objectForKey:@"message"]);
-//            return;
-//            //return NO;
-//        }
-//    }
-//    @catch (NSException * e) {
-//        NSLog(@"BrtrDataSource: Exception when adding item: %@", e);
-//        return;
-//        //return NO;
-//    }
-    
-//    NSLog(@"BrtrDataSource: Successfully added an item");
-//    
-//    // Creates new object in DB and persists it
-//    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-//    BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
-//    new_item.name = item.name;
-//    new_item.info = item.info;
-//    new_item.picture = item.picture;
-//    
-//    // FIXME what are these fields?
-//    new_item.i_id = item.i_id;
-//    new_item.user = item.user;
-//    new_item.owner = user;
-//    
-//    [BrtrDataSource saveAllData];
-//    return;
-    //return YES;
 }
 
 -(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
