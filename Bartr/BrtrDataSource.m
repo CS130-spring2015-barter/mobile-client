@@ -13,6 +13,7 @@
 #import "BrtrUser.h"
 #import "BrtrCardItem.h"
 #import "BrtrUserItem.h"
+#import "BrtrLikedItem.h"
 #import "BrtrBackendFields.h"
 #include "AppDelegate.h"
 #include "BrtrBackendFields.h"
@@ -202,7 +203,90 @@
 
 +(void)getLikedItemsForUser:(BrtrUser *)user ids:(NSArray *)ids delegate:(id<DataFetchDelegate>)theDelegate
 {
-    
+    // FIX ME
+    // do I need any database stuff here?
+
+    NSURLRequest *request = [BrtrDataSource getRequestWith:@"item" andQuery:[NSString stringWithFormat:@"%@=%@", @"ids", [[ids valueForKey:@"description"] componentsJoinedByString:@","]]];
+
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            NSLog(@"BrtrDataSource: Did not anything trying to get item info");
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            NSMutableArray *jsonData = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+            {
+                NSLog(@"BrtrDataSource: Received info for items");
+                NSError *error = nil;
+                jsonData = [NSJSONSerialization
+                            JSONObjectWithData:data
+                            options:NSJSONReadingMutableContainers
+                            error:&error];
+
+                NSMutableArray *cards = [[NSMutableArray alloc] init];
+                for (NSDictionary *item in jsonData) {
+                    NSNumber *user_id = [item valueForKey: @"user_id"];
+                    NSNumber *item_id = [item valueForKey: KEY_ITEM_ID];
+                    NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
+                    NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
+                    NSDictionary *item_image = [item valueForKey: KEY_ITEM_IMAGE];
+                    NSArray *picture_buffer = [item_image valueForKey:@"data"];
+                    
+                    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                    NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", item_id]];
+                    Byte *buffer  = malloc([picture_buffer count]);
+                    for (unsigned i = 0; i < [picture_buffer count]; ++i) {
+                        NSNumber *num = [picture_buffer objectAtIndex:i];
+                        buffer[i] = (Byte)[num intValue];
+                    }
+                    BrtrLikedItem *liked_item;
+                    
+                    if (matches && [matches count] == 1) {
+                        liked_item = [matches objectAtIndex: 0];
+                        
+                    } else if (0 == [matches count]) {
+                        liked_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem" inManagedObjectContext:context];
+                        
+                    } else {
+                        NSLog(@"Error in get card items");
+                    }
+                    
+                    liked_item.user = user;
+                    liked_item.i_id = item_id;
+                    liked_item.info = item_description;
+                    liked_item.name = item_title;
+                    liked_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    [cards addObject:liked_item];
+                }
+                [BrtrDataSource saveAllData];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [theDelegate didReceiveData:[cards  copy] response:response];
+                }];
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: Did not receive meaningful response from server for item info");
+                [theDelegate fetchingDataFailed:nil];
+            }
+        }
+    }];
 }
 
 // FIXME
@@ -214,10 +298,8 @@
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
     
-    [BrtrDataSource getLikedIDsForUser:user delegate:theDelegate];
-    
-    //NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
-    //[self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
+    NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
+    [self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 }
 
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate

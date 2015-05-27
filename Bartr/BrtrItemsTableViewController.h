@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataFetchDelegate.h"
 
-@interface BrtrItemsTableViewController : UITableViewController
+@interface BrtrItemsTableViewController : UITableViewController <DataFetchDelegate>
 
 @property (nonatomic, strong) NSArray *items;
 @property                     BOOL     allowEditableItems; 

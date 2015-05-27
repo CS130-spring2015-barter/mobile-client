@@ -52,8 +52,7 @@
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
         // FIXME
-        //itvc.items = [BrtrDataSource getLikedItemsForUser:
-        //            self.user];
+        [BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         itvc.allowEditableItems = NO;
        // NSLog(@"Items");

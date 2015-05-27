@@ -8,11 +8,12 @@
 
 #import "BrtrItemsTableViewController.h"
 #import "BrtrStartupTabViewController.h"
+#import "BrtrItemViewController.h"
 #import "BrtrUser.h"
 #import "BrtrUserItem.h"
 #import "BrtrItem.h"
+#import "BrtrDataSource.h"
 #import "ItemTableViewCell.h"
-#import "BrtrItemViewController.h"
 #import "AppDelegate.h"
 
 @interface BrtrItemsTableViewController ()
@@ -129,5 +130,34 @@
     }
 }
 
+- (void) didReceiveData:(id) data response:(NSURLResponse *)response
+{
+    
+    NSArray *liked_cards = (NSArray *)data;
+    if([liked_cards count] == 0) {
+        return;
+    }
+    // Received ids
+    if([[liked_cards objectAtIndex:0] isKindOfClass:[NSNumber class]]) {
+        AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [BrtrDataSource getLikedItemsForUser:ap.user ids:liked_cards delegate:self];
+    }
+    // Received item info
+    else {
+        // FIXME
+        self.items = liked_cards;
+    }
+}
+
+-(void)setItems:(NSArray *)items
+{
+    _items = items;
+    [self.tableView reloadData];
+}
+
+- (void) fetchingDataFailed:(NSError *)error
+{
+    NSLog(@"BrtrItemsTableViewController: Error when trying to fetch cards");
+}
 
 @end
