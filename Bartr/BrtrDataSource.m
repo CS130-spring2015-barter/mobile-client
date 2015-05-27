@@ -47,6 +47,7 @@
     [[JCDCoreData sharedInstance] saveContext];
 }
 
+
 #pragma mark - Utility Methods
 + (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
 {
@@ -184,7 +185,7 @@
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSLog(@"Response code: %ld", (long)[response statusCode]);
-        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+        //NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
             jsonData = [NSJSONSerialization

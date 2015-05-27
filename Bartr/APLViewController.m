@@ -46,7 +46,7 @@
  */
 
 #import "APLViewController.h"
-
+#import "AddItemsViewController.h"
 
 @interface APLViewController ()
 
@@ -59,6 +59,7 @@
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *startStopButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *delayedPhotoButton;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;
+@property (nonatomic, weak) IBOutlet UIButton *nextButton;
 
 @property (nonatomic) UIImagePickerController *imagePickerController;
 
@@ -75,9 +76,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.nextButton.hidden = YES;
     self.capturedImages = [[NSMutableArray alloc] init];
-
+    self.navigationController.delegate = self;
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
@@ -192,6 +193,17 @@
     [self.cameraTimer fire]; // Start taking pictures right away.
 }
 
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    AddItemsViewController *itemInfoVC;
+    if  ([segue.identifier isEqualToString:@"ShowItemInfoVC"]) {
+        itemInfoVC = (AddItemsViewController *)segue.destinationViewController;
+        itemInfoVC.itemName = self.itemName;
+        itemInfoVC.itemImage = self.imageView.image;
+        itemInfoVC.itemDescription = self.itemDescription;
+    }
+}
+
 
 - (IBAction)stopTakingPicturesAtIntervals:(id)sender
 {
@@ -210,10 +222,14 @@
 
     if ([self.capturedImages count] > 0)
     {
+        self.nextButton.hidden = NO;
         if ([self.capturedImages count] == 1)
         {
             // Camera took a single picture.
             self.imageView.frame = CGRectMake(0, 0, screen_width/2, screen_width/2);
+            [self.imageView setClipsToBounds:YES];
+            [self.imageView.layer setBorderColor: [[UIColor grayColor] CGColor]];
+            [self.imageView.layer setBorderWidth: 2.0];
             self.imageView.contentMode = UIViewContentModeScaleAspectFill;
             [self.imageView setImage:[self.capturedImages objectAtIndex:0]];
         }
@@ -232,13 +248,13 @@
 
     self.imagePickerController = nil;
 }
-
+/*
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     NSLog(@"W:%f, H:%f", self.imageView.frame.size.width, self.imageView.frame.size.height);
 }
-
+*/
 
 #pragma mark - Timer
 
@@ -272,6 +288,21 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    AddItemsViewController *itemInfoVC;
+    if ([unwindSegue.sourceViewController isKindOfClass:[AddItemsViewController class]]) {
+        itemInfoVC = (AddItemsViewController *) unwindSegue.sourceViewController;
+        self.itemName = itemInfoVC.itemName;
+        self.itemDescription = itemInfoVC.itemDescription;
+        self.imageView.image = itemInfoVC.itemImage;
+        if (self.imageView.image == nil) {
+            // TODO
+            self.nextButton.hidden = YES;
+        }
+    }
+    
+}
 
 @end
 

@@ -65,7 +65,6 @@ BOOL isEditMode;
     }
     else {
         self.navigationItem.rightBarButtonItem.title = @"Done";
-        
         self.navigationItem.hidesBackButton = YES;
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                          style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
