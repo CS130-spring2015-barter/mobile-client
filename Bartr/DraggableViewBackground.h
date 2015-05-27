@@ -42,6 +42,7 @@
 -(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate;
 -(void) userClickedItem:(BrtrCardItem *)card;
 
+
 @end
 
 @interface DraggableViewBackground : UIView <DraggableViewDelegate, DataFetchDelegate>

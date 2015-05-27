@@ -13,10 +13,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *itemImageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (strong, nonatomic) IBOutlet UITextField *ownerTextField;
-
-
+@property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 //- (void) centerContent;
 //- (void) scrollViewDoubleTapped:(UITapGestureRecognizer *)recognizer;
@@ -46,9 +44,9 @@
     self.descriptionTextView.editable = NO;
     self.descriptionTextView.scrollEnabled = YES;
 
-//    self.nameTextField.userInteractionEnabled = self.editable;
-//    self.descriptionTextView.userInteractionEnabled = self.editable;
-//    self.itemImageView.userInteractionEnabled = self.editable;
+    self.nameTextField.userInteractionEnabled = self.editable;
+    self.descriptionTextView.userInteractionEnabled = self.editable;
+    self.itemImageView.userInteractionEnabled = self.editable;
 }
 
 @end

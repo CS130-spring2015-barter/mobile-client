@@ -33,11 +33,12 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         [BrtrDataSource loadFakeData];
     }
-    
-    NSDictionary *creds = [self getLoginCredentials];
-    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
-        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
-    }
+//    
+//    NSDictionary *creds = [self getLoginCredentials];
+//    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
+//        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
+//    }
+    self.user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     if (self.user)
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
