@@ -18,11 +18,13 @@
 +(void) updateUser:(BrtrUser *)user withChanges:(NSDictionary *)userInfo withDelegate:(id<DataFetchDelegate>)delegate;
 + (void) saveAllData;
 + (void) loadFakeData;
-+(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
-+(NSArray *)getUserItemsForUser:(BrtrUser *)user;
-+(NSArray *)getLikedItemsForUser:(BrtrUser *)user;
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass;
 +(BrtrDataSource *)sharedInstance;
+
++(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
++(NSArray *)getUserItemsForUser:(BrtrUser *)user;
++(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
++(void)getLikedItemsForUser:(BrtrUser *)user ids:(NSArray *)ids delegate:(id<DataFetchDelegate>)theDelegate;
 
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
