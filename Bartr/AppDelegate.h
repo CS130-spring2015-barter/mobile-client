@@ -11,12 +11,15 @@
 #import <CoreLocation/CoreLocation.h>
 #import <LayerKit/LayerKit.h>
 #import "BrtrUser.h"
+#import "LCLayerClient.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BrtrUser *user;
 
+//-(LYRClient*) getLayerClient;
+-(LCLayerClient*) getLayerClient;
 -(NSDictionary *) getLoginCredentials;
 -(void) storeEmail:(NSString *) email password:(NSString *)password;
 -(void)storeUserAuthToken:(NSString *)tok;

@@ -3,7 +3,8 @@
 
 target 'Bartr' do
 pod 'LayerKit'
-pod 'Atlas'
+pod 'Atlas', '~> 1.0'
+pod 'JTSImageViewController', '~> 1.4'
 end
 
 target 'BartrTests' do

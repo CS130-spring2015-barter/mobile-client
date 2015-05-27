@@ -1,15 +1,15 @@
 //
-//  ChatUser.h
-//  Bartr
+//  LCUser.h
+//  LayerChatExample
 //
-//  Created by Synthia Ling on 5/24/15.
-//  Copyright (c) 2015 Bartr. All rights reserved.
+//  Created by Pulkit Goyal on 05/04/15.
+//  Copyright (c) 2015 Gigster. All rights reserved.
 //
-#import <UIKit/UIKit.h>
-#import "ATLParticipant.h"
-#import "ATLAvatarItem.h"
 
-@interface ChatUser : NSObject <ATLParticipant, ATLAvatarItem>
+#import <Foundation/Foundation.h>
+#import "ATLParticipant.h"
+
+@interface LCUser : NSObject <ATLParticipant, ATLAvatarItem>
 
 @property(nonatomic, readonly) NSString *firstName;
 @property(nonatomic, readonly) NSString *lastName;
