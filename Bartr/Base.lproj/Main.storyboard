@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="YMR-eO-7ot"/>
+                    <navigationItem key="navigationItem" id="B7R-ko-mcA"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dw7-iI-wyM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1836" y="1793"/>
+            <point key="canvasLocation" x="2368" y="1793"/>
         </scene>
         <!--Messages-->
         <scene sceneID="Une-hN-Txe">
@@ -100,12 +100,12 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="H82-6y-yEE" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AkR-Sh-duM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2332" y="1828"/>
+            <point key="canvasLocation" x="2864" y="1828"/>
         </scene>
         <!--Brtr-->
         <scene sceneID="ini-7j-j5r">
             <objects>
-                <viewController title="Brtr" id="dMK-44-AKK" customClass="BrtrItemViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItemViewController" title="Brtr" id="dMK-44-AKK" customClass="BrtrItemViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aho-GH-8f2"/>
                         <viewControllerLayoutGuide type="bottom" id="z3f-Rs-c45"/>
@@ -295,7 +295,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="QLV-dl-so9" kind="relationship" relationship="viewControllers" id="2wu-Tq-Aoi"/>
+                        <segue destination="jDN-A8-LPn" kind="relationship" relationship="viewControllers" id="2wu-Tq-Aoi"/>
                         <segue destination="hyh-tx-hM2" kind="relationship" relationship="viewControllers" id="cXe-5V-vI5"/>
                         <segue destination="8Vf-RH-966" kind="relationship" relationship="viewControllers" id="PdH-9W-LHE"/>
                         <segue destination="ZPy-Yl-6JK" kind="relationship" relationship="viewControllers" id="Utw-4N-gb1"/>
@@ -615,6 +615,25 @@
                 <exit id="bJG-sZ-bBM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3128" y="1152"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="TsB-my-r1x">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jDN-A8-LPn" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" id="YMR-eO-7ot"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zng-5v-kIk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="QLV-dl-so9" kind="relationship" relationship="rootViewController" id="yw4-fD-Czl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RaW-sl-xF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1836" y="1793"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

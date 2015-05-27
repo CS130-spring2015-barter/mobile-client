@@ -59,12 +59,11 @@
 
 
 -(void) userClickedItem:(BrtrCardItem *)card
-
 {
-    BrtrItemViewController *ivc = [[BrtrItemViewController alloc] init];
+    BrtrItemViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemViewController"];
     ivc.item = card;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
-    [nav pushViewController:ivc animated:YES];
+    
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
