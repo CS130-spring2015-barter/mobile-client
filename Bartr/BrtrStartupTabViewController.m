@@ -12,6 +12,8 @@
 #import "BrtrItemsTableViewController.h"
 #import "BrtrProfileViewController.h"
 #import "BrtrSwipeyViewController.h"
+//#import "ConversationListViewController.h"
+#import "LCConversationListViewController.h"
 
 @interface BrtrStartupTabViewController  ()
 @property (strong, nonatomic) BrtrUser *user;
@@ -45,8 +47,6 @@
     if ([vc isKindOfClass:[BrtrProfileViewController class]])
     {
         NSLog(@"Profile");
-        
-        
     }
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
@@ -61,6 +61,25 @@
     {
         //NSLog(@"Swipey");
         
+    }
+    else if ([vc isKindOfClass:[LCConversationListViewController class]]) {
+
+        AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        LCConversationListViewController *cvc = (LCConversationListViewController *)vc;
+        cvc = [LCConversationListViewController conversationListViewControllerWithLayerClient:ad.getLayerClient];
+        cvc.delegate = cvc;
+        cvc.dataSource = cvc;
+        if ([viewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nav = (UINavigationController *)viewController;
+            [nav popViewControllerAnimated:NO];
+            [nav pushViewController:cvc animated:NO];
+        }
+        else {
+            NSUInteger index = [self.viewControllers indexOfObjectIdenticalTo:viewController];
+            NSMutableArray *new_view_controllers = [[NSMutableArray alloc] initWithArray:self.viewControllers];
+            [new_view_controllers setObject:cvc atIndexedSubscript:index];
+            self.viewControllers = [new_view_controllers copy];
+        }
     }
     else {
        // NSLog(@"Unknown vc");

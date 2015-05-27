@@ -1,15 +1,19 @@
 //
-//  ConversationViewController.m
-//  Bartr
+//  LCConversationViewController.m
+//  LayerChatExample
 //
-//  Created by Synthia Ling on 5/25/15.
-//  Copyright (c) 2015 Bartr. All rights reserved.
+//  Created by Pulkit Goyal on 05/04/15.
+//  Copyright (c) 2015 Gigster. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "ConversationViewController.h"
+#import <Atlas/Utilities/ATLMessagingUtilities.h>
+#import "LCConversationViewController.h"
+#import "LCUser.h"
+#import "JTSImageInfo.h"
+#import "JTSImageViewController.h"
+#import "LCImageViewController.h"
 
-@implementation ConversationViewController
+@implementation LCConversationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,7 +25,7 @@
 
 - (id <ATLParticipant>)conversationViewController:(ATLConversationViewController *)conversationViewController participantForIdentifier:(NSString *)participantIdentifier {
     // TODO Return the user corresponding to this participant identifier
-    return [ChatUser userWithParticipantIdentifier:participantIdentifier];
+    return [LCUser userWithParticipantIdentifier:participantIdentifier];
 }
 
 - (NSAttributedString *)conversationViewController:(ATLConversationViewController *)conversationViewController attributedStringForDisplayOfDate:(NSDate *)date {
@@ -33,7 +37,7 @@
     if ([mutableRecipientStatus valueForKey:self.layerClient.authenticatedUserID]) {
         [mutableRecipientStatus removeObjectForKey:self.layerClient.authenticatedUserID];
     }
-    
+
     NSString *statusString = [NSString new];
     if (mutableRecipientStatus.count > 1) {
         __block NSUInteger readCount = 0;
@@ -85,7 +89,55 @@
         statusString = blockStatusString;
     }
     return [[NSAttributedString alloc] initWithString:statusString attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:11]}];
-    
+
+}
+
+#pragma mark - Conversation Delegate
+
+- (void)conversationViewController:(ATLConversationViewController *)viewController didSelectMessage:(LYRMessage *)message {
+    LYRMessagePart *JPEGMessagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEG);
+    if (JPEGMessagePart) {
+        [self presentImageViewControllerWithMessage:message];
+        return;
+    }
+    LYRMessagePart *PNGMessagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImagePNG);
+    if (PNGMessagePart) {
+        [self presentImageViewControllerWithMessage:message];
+    }
+}
+
+#pragma mark - Helpers
+
+- (void)presentImageViewControllerWithMessage:(LYRMessage *)message {
+    // Create image info
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = [self loadLowResImageForMessage:message];
+
+    // Setup view controller
+    JTSImageViewController *imageViewer = [[LCImageViewController alloc] initWithImageInfo:imageInfo mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled message:message];
+
+    // Present the view controller.
+    [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
+}
+
+- (UIImage *)loadLowResImageForMessage:(LYRMessage *)message {
+    LYRMessagePart *lowResImagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEGPreview);
+    LYRMessagePart *imageInfoPart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageSize);
+
+    if (!lowResImagePart) {
+        // Default back to image/jpeg MIMEType
+        lowResImagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEG);
+    }
+
+    // Retrieve low-res image from message part
+    if (!(lowResImagePart.transferStatus == LYRContentTransferReadyForDownload || lowResImagePart.transferStatus == LYRContentTransferDownloading)) {
+        if (lowResImagePart.fileURL) {
+            return [UIImage imageWithContentsOfFile:lowResImagePart.fileURL.path];
+        } else {
+            return [UIImage imageWithData:lowResImagePart.data];
+        }
+    }
+    return nil;
 }
 
 @end

@@ -12,12 +12,17 @@
 #import <Security/Security.h>
 #import "KeychainItemWrapper.h"
 #import <CoreLocation/CoreLocation.h>
+#import "ATLMessagingUtilities.h"
+#import "LCLayerClient.h"
+
+static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
 
 @interface AppDelegate ()
 
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *lastLocation;
+@property (nonatomic) LCLayerClient *layerClient;
 @end
 
 @implementation AppDelegate
@@ -32,12 +37,13 @@
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [BrtrDataSource loadFakeData];
-    }
-//    
+//
 //    NSDictionary *creds = [self getLoginCredentials];
 //    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
 //        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
 //    }
+
+    [BrtrDataSource loadFakeData];
     self.user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
     if (self.user)
     {
@@ -64,7 +70,39 @@
             }];
         }
     }];
+
+    [self setupLayer];
+    
+>>>>>>> 02f3c6d... Changes podfile to use older version of Layer. Use example layer view controllers. Changes AppDelegate and TabViewController
     return YES;
+}
+
+- (void)setupLayer {
+    if (kLayerAppID) {
+        _layerClient = [LCLayerClient clientWithAppID:[[NSUUID alloc] initWithUUIDString:kLayerAppID]];
+        self.layerClient.autodownloadMIMETypes = [NSSet setWithObjects:ATLMIMETypeImageJPEGPreview, ATLMIMETypeTextPlain, nil];
+        [self.layerClient connectWithCompletion:^(BOOL success, NSError *error) {
+            if (!success) {
+                NSLog(@"Failed to connect to Layer: %@", error);
+            } else {
+                // TODO This will usually be in a view controller after the user authenticates
+                // For the purposes of this Quick Start project, let's authenticate as a user named 'Device/Simulator'.
+#if TARGET_IPHONE_SIMULATOR
+                NSString *userIDString = @"Simulator";
+#else // TARGET_IPHONE_SIMULATOR
+                NSString *userIDString = @"Device";
+#endif // TARGET_IPHONE_SIMULATOR
+                
+                // Once connected, authenticate user.
+                // Check Authenticate step for authenticateLayerWithUserID source
+                [self.layerClient authenticateWithUserID:userIDString completion:^(BOOL success, NSError *error) {
+                    if (!success) {
+                        NSLog(@"Failed Authenticating Layer Client with error:%@", error);
+                    }
+                }];
+            }
+        }];
+    }
 }
 
 -(void) startLocationManager
@@ -105,6 +143,12 @@
     }
     return [[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:email    , pass       , nil]
                                   forKeys:       [[NSArray alloc] initWithObjects:KEY_USER_NAME, KEY_AUTH_CREDS, nil]];
+}
+
+//-(LYRClient*) getLayerClient
+-(LCLayerClient*) getLayerClient
+{
+    return self.layerClient;
 }
 
 -(NSString *)getAuthToken

@@ -1,14 +1,14 @@
 //
-//  ChatUser.m
-//  Bartr
+//  LCUser.m
+//  LayerChatExample
 //
-//  Created by Synthia Ling on 5/24/15.
-//  Copyright (c) 2015 Bartr. All rights reserved.
+//  Created by Pulkit Goyal on 05/04/15.
+//  Copyright (c) 2015 Gigster. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "ChatUser.h"
-@implementation ChatUser
+#import "LCUser.h"
+
+@implementation LCUser
 
 - (instancetype)initWithParticipantIdentifier:(NSString *)participantIdentifier {
     self = [super init];
@@ -19,7 +19,7 @@
         _fullName = participantIdentifier;
         _avatarInitials = [participantIdentifier substringToIndex:1];
     }
-    
+
     return self;
 }
 
