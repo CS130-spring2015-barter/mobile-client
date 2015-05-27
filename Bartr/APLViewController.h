@@ -49,4 +49,7 @@
 
 @interface APLViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+@property (nonatomic, strong) NSString *itemName;
+@property (nonatomic, strong) NSString *itemDescription;
+
 @end

@@ -46,7 +46,7 @@
  */
 
 #import "APLViewController.h"
-
+#import "AddItemsViewController.h"
 
 @interface APLViewController ()
 
@@ -78,7 +78,7 @@
     [super viewDidLoad];
     self.nextButton.hidden = YES;
     self.capturedImages = [[NSMutableArray alloc] init];
-    
+    self.navigationController.delegate = self;
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
@@ -96,6 +96,12 @@
 - (IBAction)showImagePickerForPhotoPicker:(id)sender
 {
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.nextButton.hidden = self.imageView.image == nil;
 }
 
 
@@ -193,6 +199,18 @@
     [self.cameraTimer fire]; // Start taking pictures right away.
 }
 
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    AddItemsViewController *itemInfoVC;
+    if  ([segue.identifier isEqualToString:@"ShowItemInfoVC"]) {
+        itemInfoVC = (AddItemsViewController *)segue.destinationViewController;
+        itemInfoVC.itemName = self.itemName;
+        itemInfoVC.itemImage = self.imageView.image;
+        itemInfoVC.itemDescription = self.itemDescription;
+        self.imageView.image = nil;
+    }
+}
+
 
 - (IBAction)stopTakingPicturesAtIntervals:(id)sender
 {
@@ -216,6 +234,7 @@
         {
             // Camera took a single picture.
             self.imageView.frame = CGRectMake(0, 0, screen_width/2, screen_width/2);
+            [self.imageView setClipsToBounds:YES];
             [self.imageView.layer setBorderColor: [[UIColor grayColor] CGColor]];
             [self.imageView.layer setBorderWidth: 2.0];
             self.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -276,6 +295,21 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
+{
+    AddItemsViewController *itemInfoVC;
+    if ([unwindSegue.sourceViewController isKindOfClass:[AddItemsViewController class]]) {
+        itemInfoVC = (AddItemsViewController *) unwindSegue.sourceViewController;
+        self.itemName = itemInfoVC.itemName;
+        self.itemDescription = itemInfoVC.itemDescription;
+        self.imageView.image = itemInfoVC.itemImage;
+        if (self.imageView.image == nil) {
+            // TODO
+            self.nextButton.hidden = YES;
+        }
+    }
+    
+}
 
 @end
 

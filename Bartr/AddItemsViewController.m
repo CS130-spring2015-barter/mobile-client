@@ -7,18 +7,30 @@
 //
 
 #import "AddItemsViewController.h"
-#import "TextFormCell.h"
+#import "BrtrDataSource.h"
+#import "APLViewController.h"
+#import "AppDelegate.h"
+
 @interface AddItemsViewController ()
 @property IBOutlet UITableView *tableView;
+@property UITextField *itemNameField;
+@property UITextView  *itemDescriptionField;
+@property UIBarButtonItem *doneButton;
 @end
 
 @implementation AddItemsViewController
 @synthesize tableView = _tableView;
+@synthesize itemName;
+@synthesize itemDescription;
+@synthesize itemDescriptionField;
+@synthesize itemNameField;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    self.doneButton = self.navigationItem.rightBarButtonItem;
+    [self updateStatusOfDoneButton];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -55,26 +67,21 @@
 
     switch (indexPath.row) {
         case 0: {
-            UITextField* textField = [cell viewWithTag:100];
             cell.textLabel.text = @"Name";
-            textField = [[UITextField alloc] initWithFrame:CGRectMake(175,15,260,40)];
+            UITextField* textField = (UITextField *)[cell viewWithTag:100];
             textField.delegate = self;
-            textField.clearButtonMode = YES;
-            textField.tag = 100; /* I would recommend a cell subclass with a textfield member over the tag method in real code*/
-            [textField setReturnKeyType:UIReturnKeyDone];
-            [cell addSubview:textField];
-            break;
-        }
+            textField.text = self.itemName;
+            self.itemNameField = textField;
+            [textField setReturnKeyType:UIReturnKeyDone];            
+        } break;
         case 1: {
             cell.textLabel.text = @"Description";
-            UITextView *textView = [cell viewWithTag:100];
-            textView = [[UITextView alloc] initWithFrame:CGRectMake(175,15,260,40)];
+            UITextView *textView = (UITextView *)[cell viewWithTag:100];
+            textView.text = self.itemDescription;
+            self.itemDescriptionField = textView;
             textView.delegate = self;
-            textView.tag = 100; /* I would recommend a cell subclass with a textfield member over the tag method in real code*/
-            [textView setReturnKeyType:UIReturnKeyDone];
-            [cell addSubview:textView];
-            break;
-        }
+            
+        } break;
         default:
             break;
     }
@@ -85,7 +92,7 @@
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    id textField = (UITextField *)[cell viewWithTag:100];
+    id textField = [cell viewWithTag:100];
     [textField becomeFirstResponder];
 }
 
@@ -93,6 +100,51 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+-(void) textFieldDidEndEditing:(UITextField *)textField
+{
+    self.itemName = textField.text;
+    [self updateStatusOfDoneButton];
+}
+
+-(void) textViewDidEndEditing:(UITextView *)textView
+{
+    self.itemDescription = textView.text;
+    [self updateStatusOfDoneButton];
+}
+
+-(void) updateStatusOfDoneButton
+{
+    if (self.itemDescription && self.itemName
+    && ![self.itemDescription isEqualToString:@""]
+    && ![self.itemName isEqualToString:@""] )
+    {
+        self.navigationItem.rightBarButtonItem = self.doneButton;
+    }
+    else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
+- (IBAction)userDidPressDoneButton:(UIBarButtonItem *)sender {
+
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    BrtrUser *user  = ad.user;
+    [BrtrDataSource user:user
+             didAddItemWithName:self.itemName
+             andInfo:self.itemDescription
+                andImage:UIImagePNGRepresentation(self.itemImage) delegate:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSLog(@"Done");
+    self.itemImage = nil;
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if  ([segue.identifier isEqualToString:@"unwind"]) {
+        self.itemName = itemNameField.text;
+        self.itemDescription = itemDescriptionField.text;
+    }
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -107,30 +159,7 @@
     }
 }
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
- 
-*/
 
 
 @end
