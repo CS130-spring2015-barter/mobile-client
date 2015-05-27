@@ -16,6 +16,6 @@
 @dynamic info;
 @dynamic name;
 @dynamic picture;
-@dynamic user;
+//@dynamic user;
 
 @end
