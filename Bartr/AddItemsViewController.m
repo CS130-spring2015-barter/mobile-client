@@ -7,7 +7,9 @@
 //
 
 #import "AddItemsViewController.h"
+#import "BrtrDataSource.h"
 #import "APLViewController.h"
+#import "AppDelegate.h"
 
 @interface AddItemsViewController ()
 @property IBOutlet UITableView *tableView;
@@ -125,6 +127,14 @@
     }
 }
 - (IBAction)userDidPressDoneButton:(UIBarButtonItem *)sender {
+
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    BrtrUser *user  = ad.user;
+    [BrtrDataSource user:user
+             didAddItemWithName:self.itemName
+             andInfo:self.itemDescription
+                andImage:UIImagePNGRepresentation(self.itemImage) delegate:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     NSLog(@"Done");
     self.itemImage = nil;
 }

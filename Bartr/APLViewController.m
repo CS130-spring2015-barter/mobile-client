@@ -98,6 +98,12 @@
     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.nextButton.hidden = self.imageView.image == nil;
+}
+
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
@@ -201,6 +207,7 @@
         itemInfoVC.itemName = self.itemName;
         itemInfoVC.itemImage = self.imageView.image;
         itemInfoVC.itemDescription = self.itemDescription;
+        self.imageView.image = nil;
     }
 }
 
