@@ -12,6 +12,7 @@
 #import "BrtrItemsTableViewController.h"
 #import "BrtrProfileViewController.h"
 #import "BrtrSwipeyViewController.h"
+#import "JCDCoreData.h"
 //#import "ConversationListViewController.h"
 #import "LCConversationListViewController.h"
 
@@ -51,7 +52,9 @@
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
-        // FIXME
+        NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+        AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        itvc.items = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", ap.user.email]];
         [BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         itvc.allowEditableItems = NO;

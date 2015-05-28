@@ -174,10 +174,6 @@
 
 +(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
-    //FIXME
-//    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-//    return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-    
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
     NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/liked"
