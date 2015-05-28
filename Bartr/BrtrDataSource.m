@@ -174,10 +174,6 @@
 
 +(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
-    //FIXME
-//    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-//    return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-    
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
     NSURLRequest *request = [BrtrDataSource getRequestWith:@"item/liked"
@@ -479,11 +475,10 @@
     return user;
 }
 
-
-+(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
++(NSDictionary *)getUserInfoForUserWithId:(NSNumber *)u_id
 {
-    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:ROUTE_USER_GET, user.u_id] andQuery:nil];
-
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:ROUTE_USER_GET, u_id]  andQuery:nil];
+    
     NSDictionary *jsonData;
     @try {
         NSError *error = [[NSError alloc] init];
@@ -492,9 +487,6 @@
         NSLog(@"Response code: %ld", (long)[response statusCode]);
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
-           // NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
-           // NSLog(@"Response ==> %@", responseData);
-
             NSError *error = nil;
             jsonData = [NSJSONSerialization
                         JSONObjectWithData:urlData
@@ -505,7 +497,7 @@
             NSString *error_msg = (NSString *) jsonData[@"message"];
             [BrtrDataSource alertStatus:error_msg :@"Sign in Failed!" :0];
         }
-
+        
         else {
             //if (error) NSLog(@"Error: %@", error);
             [BrtrDataSource alertStatus:@"Connection Failed" :@"Sign in Failed!" :0];
@@ -516,6 +508,11 @@
         [BrtrDataSource alertStatus:@"Sign in Failed." :@"Error!" :0];
     }
     return jsonData;
+}
+
++(NSDictionary *)getUserInfoForUser:(BrtrUser *)user
+{
+    return [BrtrDataSource getUserInfoForUserWithId:user.u_id];
 }
 
 +(BrtrUser *)getUserForEmail:(NSString *)email password:(NSString *)pass
@@ -754,7 +751,7 @@
                 BrtrUser *user = ad.user;
                 NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
-                    //NSNumber *user_id = [item valueForKey: @"user_id"];
+                    NSNumber *owner_id = [item valueForKey: @"user_id"];
                     NSNumber *item_id = [item valueForKey: @"id"];
                     NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
                     NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
@@ -775,6 +772,7 @@
                     }
                     fetched_item.user = user;
                     fetched_item.i_id = item_id;
+                    fetched_item.owner_id = owner_id;
                     fetched_item.info = item_description;
                     fetched_item.name = item_title;
                     fetched_item.picture = item_image;

@@ -12,7 +12,7 @@
 #import "BrtrItemsTableViewController.h"
 #import "BrtrProfileViewController.h"
 #import "BrtrSwipeyViewController.h"
-//#import "ConversationListViewController.h"
+#import "JCDCoreData.h"
 #import "LCConversationListViewController.h"
 
 @interface BrtrStartupTabViewController  ()
@@ -25,9 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *ad = (AppDelegate *)[UIApplication  sharedApplication].delegate;
-    [ad setupLayer];
     self.delegate = self;
     self.user = ad.user;
+    [ad setupLayer: self.user.email];
     // Do any additional setup after loading the view.
 }
 
@@ -35,6 +35,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
@@ -51,7 +52,9 @@
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
-        // FIXME
+        NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+        AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        itvc.items = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", ap.user.email]];
         [BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         itvc.allowEditableItems = NO;

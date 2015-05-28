@@ -12,14 +12,17 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "LCImageViewController.h"
+#import "AppDelegate.h"
 
 @implementation LCConversationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.u_id = ad.user.email;
     self.delegate = self;
     self.dataSource = self;
-}
+};
 
 #pragma mark - Conversation Data Source
 
@@ -138,6 +141,40 @@
         }
     }
     return nil;
+}
+
+- (void)sendMessage:(NSString *)messageText toReceiver:(NSString *) rec_id {
+    
+    // Send a Message
+    // See "Quick Start - Send a Message" for more details
+    // https://developer.layer.com/docs/quick-start/ios#send-a-message
+    
+    // If no conversations exist, create a new conversation object with a single participant
+    if (!self.conversation) {
+        NSError *error = nil;
+        NSSet *participants = [[NSSet alloc] initWithObjects:self.u_id, rec_id, nil];
+        self.conversation = [self.layerClient newConversationWithParticipants:participants options:nil error:&error];
+        if (!self.conversation) {
+            NSLog(@"New Conversation creation failed: %@", error);
+        }
+    }
+    
+    // Creates a message part with text/plain MIME Type
+    LYRMessagePart *messagePart = [LYRMessagePart messagePartWithText:messageText];
+    
+    // Creates and returns a new message object with the given conversation and array of message parts
+    NSString *pushMessage= [NSString stringWithFormat:@"%@ says %@",self.layerClient.authenticatedUserID ,messageText];
+    LYRMessage *message = [self.layerClient newMessageWithParts:@[messagePart] options:@{LYRMessageOptionsPushNotificationAlertKey: pushMessage} error:nil];
+    
+    // Sends the specified message
+    NSError *error;
+    BOOL success = [self.conversation sendMessage:message error:&error];
+    if (success) {
+        // If the message was sent by the participant, show the sentAt time and mark the message as read
+        NSLog(@"Message queued to be sent: %@", messageText);
+    } else {
+        NSLog(@"Message send failed: %@", error);
+    }
 }
 
 @end

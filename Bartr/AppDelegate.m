@@ -52,7 +52,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
     return YES;
 }
 
-- (void)setupLayer {
+- (void)setupLayer: (NSString *) userIDString{
     if (kLayerAppID) {
         _layerClient = [LCLayerClient clientWithAppID:[[NSUUID alloc] initWithUUIDString:kLayerAppID]];
         self.layerClient.autodownloadMIMETypes = [NSSet setWithObjects:ATLMIMETypeImageJPEGPreview, ATLMIMETypeTextPlain, nil];
@@ -61,13 +61,14 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
                 NSLog(@"Failed to connect to Layer: %@", error);
             } else {
                 // TODO This will usually be in a view controller after the user authenticates
-                // For the purposes of this Quick Start project, let's authenticate as a user named 'Device/Simulator'.
+                // For the purposes of th       is Quick Start project, let's authenticate as a user named 'Device/Simulator'.
+/*
 #if TARGET_IPHONE_SIMULATOR
                 NSString *userIDString = @"Simulator";
 #else // TARGET_IPHONE_SIMULATOR
                 NSString *userIDString = @"Device";
 #endif // TARGET_IPHONE_SIMULATOR
-                
+*/
                 // Once connected, authenticate user.
                 // Check Authenticate step for authenticateLayerWithUserID source
                 [self.layerClient authenticateWithUserID:userIDString completion:^(BOOL success, NSError *error) {

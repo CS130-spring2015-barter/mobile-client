@@ -1,9 +1,9 @@
 //
 //  BrtrCardItem.h
-//  Bartr
+//  
 //
-//  Created by admin on 5/2/15.
-//  Copyright (c) 2015 Bartr. All rights reserved.
+//  Created by Synthia Ling on 5/28/15.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -14,6 +14,7 @@
 
 @interface BrtrCardItem : BrtrItem
 
+@property (nonatomic, retain) NSNumber * owner_id;
 @property (nonatomic, retain) BrtrUser *user;
 
 @end

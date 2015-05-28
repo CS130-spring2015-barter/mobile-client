@@ -1,9 +1,9 @@
 //
 //  BrtrCardItem.m
-//  Bartr
+//  
 //
-//  Created by admin on 5/2/15.
-//  Copyright (c) 2015 Bartr. All rights reserved.
+//  Created by Synthia Ling on 5/28/15.
+//
 //
 
 #import "BrtrCardItem.h"
@@ -12,6 +12,7 @@
 
 @implementation BrtrCardItem
 
+@dynamic owner_id;
 @dynamic user;
 
 @end

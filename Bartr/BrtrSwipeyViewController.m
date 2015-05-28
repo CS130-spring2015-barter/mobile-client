@@ -16,6 +16,8 @@
 #import "DataFetchDelegate.h"
 #import "JCDCoreData.h"
 #import "BrtrItemViewController.h"
+#import "LCConversationViewController.h"
+#import "BrtrBackendFields.h"
 
 @interface BrtrSwipeyViewController ()
 
@@ -54,14 +56,17 @@
 
 -(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>)delegate
 {
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [[BrtrDataSource sharedInstance] user:self.user didLikeItem:item delegate:delegate];
+    LCConversationViewController *conv = [LCConversationViewController conversationViewControllerWithLayerClient:[ad getLayerClient]];
+    NSDictionary *user_info = [BrtrDataSource getUserInfoForUserWithId:item.owner_id];
+    [conv sendMessage:@"Hello world!" toReceiver:[user_info objectForKey:KEY_USER_EMAIL]];
 }
 
 -(void) itemSwipedLeft:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate
 {
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item delegate:delegate];
 }
-
 
 -(void) userClickedItem:(BrtrCardItem *)card
 {

@@ -9,5 +9,6 @@
 #import "ATLConversationViewController.h"
 
 @interface LCConversationViewController : ATLConversationViewController <ATLConversationViewControllerDataSource, ATLConversationViewControllerDelegate>
-
+-(void)sendMessage:(NSString *)messageText toReceiver:(NSString *) rec_id;
+@property (strong, nonatomic) NSString *u_id;
 @end

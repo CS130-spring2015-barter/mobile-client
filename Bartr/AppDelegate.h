@@ -26,6 +26,6 @@
 -(NSString *)getAuthToken;
 -(void) startLocationManager;
 -(CLLocation *) getGPSData;
--(void)setupLayer;
+-(void)setupLayer: (NSString *) userIDString;
 @end
 

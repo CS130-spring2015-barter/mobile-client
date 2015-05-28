@@ -16,6 +16,7 @@
 		253629A21B15984A00DA5C6A /* LCLayerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536299C1B15984A00DA5C6A /* LCLayerClient.m */; };
 		253629A31B15984A00DA5C6A /* LCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536299E1B15984A00DA5C6A /* LCUser.m */; };
 		256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C0B391B058AA100677AF6 /* APLViewController.m */; };
+		25B692601B170361005CB7A6 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B6925F1B170361005CB7A6 /* BrtrCardItem.m */; };
 		526E99FF1ADB822800615EFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E99FE1ADB822800615EFC /* main.m */; };
 		526E9A021ADB822800615EFC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A011ADB822800615EFC /* AppDelegate.m */; };
 		526E9A0B1ADB822800615EFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A091ADB822800615EFC /* Main.storyboard */; };
@@ -31,7 +32,6 @@
 		842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176841AF5A9D500B72AA3 /* BrtrUser.m */; };
 		842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176871AF5A9D600B72AA3 /* BrtrUserItem.m */; };
 		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
-		8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */; };
 		84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84273B3B1B01CBA1004430B5 /* LoginViewController.m */; };
 		8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4A1B051B1C008FFF07 /* RoundedButton.m */; };
 		8434CF4F1B051C49008FFF07 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4E1B051C49008FFF07 /* common.m */; };
@@ -79,6 +79,8 @@
 		2536299E1B15984A00DA5C6A /* LCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUser.m; sourceTree = "<group>"; };
 		256C0B381B058AA100677AF6 /* APLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLViewController.h; sourceTree = "<group>"; };
 		256C0B391B058AA100677AF6 /* APLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLViewController.m; sourceTree = "<group>"; };
+		25B6925E1B170361005CB7A6 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
+		25B6925F1B170361005CB7A6 /* BrtrCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrCardItem.m; sourceTree = "<group>"; };
 		526E99F91ADB822800615EFC /* Bartr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bartr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		526E99FD1ADB822800615EFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526E99FE1ADB822800615EFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,8 +109,6 @@
 		842176871AF5A9D600B72AA3 /* BrtrUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUserItem.m; sourceTree = "<group>"; };
 		842176891AF5A9D600B72AA3 /* BrtrItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrItem.h; sourceTree = "<group>"; };
 		8421768A1AF5A9D600B72AA3 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
-		8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
-		8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrCardItem.m; sourceTree = "<group>"; };
 		84273B3A1B01CBA1004430B5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		84273B3B1B01CBA1004430B5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		8434CF491B051B1C008FFF07 /* RoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedButton.h; sourceTree = "<group>"; };
@@ -296,9 +296,9 @@
 		84F9E1941AF444B2006E504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				25B6925E1B170361005CB7A6 /* BrtrCardItem.h */,
+				25B6925F1B170361005CB7A6 /* BrtrCardItem.m */,
 				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
-				8421768C1AF5AA9D00B72AA3 /* BrtrCardItem.h */,
-				8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */,
 				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
 				8421768A1AF5A9D600B72AA3 /* BrtrItem.m */,
 				7643E7381B1687DB00FC1B08 /* BrtrLikedItem.h */,
@@ -322,10 +322,10 @@
 				253629961B15984A00DA5C6A /* LCConversationListViewController.m */,
 				253629971B15984A00DA5C6A /* LCConversationViewController.h */,
 				253629981B15984A00DA5C6A /* LCConversationViewController.m */,
-				253629991B15984A00DA5C6A /* LCImageViewController.h */,
-				2536299A1B15984A00DA5C6A /* LCImageViewController.m */,
 				2536299B1B15984A00DA5C6A /* LCLayerClient.h */,
 				2536299C1B15984A00DA5C6A /* LCLayerClient.m */,
+				253629991B15984A00DA5C6A /* LCImageViewController.h */,
+				2536299A1B15984A00DA5C6A /* LCImageViewController.m */,
 				2536299D1B15984A00DA5C6A /* LCUser.h */,
 				2536299E1B15984A00DA5C6A /* LCUser.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
@@ -492,6 +492,7 @@
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				2536299F1B15984A00DA5C6A /* LCConversationListViewController.m in Sources */,
 				D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */,
+				25B692601B170361005CB7A6 /* BrtrCardItem.m in Sources */,
 				7643E73A1B1687DB00FC1B08 /* BrtrLikedItem.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */,
@@ -504,7 +505,6 @@
 				253629A31B15984A00DA5C6A /* LCUser.m in Sources */,
 				84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
-				8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */,
 				842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */,
 				253629A11B15984A00DA5C6A /* LCImageViewController.m in Sources */,
 				84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */,

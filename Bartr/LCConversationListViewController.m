@@ -14,7 +14,8 @@
 @implementation LCConversationListViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.participants = [NSSet setWithArray:@[[LCUser userWithParticipantIdentifier:@"Device"], [LCUser userWithParticipantIdentifier:@"Simulator"]]];
+self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewChat:)];
 }
 
 #pragma mark - Conversation List Data Source
@@ -84,6 +85,12 @@
     return participants;
 }
 
+- (void)createNewChat:(id)sender {
+    ATLParticipantTableViewController *participantTableViewController = [ATLParticipantTableViewController participantTableViewControllerWithParticipants:self.participants sortType:ATLParticipantPickerSortTypeFirstName];
+    participantTableViewController.delegate = self;
+    [self.navigationController pushViewController:participantTableViewController animated:YES];
+}
+
 #pragma mark - Conversation Selection From Push Notification
 
 - (void)selectConversation:(LYRConversation *)conversation {
@@ -91,5 +98,8 @@
         [self presentConversationControllerForConversation:conversation];
     }
 }
+
+
+
 
 @end
