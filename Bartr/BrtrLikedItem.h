@@ -2,7 +2,7 @@
 //  BrtrLikedItem.h
 //  Bartr
 //
-//  Created by admin on 5/2/15.
+//  Created by Tung Nguyen on 5/27/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 
 @interface BrtrLikedItem : BrtrItem
 
+@property (nonatomic, retain) NSNumber * owner_id;
 @property (nonatomic, retain) BrtrUser *user;
 
 @end

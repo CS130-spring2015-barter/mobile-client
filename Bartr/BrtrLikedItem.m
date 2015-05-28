@@ -2,7 +2,7 @@
 //  BrtrLikedItem.m
 //  Bartr
 //
-//  Created by admin on 5/2/15.
+//  Created by Tung Nguyen on 5/27/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 @implementation BrtrLikedItem
 
+@dynamic owner_id;
 @dynamic user;
 
 @end

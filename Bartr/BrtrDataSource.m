@@ -276,6 +276,7 @@
                     liked_item.info = item_description;
                     liked_item.name = item_title;
                     liked_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    liked_item.owner_id = user_id;
                     [cards addObject:liked_item];
                 }
                 [BrtrDataSource saveAllData];
@@ -300,7 +301,7 @@
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
-    
+
     NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
     [self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 }

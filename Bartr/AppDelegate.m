@@ -35,7 +35,6 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
         [self.keychainItem resetKeychainItem];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:@"FirstRun"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [BrtrDataSource loadFakeData];
     }
     NSDictionary *creds = [self getLoginCredentials];
     if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
