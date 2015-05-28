@@ -168,10 +168,6 @@
 
 +(void)getUserItemsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
-    // FIXME
-//    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-//    return [context fetchObjectsWithEntityName:@"BrtrUserItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
-    
     NSLog(@"Attempting to get my items");
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
@@ -696,13 +692,13 @@
     NSMutableArray *items = [[NSMutableArray alloc] init];
     __block NSArray* items_arr;
     if([route  isEqual: @"item/liked"]) {
-        items_arr = self.liked_items;
+        items_arr = [self.liked_items copy];
         for (BrtrCardItem* item in self.liked_items) {
             [items addObject:[item.i_id stringValue]];
         }
     }
     else {
-        items_arr = self.rejected_items;
+        items_arr = [self.rejected_items copy];
         for (BrtrCardItem* item in self.rejected_items) {
             [items addObject:[item.i_id stringValue]];
         }
@@ -749,14 +745,32 @@
                         }
                     }
                 }
-                [BrtrDataSource saveAllData];
                 
                 if([route isEqual:@"item/liked"]) {
+                    for (BrtrCardItem* i in self.liked_items) {
+                        NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", i.i_id]];
+                        BrtrLikedItem *liked_item;
+                        if (matches && [matches count] == 1) {
+                            liked_item = [matches objectAtIndex: 0];
+                        } else if (0 == [matches count]) {
+                            liked_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrLikedItem" inManagedObjectContext:context];
+                        } else {
+                            NSLog(@"Error in get card items");
+                        }
+
+                        liked_item.i_id = i.i_id;
+                        liked_item.info = i.info;
+                        liked_item.name = i.name;
+                        liked_item.picture = i.picture;
+                        liked_item.user = user;
+                        liked_item.owner_id = i.owner_id;
+                    }
                     self.liked_items = [mut_items_arr copy];
                 }
                 else {
                     self.rejected_items = [mut_items_arr copy];
                 }
+                [BrtrDataSource saveAllData];
             }
             else
             {
