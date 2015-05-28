@@ -51,8 +51,8 @@
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
         BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
-        itvc.items = [BrtrDataSource getLikedItemsForUser:
-                    self.user];
+        // FIXME
+        [BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         itvc.allowEditableItems = NO;
        // NSLog(@"Items");
