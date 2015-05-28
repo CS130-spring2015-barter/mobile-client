@@ -24,9 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [BrtrDataSource loadFakeData];
+    AppDelegate *ad = (AppDelegate *)[UIApplication  sharedApplication].delegate;
+    [ad setupLayer];
     self.delegate = self;
-    AppDelegate *ad = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.user = ad.user;
     // Do any additional setup after loading the view.
 }

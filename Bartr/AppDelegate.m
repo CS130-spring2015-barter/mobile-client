@@ -15,7 +15,8 @@
 #import "ATLMessagingUtilities.h"
 #import "LCLayerClient.h"
 
-static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
+//static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
+static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 @interface AppDelegate()
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
@@ -37,12 +38,10 @@ static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
         [[NSUserDefaults standardUserDefaults] synchronize];
         [BrtrDataSource loadFakeData];
     }
-//    NSDictionary *creds = [self getLoginCredentials];
-//    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
-//        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
-//    }
-    [BrtrDataSource loadFakeData];
-    self.user = [BrtrDataSource getUserForEmail:@"foo@bar.com"];
+    NSDictionary *creds = [self getLoginCredentials];
+    if (creds && [creds objectForKey:KEY_USER_NAME] && [creds objectForKey:KEY_AUTH_CREDS]) {
+        self.user = [BrtrDataSource getUserForEmail:[creds objectForKey:KEY_USER_NAME] password:[creds objectForKey:KEY_AUTH_CREDS]];
+    }
     if (self.user)
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
@@ -51,8 +50,6 @@ static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
-
-    [self setupLayer];
     
     return YES;
 }
