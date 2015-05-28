@@ -56,11 +56,16 @@
 
 -(void) itemSwipedRight:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>)delegate
 {
-    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [[BrtrDataSource sharedInstance] user:self.user didLikeItem:item delegate:delegate];
-    LCConversationViewController *conv = [LCConversationViewController conversationViewControllerWithLayerClient:[ad getLayerClient]];
-    NSDictionary *user_info = [BrtrDataSource getUserInfoForUserWithId:item.owner_id];
-    [conv sendMessage:@"Hello world!" toReceiver:[user_info objectForKey:KEY_USER_EMAIL]];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    __block BrtrCardItem *temp_item = item;
+    __block BrtrUser     *temp_user = self.user;
+    [queue addOperationWithBlock:^{
+        AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [[BrtrDataSource sharedInstance] user:temp_user didLikeItem:temp_item delegate:delegate];
+        LCConversationViewController *conv = [LCConversationViewController conversationViewControllerWithLayerClient:[ad getLayerClient]];
+        NSDictionary *user_info = [BrtrDataSource getUserInfoForUserWithId:temp_item.owner_id];
+        [conv sendMessage:@"Hello world!" toReceiver:[user_info objectForKey:KEY_USER_EMAIL]];
+    }];
 }
 
 -(void) itemSwipedLeft:(BrtrCardItem *)item usingDelegate:(id<DataFetchDelegate>) delegate

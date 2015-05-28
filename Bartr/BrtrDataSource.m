@@ -812,8 +812,8 @@
                 BrtrUser *user = ad.user;
                 NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
-                    NSNumber *owner_id = [item valueForKey: @"user_id"];
-                    NSNumber *item_id = [item valueForKey: @"id"];
+                    NSNumber *owner_id = [item valueForKey: KEY_USER_ID];
+                    NSNumber *item_id = [item valueForKey: KEY_ITEM_ID];
                     NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
                     NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
                     NSDictionary *image_dict = [item valueForKey: KEY_ITEM_IMAGE];

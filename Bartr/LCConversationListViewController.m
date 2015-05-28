@@ -52,7 +52,6 @@ self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarBut
 }
 
 #pragma mark - Participant Delegate
-
 - (void)participantTableViewController:(ATLParticipantTableViewController *)participantTableViewController didSelectParticipant:(id <ATLParticipant>)participant {
     [self.navigationController popViewControllerAnimated:NO];
 
@@ -66,11 +65,7 @@ self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarBut
     }
 }
 
-- (void)participantTableViewController:(ATLParticipantTableViewController *)participantTableViewController didSearchWithString:(NSString *)searchText completion:(void (^)(NSSet *filteredParticipants))completion {
-}
-
 #pragma mark - Helpers
-
 - (void)presentConversationControllerForConversation:(LYRConversation *)conversation {
     ATLConversationViewController *conversationViewController = [LCConversationViewController conversationViewControllerWithLayerClient:self.layerClient];
     conversationViewController.conversation = conversation;
