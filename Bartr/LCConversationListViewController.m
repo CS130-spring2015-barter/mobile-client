@@ -17,7 +17,6 @@
     self.participants = [NSSet setWithArray:@[[LCUser userWithParticipantIdentifier:@"Device"], [LCUser userWithParticipantIdentifier:@"Simulator"]]];
 self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewChat:)];
 }
-
 #pragma mark - Conversation List Data Source
 
 - (NSString *)conversationListViewController:(ATLConversationListViewController *)conversationListViewController titleForConversation:(LYRConversation *)conversation {

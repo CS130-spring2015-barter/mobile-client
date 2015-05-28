@@ -51,8 +51,8 @@ BOOL isEditMode;
             self.user.about_me = self.aboutMeField.text;
         }
         // Because the cropped version is displayed we must crop both for comparasion
-        NSData *new_image_data = UIImagePNGRepresentation(self.picture.image);
-        NSData *old_image_data = UIImagePNGRepresentation([self centerCropImage: [UIImage imageWithData: self.user.image]]);
+        NSData *new_image_data = UIImageJPEGRepresentation(self.picture.image, 0.0f);
+        NSData *old_image_data = UIImageJPEGRepresentation([self centerCropImage: [UIImage imageWithData: self.user.image]], 0.0f);
         if (![new_image_data isEqualToData:old_image_data]) {
             self.user.image = new_image_data;
             NSString *encoded_image_data = [new_image_data base64EncodedStringWithOptions:kNilOptions];

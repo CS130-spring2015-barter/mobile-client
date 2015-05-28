@@ -132,7 +132,7 @@
     [BrtrDataSource user:user
              didAddItemWithName:self.itemName
              andInfo:self.itemDescription
-                andImage:UIImagePNGRepresentation(self.itemImage) delegate:nil];
+                andImage:UIImageJPEGRepresentation(self.itemImage, 0.0f) delegate:nil];
     [self.navigationController popToRootViewControllerAnimated:YES];
     NSLog(@"Done");
     self.itemImage = nil;

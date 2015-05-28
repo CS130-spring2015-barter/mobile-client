@@ -150,6 +150,8 @@
     // https://developer.layer.com/docs/quick-start/ios#send-a-message
     
     // If no conversations exist, create a new conversation object with a single participant
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.u_id = ad.user.email;
     if (!self.conversation) {
         NSError *error = nil;
         NSSet *participants = [[NSSet alloc] initWithObjects:self.u_id, rec_id, nil];

@@ -12,7 +12,6 @@
 @protocol ATLParticipantTableViewControllerDelegate;
 
 @interface LCConversationListViewController : ATLConversationListViewController <ATLParticipantTableViewControllerDelegate>
-
 - (void)selectConversation:(LYRConversation *)conversation;
 @property (nonatomic, strong) NSSet *participants;
 @end
