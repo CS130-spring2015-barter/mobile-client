@@ -15,7 +15,6 @@
 		253629A11B15984A00DA5C6A /* LCImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536299A1B15984A00DA5C6A /* LCImageViewController.m */; };
 		253629A21B15984A00DA5C6A /* LCLayerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536299C1B15984A00DA5C6A /* LCLayerClient.m */; };
 		253629A31B15984A00DA5C6A /* LCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536299E1B15984A00DA5C6A /* LCUser.m */; };
-		255EC14C1B17B9010087B9C7 /* BrtrMyItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255EC14B1B17B9010087B9C7 /* BrtrMyItemsTableViewController.m */; };
 		256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256C0B391B058AA100677AF6 /* APLViewController.m */; };
 		25B692601B170361005CB7A6 /* BrtrCardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B6925F1B170361005CB7A6 /* BrtrCardItem.m */; };
 		526E99FF1ADB822800615EFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E99FE1ADB822800615EFC /* main.m */; };
@@ -34,7 +33,6 @@
 		842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176871AF5A9D600B72AA3 /* BrtrUserItem.m */; };
 		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
 		84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84273B3B1B01CBA1004430B5 /* LoginViewController.m */; };
-		8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4A1B051B1C008FFF07 /* RoundedButton.m */; };
 		8434CF4F1B051C49008FFF07 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CF4E1B051C49008FFF07 /* common.m */; };
 		8434CF511B051E03008FFF07 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8434CF501B051E03008FFF07 /* CoreGraphics.framework */; };
 		8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */; };
@@ -78,8 +76,6 @@
 		2536299C1B15984A00DA5C6A /* LCLayerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCLayerClient.m; sourceTree = "<group>"; };
 		2536299D1B15984A00DA5C6A /* LCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUser.h; sourceTree = "<group>"; };
 		2536299E1B15984A00DA5C6A /* LCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCUser.m; sourceTree = "<group>"; };
-		255EC14A1B17B9010087B9C7 /* BrtrMyItemsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrMyItemsTableViewController.h; sourceTree = "<group>"; };
-		255EC14B1B17B9010087B9C7 /* BrtrMyItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrMyItemsTableViewController.m; sourceTree = "<group>"; };
 		256C0B381B058AA100677AF6 /* APLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLViewController.h; sourceTree = "<group>"; };
 		256C0B391B058AA100677AF6 /* APLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLViewController.m; sourceTree = "<group>"; };
 		25B6925E1B170361005CB7A6 /* BrtrCardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrCardItem.h; sourceTree = "<group>"; };
@@ -114,8 +110,6 @@
 		8421768A1AF5A9D600B72AA3 /* BrtrItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrItem.m; sourceTree = "<group>"; };
 		84273B3A1B01CBA1004430B5 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		84273B3B1B01CBA1004430B5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		8434CF491B051B1C008FFF07 /* RoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedButton.h; sourceTree = "<group>"; };
-		8434CF4A1B051B1C008FFF07 /* RoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedButton.m; sourceTree = "<group>"; };
 		8434CF4D1B051C26008FFF07 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		8434CF4E1B051C49008FFF07 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = common.m; sourceTree = "<group>"; };
 		8434CF501B051E03008FFF07 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,14 +161,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02FC0B9A176ECED7AD58DDAC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C579D4BE3FDB9CDFE38BA33A /* libPods-Bartr.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		1F556C097FBC784C9F0A8F7A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,7 +178,6 @@
 				526E9A181ADB822800615EFC /* BartrTests */,
 				526E99FA1ADB822800615EFC /* Products */,
 				1F556C097FBC784C9F0A8F7A /* Pods */,
-				02FC0B9A176ECED7AD58DDAC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,8 +193,6 @@
 		526E99FB1ADB822800615EFC /* Bartr */ = {
 			isa = PBXGroup;
 			children = (
-				256C0B381B058AA100677AF6 /* APLViewController.h */,
-				256C0B391B058AA100677AF6 /* APLViewController.m */,
 				526E9A091ADB822800615EFC /* Main.storyboard */,
 				842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */,
 				84F9E1931AF44492006E504D /* Views */,
@@ -223,19 +206,16 @@
 		526E99FC1ADB822800615EFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				526E9A0C1ADB822800615EFC /* Images.xcassets */,
+				84B8BA8B1B17DB1100225ADE /* Generic */,
+				84185F7B1B056E8500C671EE /* Frameworks */,
+				84CAA8011ADE086A00253D2A /* Icon-user.png */,
 				84788EC01B115C9000BC4828 /* BrtrBackendFields.h */,
 				7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */,
 				84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */,
 				84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */,
-				84185F7B1B056E8500C671EE /* Frameworks */,
-				8434CF4D1B051C26008FFF07 /* common.h */,
-				8434CF4E1B051C49008FFF07 /* common.m */,
 				526E9A001ADB822800615EFC /* AppDelegate.h */,
 				526E9A011ADB822800615EFC /* AppDelegate.m */,
-				84CAA8011ADE086A00253D2A /* Icon-user.png */,
-				526E9A0C1ADB822800615EFC /* Images.xcassets */,
-				526E99FD1ADB822800615EFC /* Info.plist */,
-				526E99FE1ADB822800615EFC /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -260,12 +240,65 @@
 		84185F7B1B056E8500C671EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C579D4BE3FDB9CDFE38BA33A /* libPods-Bartr.a */,
 				7643E7361B099D5A00FC1B08 /* CoreLocation.framework */,
 				84185F791B056E7100C671EE /* Security.framework */,
 				8434CF501B051E03008FFF07 /* CoreGraphics.framework */,
 				8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84B8BA881B17DA3000225ADE /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				253629951B15984A00DA5C6A /* LCConversationListViewController.h */,
+				253629961B15984A00DA5C6A /* LCConversationListViewController.m */,
+				253629971B15984A00DA5C6A /* LCConversationViewController.h */,
+				253629981B15984A00DA5C6A /* LCConversationViewController.m */,
+				253629991B15984A00DA5C6A /* LCImageViewController.h */,
+				2536299A1B15984A00DA5C6A /* LCImageViewController.m */,
+			);
+			name = Layer;
+			sourceTree = "<group>";
+		};
+		84B8BA891B17DAA800225ADE /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				2536299B1B15984A00DA5C6A /* LCLayerClient.h */,
+				2536299C1B15984A00DA5C6A /* LCLayerClient.m */,
+				2536299D1B15984A00DA5C6A /* LCUser.h */,
+				2536299E1B15984A00DA5C6A /* LCUser.m */,
+			);
+			name = Layer;
+			sourceTree = "<group>";
+		};
+		84B8BA8A1B17DAC200225ADE /* Core Data Entities */ = {
+			isa = PBXGroup;
+			children = (
+				25B6925E1B170361005CB7A6 /* BrtrCardItem.h */,
+				25B6925F1B170361005CB7A6 /* BrtrCardItem.m */,
+				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
+				8421768A1AF5A9D600B72AA3 /* BrtrItem.m */,
+				7643E7381B1687DB00FC1B08 /* BrtrLikedItem.h */,
+				7643E7391B1687DB00FC1B08 /* BrtrLikedItem.m */,
+				842176861AF5A9D600B72AA3 /* BrtrUserItem.h */,
+				842176871AF5A9D600B72AA3 /* BrtrUserItem.m */,
+				842176831AF5A9D500B72AA3 /* BrtrUser.h */,
+				842176841AF5A9D500B72AA3 /* BrtrUser.m */,
+			);
+			name = "Core Data Entities";
+			sourceTree = "<group>";
+		};
+		84B8BA8B1B17DB1100225ADE /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				8434CF4D1B051C26008FFF07 /* common.h */,
+				8434CF4E1B051C49008FFF07 /* common.m */,
+				526E99FD1ADB822800615EFC /* Info.plist */,
+				526E99FE1ADB822800615EFC /* main.m */,
+			);
+			name = Generic;
 			sourceTree = "<group>";
 		};
 		84C8F3681AEC5F54005D7D65 /* JCDCoreData */ = {
@@ -280,8 +313,8 @@
 		84F9E1931AF44492006E504D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8434CF491B051B1C008FFF07 /* RoundedButton.h */,
-				8434CF4A1B051B1C008FFF07 /* RoundedButton.m */,
+				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
+				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
 				8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */,
 				8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */,
 				253238E91AEC500700DF7DE5 /* DraggableView.h */,
@@ -297,17 +330,9 @@
 		84F9E1941AF444B2006E504D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				25B6925E1B170361005CB7A6 /* BrtrCardItem.h */,
-				25B6925F1B170361005CB7A6 /* BrtrCardItem.m */,
+				84B8BA891B17DAA800225ADE /* Layer */,
 				84C8F3681AEC5F54005D7D65 /* JCDCoreData */,
-				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
-				8421768A1AF5A9D600B72AA3 /* BrtrItem.m */,
-				7643E7381B1687DB00FC1B08 /* BrtrLikedItem.h */,
-				7643E7391B1687DB00FC1B08 /* BrtrLikedItem.m */,
-				842176861AF5A9D600B72AA3 /* BrtrUserItem.h */,
-				842176871AF5A9D600B72AA3 /* BrtrUserItem.m */,
-				842176831AF5A9D500B72AA3 /* BrtrUser.h */,
-				842176841AF5A9D500B72AA3 /* BrtrUser.m */,
+				84B8BA8A1B17DAC200225ADE /* Core Data Entities */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
 			);
@@ -317,33 +342,22 @@
 		84F9E1951AF444C8006E504D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				84B8BA881B17DA3000225ADE /* Layer */,
+				256C0B381B058AA100677AF6 /* APLViewController.h */,
+				256C0B391B058AA100677AF6 /* APLViewController.m */,
 				8465F16F1B169BBD000603DD /* AddItemsViewController.h */,
 				8465F1701B169BBD000603DD /* AddItemsViewController.m */,
 				84273B3A1B01CBA1004430B5 /* LoginViewController.h */,
 				84273B3B1B01CBA1004430B5 /* LoginViewController.m */,
-				253629951B15984A00DA5C6A /* LCConversationListViewController.h */,
-				253629961B15984A00DA5C6A /* LCConversationListViewController.m */,
-				253629971B15984A00DA5C6A /* LCConversationViewController.h */,
-				253629981B15984A00DA5C6A /* LCConversationViewController.m */,
-				2536299B1B15984A00DA5C6A /* LCLayerClient.h */,
-				2536299C1B15984A00DA5C6A /* LCLayerClient.m */,
-				253629991B15984A00DA5C6A /* LCImageViewController.h */,
-				2536299A1B15984A00DA5C6A /* LCImageViewController.m */,
-				2536299D1B15984A00DA5C6A /* LCUser.h */,
-				2536299E1B15984A00DA5C6A /* LCUser.m */,
 				84CAA8141AE4C92C00253D2A /* BrtrSwipeyViewController.h */,
 				84CAA8151AE4C92C00253D2A /* BrtrSwipeyViewController.m */,
 				84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */,
 				84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */,
 				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
-				255EC14A1B17B9010087B9C7 /* BrtrMyItemsTableViewController.h */,
-				255EC14B1B17B9010087B9C7 /* BrtrMyItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
-				D24C83E21B00566E00E73524 /* ProfileTableCell.h */,
-				D24C83E61B00768200E73524 /* ProfileTableCell.m */,
 				D2E298851AF9B7B500808AB1 /* BrtrItemViewController.m */,
 			);
 			name = Controllers;
@@ -493,8 +507,6 @@
 				8465F1711B169BBD000603DD /* AddItemsViewController.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */,
-				8434CF4B1B051B1C008FFF07 /* RoundedButton.m in Sources */,
-				255EC14C1B17B9010087B9C7 /* BrtrMyItemsTableViewController.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				2536299F1B15984A00DA5C6A /* LCConversationListViewController.m in Sources */,
