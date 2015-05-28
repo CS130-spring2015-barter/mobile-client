@@ -22,12 +22,12 @@
 		526E9A0D1ADB822800615EFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 526E9A0C1ADB822800615EFC /* Images.xcassets */; };
 		526E9A1C1ADB822800615EFC /* BartrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 526E9A1B1ADB822800615EFC /* BartrTests.m */; };
 		7643E7371B099D5A00FC1B08 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7643E7361B099D5A00FC1B08 /* CoreLocation.framework */; };
+		7643E73A1B1687DB00FC1B08 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7643E7391B1687DB00FC1B08 /* BrtrLikedItem.m */; };
 		841206871B0712B1004FE8DD /* OverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 841206861B0712B1004FE8DD /* OverlayView.xib */; };
 		84185F7A1B056E7100C671EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84185F791B056E7100C671EE /* Security.framework */; };
 		84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */; };
 		842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 842176541AF585D700B72AA3 /* Bartr.xcdatamodeld */; };
 		8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176641AF5A90600B72AA3 /* BrtrDataSource.m */; };
-		842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */; };
 		842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176841AF5A9D500B72AA3 /* BrtrUser.m */; };
 		842176881AF5A9D600B72AA3 /* BrtrUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 842176871AF5A9D600B72AA3 /* BrtrUserItem.m */; };
 		8421768B1AF5A9D600B72AA3 /* BrtrItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421768A1AF5A9D600B72AA3 /* BrtrItem.m */; };
@@ -92,6 +92,8 @@
 		6ED66D7B79B3DFCD5764E908 /* Pods-Bartr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bartr.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bartr/Pods-Bartr.release.xcconfig"; sourceTree = "<group>"; };
 		7643E7321B09843C00FC1B08 /* DataFetchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFetchDelegate.h; sourceTree = "<group>"; };
 		7643E7361B099D5A00FC1B08 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7643E7381B1687DB00FC1B08 /* BrtrLikedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrLikedItem.h; sourceTree = "<group>"; };
+		7643E7391B1687DB00FC1B08 /* BrtrLikedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrLikedItem.m; sourceTree = "<group>"; };
 		841206861B0712B1004FE8DD /* OverlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayView.xib; path = Bartr/OverlayView.xib; sourceTree = "<group>"; };
 		84185F791B056E7100C671EE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		84185F7C1B056FA400C671EE /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -99,8 +101,6 @@
 		842176551AF585D700B72AA3 /* Bartr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bartr.xcdatamodel; sourceTree = "<group>"; };
 		842176631AF5A90600B72AA3 /* BrtrDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrDataSource.h; sourceTree = "<group>"; };
 		842176641AF5A90600B72AA3 /* BrtrDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrDataSource.m; sourceTree = "<group>"; };
-		842176801AF5A9D500B72AA3 /* BrtrLikedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrLikedItem.h; sourceTree = "<group>"; };
-		842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrLikedItem.m; sourceTree = "<group>"; };
 		842176831AF5A9D500B72AA3 /* BrtrUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUser.h; sourceTree = "<group>"; };
 		842176841AF5A9D500B72AA3 /* BrtrUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrUser.m; sourceTree = "<group>"; };
 		842176861AF5A9D600B72AA3 /* BrtrUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrUserItem.h; sourceTree = "<group>"; };
@@ -301,12 +301,12 @@
 				8421768D1AF5AA9D00B72AA3 /* BrtrCardItem.m */,
 				842176891AF5A9D600B72AA3 /* BrtrItem.h */,
 				8421768A1AF5A9D600B72AA3 /* BrtrItem.m */,
+				7643E7381B1687DB00FC1B08 /* BrtrLikedItem.h */,
+				7643E7391B1687DB00FC1B08 /* BrtrLikedItem.m */,
 				842176861AF5A9D600B72AA3 /* BrtrUserItem.h */,
 				842176871AF5A9D600B72AA3 /* BrtrUserItem.m */,
 				842176831AF5A9D500B72AA3 /* BrtrUser.h */,
 				842176841AF5A9D500B72AA3 /* BrtrUser.m */,
-				842176801AF5A9D500B72AA3 /* BrtrLikedItem.h */,
-				842176811AF5A9D500B72AA3 /* BrtrLikedItem.m */,
 				842176631AF5A90600B72AA3 /* BrtrDataSource.h */,
 				842176641AF5A90600B72AA3 /* BrtrDataSource.m */,
 			);
@@ -492,6 +492,7 @@
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				2536299F1B15984A00DA5C6A /* LCConversationListViewController.m in Sources */,
 				D2E298861AF9B7B500808AB1 /* BrtrItemViewController.m in Sources */,
+				7643E73A1B1687DB00FC1B08 /* BrtrLikedItem.m in Sources */,
 				842176561AF585D700B72AA3 /* Bartr.xcdatamodeld in Sources */,
 				256C0B3A1B058AA100677AF6 /* APLViewController.m in Sources */,
 				84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */,
@@ -504,7 +505,6 @@
 				84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */,
 				526E99FF1ADB822800615EFC /* main.m in Sources */,
 				8421768E1AF5AA9D00B72AA3 /* BrtrCardItem.m in Sources */,
-				842176821AF5A9D500B72AA3 /* BrtrLikedItem.m in Sources */,
 				842176851AF5A9D500B72AA3 /* BrtrUser.m in Sources */,
 				253629A11B15984A00DA5C6A /* LCImageViewController.m in Sources */,
 				84185F7E1B056FA400C671EE /* KeychainItemWrapper.m in Sources */,

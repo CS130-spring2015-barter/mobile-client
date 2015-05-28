@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="13F1066" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BrtrCardItem" representedClassName="BrtrCardItem" parentEntity="BrtrItem" syncable="YES">
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BrtrUser" inverseName="item_stack" inverseEntity="BrtrUser" syncable="YES"/>
     </entity>
@@ -10,6 +10,7 @@
         <attribute name="picture" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="BrtrLikedItem" representedClassName="BrtrLikedItem" parentEntity="BrtrItem" syncable="YES">
+        <attribute name="owner_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BrtrUser" inverseName="liked_items" inverseEntity="BrtrUser" syncable="YES"/>
     </entity>
     <entity name="BrtrUser" representedClassName="BrtrUser" syncable="YES">
@@ -29,7 +30,7 @@
     <elements>
         <element name="BrtrCardItem" positionX="-261" positionY="-4" width="126" height="58"/>
         <element name="BrtrItem" positionX="-29" positionY="-28" width="128" height="103"/>
-        <element name="BrtrLikedItem" positionX="-263" positionY="-117" width="128" height="60"/>
+        <element name="BrtrLikedItem" positionX="-263" positionY="-117" width="128" height="73"/>
         <element name="BrtrUser" positionX="-603" positionY="-61" width="128" height="178"/>
         <element name="BrtrUserItem" positionX="-254" positionY="117" width="128" height="58"/>
     </elements>
