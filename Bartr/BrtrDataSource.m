@@ -18,8 +18,8 @@
 #include "BrtrBackendFields.h"
 
 @interface BrtrDataSource()
-@property (nonatomic, strong) NSArray *liked_items;
-@property (nonatomic, strong) NSArray *rejected_items;
+@property (atomic, strong) NSArray *liked_items;
+@property (atomic, strong) NSArray *rejected_items;
 + (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag;
 +(void) performBackgroundFetchForCardFetchWithDelegate:(id<DataFetchDelegate>)theDelegate;
 @end
@@ -46,6 +46,7 @@
 {
     [[JCDCoreData sharedInstance] saveContext];
 }
+
 
 #pragma mark - Utility Methods
 + (void) alertStatus:(NSString *)msg :(NSString *)title :(int) tag
@@ -74,6 +75,26 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:postData];
+    return request;
+}
+
++(NSURLRequest *)postRequestWith:(NSString *)route dict:(NSDictionary *)dict
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, route]];
+    
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+    NSString *bodyLength = [NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:bodyLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPBody:jsonData];
     return request;
 }
 
@@ -137,31 +158,105 @@
     return [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", user.email]];
 }
 
+
+// FIXME
+// As of now we're assuming a like/reject will be successful
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
+    // FIXME
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
-
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
+    
+    NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
+    [self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 }
 
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
-    NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
-    [newLikedItems addObject:item];
-    self.liked_items = [newLikedItems copy];
-
-    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
-    [context deleteObject:item];
-    [BrtrDataSource saveAllData];
+    // FIXME
+    NSMutableArray *newSeenItems = [[NSMutableArray alloc] initWithArray:self.rejected_items];
+    [newSeenItems addObject:item];
+    self.rejected_items = [newSeenItems copy];
+    
+    NSLog(@"BrtrDataSource: Attemping to reject item number %@", item.i_id);
+    [self performBackgroundFetchWith:@"item/seen" AndUser:user andItem:item WithDelegate:theDelegate];
 }
 
--(void) user:(BrtrUser *)user didAddItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
+
+// FIXME thinking about whether or not these should be synchronous calls that return a BOOL
++(void) user:(BrtrUser *)user didAddItemWithName:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
 {
-    NSLog(@"BrtrDataSource: Added an item");
+    NSLog(@"BrtrDataSource: Attempting to add item");
+    
+    NSMutableDictionary *item_info = [[NSMutableDictionary alloc] init];
+    NSString *encoded_pic_data = [image base64EncodedStringWithOptions:kNilOptions];
+    
+    [item_info setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:KEY_USER_ID];
+    [item_info setObject:name forKey:KEY_ITEM_TITLE];
+    [item_info setObject:info forKey:KEY_ITEM_DESC];
+    [item_info setObject:encoded_pic_data forKey:KEY_ITEM_IMAGE];
+    NSURLRequest *request = [BrtrDataSource postRequestWith:ROUTE_ITEM_ADD dict:item_info];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            NSDictionary *jsonData = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                // FIXME
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            NSString *responseData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            NSError *serialError;
+            jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                       options:NSJSONReadingMutableContainers
+                                                       error:&serialError];
+            
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300) {
+                NSLog(@"Response ==> %@", responseData);
+                NSLog(@"BrtrDataSource: Successfully added an item");
+                
+                // Creates new object in DB and persists it
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                BrtrUserItem *new_item = [NSEntityDescription insertNewObjectForEntityForName:@"BrtrUserItem" inManagedObjectContext:context];
+                new_item.name = name;
+                new_item.info = info;
+                new_item.picture = image;
+                new_item.i_id = [jsonData objectForKey:@"item_id"];
+                new_item.owner = user;
+                
+                [BrtrDataSource saveAllData];
+                [theDelegate didReceiveData:nil response:response];
+            }
+            else if(error != nil) {
+                NSString *error_msg = (NSString *) jsonData[@"message"];
+                NSLog(@"BrtrDataSource: Could not add item");
+                NSLog(@"Error: %@", error_msg);
+                [theDelegate fetchingDataFailed:error];
+                return;
+            }
+            else {
+                // FIXME
+                [theDelegate fetchingDataFailed:nil];
+                return;
+            }
+        }
+    }];
 }
 
 -(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
@@ -186,7 +281,7 @@
         NSHTTPURLResponse *response = nil;
         NSData *urlData=[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         NSLog(@"Response code: %ld", (long)[response statusCode]);
-        NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+        //NSString *responseData = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
         if ([response statusCode] >= 200 && [response statusCode] < 300)
         {
             jsonData = [NSJSONSerialization
@@ -382,6 +477,84 @@
                             options:NSJSONReadingMutableContainers
                             error:&error];
                 NSLog(@"Response ==> %@", jsonData);
+            }
+        }
+    }];
+}
+
+-(void)performBackgroundFetchWith:(NSString *)route AndUser:(BrtrUser *)user andItem:(BrtrCardItem *)item WithDelegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSMutableDictionary *item_dict = [[NSMutableDictionary alloc] init];
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    __block NSArray* items_arr;
+    if([route  isEqual: @"item/liked"]) {
+        items_arr = self.liked_items;
+        for (BrtrCardItem* item in self.liked_items) {
+            [items addObject:[item.i_id stringValue]];
+        }
+    }
+    else {
+        items_arr = self.rejected_items;
+        for (BrtrCardItem* item in self.rejected_items) {
+            [items addObject:[item.i_id stringValue]];
+        }
+    }
+    
+    [item_dict setObject:[NSString stringWithFormat:@"%@", user.u_id] forKey:@"user_id"];
+    [item_dict setObject:items forKey:@"item_ids"];
+    
+    NSURLRequest *request = [BrtrDataSource postRequestWith:route dict:item_dict];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse for liked/rejected item");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                // FIXME
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse for liked/rejected item");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+            {
+                NSLog(@"BrtrDataSource: Successfully liked/rejected item");
+                
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                NSMutableArray *mut_items_arr = [[NSMutableArray alloc] initWithArray:items_arr];
+                for (NSString *item_id in items) {
+                    for (BrtrCardItem* i in items_arr) {
+                        if([item_id isEqual:[i.i_id stringValue]]) {
+                            [mut_items_arr removeObject:i];
+                            [context deleteObject:i];
+                            break;
+                        }
+                    }
+                }
+                [BrtrDataSource saveAllData];
+                
+                if([route isEqual:@"item/liked"]) {
+                    self.liked_items = [mut_items_arr copy];
+                }
+                else {
+                    self.rejected_items = [mut_items_arr copy];
+                }
+            }
+            else
+            {
+                // FIXME
+                NSLog(@"BrtrDataSource: Did not successfully like/reject item");
+                return;
             }
         }
     }];

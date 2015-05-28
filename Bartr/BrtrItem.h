@@ -17,6 +17,6 @@
 @property (nonatomic, retain) NSString * info;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSData * picture;
-@property (nonatomic, retain) BrtrUser *user;
+//@property (nonatomic, retain) BrtrUser *user;
 
 @end

@@ -32,10 +32,10 @@
 #define KEY_USER_LOC_LAT    @"latitude"
 #define KEY_USER_LOC_LONG   @"longitude"
 #define KEY_USER_ABOUTME    @"about_me"
-#define KEY_USER_IMAGE      @"user_mage"
+#define KEY_USER_IMAGE      @"user_image"
 #define KEY_USER_INFO       @"user_info"
 
-#define KEY_ITEM_ID     @"item_id"
+#define KEY_ITEM_ID     @"id"
 #define KEY_ITEM_TITLE  @"item_title"
 #define KEY_ITEM_DESC   @"item_description"
 #define KEY_ITEM_IMAGE  @"item_image"

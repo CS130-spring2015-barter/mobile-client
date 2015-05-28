@@ -15,12 +15,18 @@
 #import "AppDelegate.h"
 #import "DataFetchDelegate.h"
 #import "JCDCoreData.h"
+#import "BrtrItemViewController.h"
+
+@interface BrtrSwipeyViewController ()
+
+@end
 
 @implementation BrtrSwipeyViewController
 
 @synthesize user;
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
     AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.user = ad.user;
     
@@ -36,10 +42,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)userClickedItem:(BrtrCardItem *)card
+-(void)viewWillAppear:(BOOL)animated
 {
-    //[self performSegueWithIdentifier:@"ShowItem" sender:self];
+ [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
+
 
 -(NSArray *) getMultipleCardsUsingDelegate:(id<DataFetchDelegate>) delegate {
     return [BrtrDataSource getCardStackForUser:user delegate:delegate];
@@ -55,12 +62,18 @@
     [[BrtrDataSource sharedInstance] user:self.user didRejectItem:item delegate:delegate];
 }
 
+
+-(void) userClickedItem:(BrtrCardItem *)card
+{
+    BrtrItemViewController *ivc = [self.storyboard instantiateViewControllerWithIdentifier:@"ItemViewController"];
+    ivc.item = card;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController pushViewController:ivc animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 @end
