@@ -739,7 +739,7 @@
                 NSMutableArray *cards = [[NSMutableArray alloc] init];
                 for (NSDictionary *item in jsonData) {
                     //NSNumber *user_id = [item valueForKey: @"user_id"];
-                    NSNumber *item_id = [item valueForKey: KEY_ITEM_ID];
+                    NSNumber *item_id = [item valueForKey: @"id"];
                     NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
                     NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
                     NSDictionary *item_image = [item valueForKey: KEY_ITEM_IMAGE];
