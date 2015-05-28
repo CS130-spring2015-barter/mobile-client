@@ -133,6 +133,25 @@
     return request;
 }
 
++(NSData *)decodePictureDictionary:(NSDictionary *)image_dict base64encoded:(BOOL)isBase64
+{
+    NSData *image_data;
+    NSArray *picture_buffer =  [image_dict objectForKey:@"data"];
+    Byte *buffer  = malloc([picture_buffer count]);
+    for (unsigned i = 0; i < [picture_buffer count]; ++i) {
+        NSNumber *num = [picture_buffer objectAtIndex:i];
+        buffer[i] = (Byte)[num intValue];
+    }
+    if (isBase64) {
+        NSString *image_string = [[NSString alloc] initWithBytes:buffer length:[picture_buffer count] encoding:NSUTF8StringEncoding];
+        image_data = [[NSData alloc] initWithBase64EncodedString:image_string options:0];
+    }
+    else {
+        image_data = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+    }
+    return image_data;
+}
+
 #pragma mark - Item Data Source
 +(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
@@ -249,16 +268,11 @@
                     NSNumber *item_id = [item valueForKey: KEY_ITEM_ID];
                     NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
                     NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
-                    NSDictionary *item_image = [item valueForKey: KEY_ITEM_IMAGE];
-                    NSArray *picture_buffer = [item_image valueForKey:@"data"];
+                    NSDictionary *image_dict = [item valueForKey:KEY_ITEM_IMAGE];
+                    NSData* item_image = [BrtrDataSource decodePictureDictionary:image_dict base64encoded:YES];
                     
                     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
                     NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", item_id]];
-                    Byte *buffer  = malloc([picture_buffer count]);
-                    for (unsigned i = 0; i < [picture_buffer count]; ++i) {
-                        NSNumber *num = [picture_buffer objectAtIndex:i];
-                        buffer[i] = (Byte)[num intValue];
-                    }
                     BrtrLikedItem *liked_item;
                     
                     if (matches && [matches count] == 1) {
@@ -275,7 +289,7 @@
                     liked_item.i_id = item_id;
                     liked_item.info = item_description;
                     liked_item.name = item_title;
-                    liked_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    liked_item.picture = item_image;
                     liked_item.owner_id = user_id;
                     [cards addObject:liked_item];
                 }
@@ -401,12 +415,14 @@
 #pragma mark - User Data Source
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass
 {
+    NSData *image_data = UIImagePNGRepresentation([UIImage imageNamed:@"Icon-user"]);
+    NSString *image_string = [image_data base64EncodedStringWithOptions:kNilOptions];
     NSString *post =[[NSString alloc] initWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@&%@=%@", KEY_USER_FIRST_NAME, @"First",
                                                                                              KEY_USER_LAST_NAME, @"Last",
                                                                                              KEY_USER_EMAIL, email,
                                                                                              KEY_USER_PASSWORD, pass,
                                                                                              KEY_USER_ABOUTME, @"About me",
-                                                                                             KEY_USER_IMAGE  , @"image"];
+                                                                                             KEY_USER_IMAGE  , image_string];
     NSDictionary *jsonData;
     NSURLRequest *request = [BrtrDataSource postRequestWith:@"user" post:post];
     @try {
@@ -550,8 +566,8 @@
                 user.firstName = [userInfo objectForKey:KEY_USER_FIRST_NAME];
                 user.lastName  = [userInfo objectForKey:KEY_USER_LAST_NAME];
                 user.about_me  = [userInfo objectForKey:KEY_USER_ABOUTME];
-                user.image     = UIImagePNGRepresentation([UIImage imageNamed:@"Icon-user"]);
-                
+                NSDictionary *image_dict = [userInfo objectForKey:KEY_USER_IMAGE];
+                user.image = [BrtrDataSource decodePictureDictionary:image_dict base64encoded:YES];
                 [BrtrDataSource saveAllData];
             }
             return user;
@@ -742,16 +758,11 @@
                     NSNumber *item_id = [item valueForKey: @"id"];
                     NSString *item_title = [item valueForKey: KEY_ITEM_TITLE];
                     NSString *item_description = [item valueForKey: KEY_ITEM_DESC];
-                    NSDictionary *item_image = [item valueForKey: KEY_ITEM_IMAGE];
-                    NSArray *picture_buffer = [item_image valueForKey:@"data"];
+                    NSDictionary *image_dict = [item valueForKey: KEY_ITEM_IMAGE];
+                    NSData *item_image = [BrtrDataSource decodePictureDictionary:image_dict base64encoded:YES];
                     
                     NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
                     NSArray *matches = [context fetchObjectsWithEntityName:@"BrtrCardItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"i_id = %@", item_id]];
-                    Byte *buffer  = malloc([picture_buffer count]);
-                    for (unsigned i = 0; i < [picture_buffer count]; ++i) {
-                        NSNumber *num = [picture_buffer objectAtIndex:i];
-                        buffer[i] = (Byte)[num intValue];
-                    }
                     BrtrCardItem *fetched_item;
                     if (matches && [matches count] == 1) {
                         fetched_item = [matches objectAtIndex: 0];
@@ -766,7 +777,7 @@
                     fetched_item.i_id = item_id;
                     fetched_item.info = item_description;
                     fetched_item.name = item_title;
-                    fetched_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    fetched_item.picture = item_image;
                     [cards addObject:fetched_item];
                 }
                 [BrtrDataSource saveAllData];
