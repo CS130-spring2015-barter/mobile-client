@@ -15,7 +15,6 @@
 #import "ATLMessagingUtilities.h"
 #import "LCLayerClient.h"
 
-//static NSString *const kLayerAppID = @"36e57962-db87-11e4-aa50-52bb23004500";
 static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 @interface AppDelegate()
