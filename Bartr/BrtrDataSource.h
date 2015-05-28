@@ -23,6 +23,7 @@
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
 +(void)getUserItemsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
++(void)getUsersLikedMyItem:(NSNumber *) item_id delegate:(id<DataFetchDelegate>)theDelegate;
 +(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
 +(void)getItemsWithIDs:(NSArray *)ids user:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate liked:(BOOL)liked;
 

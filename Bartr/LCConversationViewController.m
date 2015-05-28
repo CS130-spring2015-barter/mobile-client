@@ -19,7 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self.u_id = ad.user.email;
     self.delegate = self;
     self.dataSource = self;
 };
@@ -144,7 +143,8 @@
 }
 
 - (void)sendMessage:(NSString *)messageText toReceiver:(NSString *) rec_id {
-    
+    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.u_id = ad.user.email;
     // Send a Message
     // See "Quick Start - Send a Message" for more details
     // https://developer.layer.com/docs/quick-start/ios#send-a-message

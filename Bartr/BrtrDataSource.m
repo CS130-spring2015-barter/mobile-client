@@ -214,7 +214,53 @@
     }];
     
 }
++(void)getUsersLikedMyItem:(NSNumber *) item_id delegate:(id<DataFetchDelegate>)theDelegate
+{
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+    NSURLRequest *request = [BrtrDataSource getRequestWith:[NSString stringWithFormat:@"user/%@/item", item_id] andQuery:nil];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            NSLog(@"BrtrDataSource: Did not get users who liked item");
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            NSDictionary *jsonData = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+            {
+                NSLog(@"BrtrDataSource: Received user ids who liked my item");
+                NSError *error = nil;
+                jsonData = [NSJSONSerialization
+                            JSONObjectWithData:data
+                            options:NSJSONReadingMutableContainers
+                            error:&error];
+                NSArray *user_ids = [jsonData objectForKey:@"user_ids"];
+                [theDelegate didReceiveData:user_ids response:httpResponse];
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: Did not receive meaningful response from server");
+                [theDelegate fetchingDataFailed:nil];
+            }
+        }
+    }];
 
+    
+}
 +(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate
 {
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
