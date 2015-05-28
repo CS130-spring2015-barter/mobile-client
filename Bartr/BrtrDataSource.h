@@ -22,9 +22,9 @@
 +(BrtrDataSource *)sharedInstance;
 
 +(NSArray *)getCardStackForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
-+(NSArray *)getUserItemsForUser:(BrtrUser *)user;
++(void)getUserItemsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
 +(void)getLikedIDsForUser:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate;
-+(void)getLikedItemsForUser:(BrtrUser *)user ids:(NSArray *)ids delegate:(id<DataFetchDelegate>)theDelegate;
++(void)getItemsWithIDs:(NSArray *)ids user:(BrtrUser *)user delegate:(id<DataFetchDelegate>)theDelegate liked:(BOOL)liked;
 
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;

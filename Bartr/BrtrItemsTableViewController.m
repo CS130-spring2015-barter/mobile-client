@@ -16,6 +16,7 @@
 #import "BrtrDataSource.h"
 #import "ItemTableViewCell.h"
 #import "AppDelegate.h"
+#import "BrtrBackendFields.h"
 
 @interface BrtrItemsTableViewController ()
 
@@ -133,20 +134,27 @@
 
 - (void) didReceiveData:(id) data response:(NSURLResponse *)response
 {
-    
-    NSArray *liked_cards = (NSArray *)data;
-    if([liked_cards count] == 0) {
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSArray *cards = (NSArray *)data;
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+
+    if([cards count] == 0) {
         return;
     }
-    // Received ids
-    if([[liked_cards objectAtIndex:0] isKindOfClass:[NSNumber class]]) {
-        AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [BrtrDataSource getLikedItemsForUser:ap.user ids:liked_cards delegate:self];
+    
+    NSString *myItemsUrl = [NSString stringWithFormat: @"%@%@" , ENDPOINT, [NSString stringWithFormat:@"user/%@/item", ap.user.u_id]];
+    
+    // Received ids for my items
+    if ([[[httpResponse URL] absoluteString] isEqual:myItemsUrl]) {
+        [BrtrDataSource getItemsWithIDs:cards user:ap.user delegate:self liked:NO];
     }
-    // Received item info
+    // received ids for my liked items
+    else if ([[cards objectAtIndex:0] isKindOfClass:[NSNumber class]]){
+        [BrtrDataSource getItemsWithIDs:cards user:ap.user delegate:self liked:YES];
+    }
+    // received cards
     else {
-        // FIXME
-        self.items = liked_cards;
+        self.items = cards;
     }
 }
 

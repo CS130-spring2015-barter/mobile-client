@@ -15,6 +15,7 @@
 #import "BrtrItemsTableViewController.h"
 #import "ProfileTableCell.h"
 #import "BrtrBackendFields.h"
+#import "BrtrDataSource.h"
 
 @interface BrtrProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
@@ -352,6 +353,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
+            [BrtrDataSource getUserItemsForUser:ad.user delegate:itvc];
         }
         else {
             // error
