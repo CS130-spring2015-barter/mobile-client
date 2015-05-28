@@ -763,8 +763,7 @@
                         liked_item.name = i.name;
                         liked_item.picture = i.picture;
                         liked_item.user = user;
-                        // FIXME
-                        liked_item.owner_id = i.user.u_id;
+                        liked_item.owner_id = i.owner_id;
                     }
                     self.liked_items = [mut_items_arr copy];
                 }
