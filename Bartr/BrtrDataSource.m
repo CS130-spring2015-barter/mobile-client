@@ -273,6 +273,7 @@
                     liked_item.info = item_description;
                     liked_item.name = item_title;
                     liked_item.picture = [[NSData alloc] initWithBytes:buffer length:[picture_buffer count]];
+                    liked_item.owner_id = user_id;
                     [cards addObject:liked_item];
                 }
                 [BrtrDataSource saveAllData];
@@ -297,7 +298,7 @@
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
-    
+
     NSLog(@"BrtrDataSource: Attemping to like item number %@", item.i_id);
     [self performBackgroundFetchWith:@"item/liked" AndUser:user andItem:item WithDelegate:theDelegate];
 }
@@ -315,7 +316,7 @@
 
 
 // FIXME thinking about whether or not these should be synchronous calls that return a BOOL
--(void) user:(BrtrUser *)user didAddItemWith:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
++(void) user:(BrtrUser *)user didAddItemWith:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Attempting to add item");
     
