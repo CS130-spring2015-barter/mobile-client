@@ -7,6 +7,7 @@
 //
 
 #import "LCLayerClient.h"
+#import "AppDelegate.h"
 
 @implementation LCLayerClient
 
@@ -89,14 +90,16 @@
     NSParameterAssert(appID);
     NSParameterAssert(nonce);
     NSParameterAssert(completion);
-
-    NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+    //NSURL *identityTokenURL = [NSURL URLWithString:@"https://layer-identity-provider.herokuapp.com/identity_tokens"];
+    NSURL *identityTokenURL = [NSURL URLWithString:@"http://barter.elasticbeanstalk.com/chat/authenticate"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:identityTokenURL];
     request.HTTPMethod = @"POST";
+    
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-
-    NSDictionary *parameters = @{@"app_id" : appID, @"user_id" : userID, @"nonce" : nonce};
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    NSDictionary *parameters = @{@"user_id" : userID, @"nonce" : nonce};
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
     request.HTTPBody = requestBody;
 
@@ -111,11 +114,12 @@
         // Deserialize the response
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         if (![responseObject valueForKey:@"error"]) {
-            NSString *identityToken = responseObject[@"identity_token"];
+            NSString *identityToken = responseObject[@"layer_token"];
             completion(identityToken, nil);
         }
         else {
-            NSString *domain = @"layer-identity-provider.herokuapp.com";
+            //NSString *domain = @"layer-identity-provider.herokuapp.com";
+            NSString *domain= @"barter.elasticbeanstalk.com";
             NSInteger code = [responseObject[@"status"] integerValue];
             NSDictionary *userInfo = @{
                     NSLocalizedDescriptionKey : @"Layer Identity Provider Returned an Error.",

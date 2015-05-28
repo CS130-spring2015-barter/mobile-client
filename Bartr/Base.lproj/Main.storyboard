@@ -213,7 +213,7 @@
                                 <rect key="frame" x="120" y="264" width="80" height="39"/>
                                 <color key="backgroundColor" red="0.54985587770330246" green="0.86063170241286868" blue="0.49928052745275014" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="15"/>
-                                <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Log in">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -587,10 +587,10 @@
             </objects>
             <point key="canvasLocation" x="3128" y="1152"/>
         </scene>
-        <!--Conversation View Controller-->
+        <!--Conversation List View Controller-->
         <scene sceneID="iay-Cb-YCe">
             <objects>
-                <viewController id="rBb-n0-1a2" customClass="ConversationViewController" sceneMemberID="viewController">
+                <viewController id="rBb-n0-1a2" customClass="LCConversationListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IeA-nt-AB6"/>
                         <viewControllerLayoutGuide type="bottom" id="Fd2-6k-bLZ"/>
@@ -642,7 +642,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Labelsdfdsadfdsfdsfdsfdsafadsfdsfdsafdafdfds" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zx-lA-3ML">
                                                     <rect key="frame" x="8" y="8" width="314" height="70"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -683,7 +683,7 @@
                                     </label>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELo-Rz-7Lj" userLabel="Dividing Line">
                                         <rect key="frame" x="0.0" y="1" width="320" height="1"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" misplaced="YES" text="Hey De Vice, this is your friend, Simul Ator." translatesAutoresizingMaskIntoConstraints="NO" id="Mn2-me-nGD" userLabel="Message Text Input">
                                         <rect key="frame" x="0.0" y="19" width="308" height="64"/>

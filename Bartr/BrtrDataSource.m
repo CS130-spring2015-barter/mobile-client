@@ -62,6 +62,7 @@
 +(NSURLRequest *)postRequestWith:(NSString *)route post:(NSString *)post
 {
     NSLog(@"PostData: %@",post);
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat: @"%@%@" , ENDPOINT, route]];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
@@ -71,6 +72,7 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:postData];
     return request;
 }
