@@ -183,7 +183,7 @@
     }
     long row = indexPath.row;
     userFields.layer.cornerRadius = 10;
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UITextField *inputField = (UITextField *)[cell viewWithTag:100];
     inputField.delegate = self;
     inputField.clearsOnBeginEditing = YES;
@@ -198,6 +198,17 @@
         self.passwordField = inputField;
     }
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    if (0 == row) {
+        [self.emailField becomeFirstResponder];
+    }
+    else {
+        [self.passwordField becomeFirstResponder];
+    }
 }
 
 

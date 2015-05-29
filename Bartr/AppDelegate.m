@@ -273,7 +273,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
         self.shareModel.myLocationArrayInPlist = [savedProfile objectForKey:@"LocationArray"];
     }
     
-    NSLog(@"Dict: %@",self.shareModel.myLocationDictInPlist);
+    //NSLog(@"Dict: %@",self.shareModel.myLocationDictInPlist);
     
     if(self.shareModel.myLocationDictInPlist)
     {
