@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gjj-gP-tpe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="gjj-gP-tpe">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -478,17 +478,26 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xqR-Nf-IuS" id="OhG-ab-mZm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Is this the real life ..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="An6-bO-RS0">
-                                                    <rect key="frame" x="108" y="8" width="209" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a20-fn-VW8">
+                                                    <rect key="frame" x="8" y="12" width="46" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" red="0.039215686270000001" green="0.80392156859999997" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KZw-4v-ErQ">
+                                                    <rect key="frame" x="110" y="10" width="207" height="29"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="An6-bO-RS0" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leadingMargin" constant="100" id="0lb-CY-N5S"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="An6-bO-RS0" secondAttribute="trailing" id="nJ1-G1-9D0"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="An6-bO-RS0" secondAttribute="bottom" constant="-3" id="vBm-5g-cIu"/>
-                                                <constraint firstItem="An6-bO-RS0" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="topMargin" id="wWi-eA-GPh"/>
+                                                <constraint firstItem="KZw-4v-ErQ" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="top" constant="10" id="2m2-1F-e7J"/>
+                                                <constraint firstAttribute="trailing" secondItem="KZw-4v-ErQ" secondAttribute="trailing" constant="8" id="CtB-za-zbH"/>
+                                                <constraint firstItem="a20-fn-VW8" firstAttribute="top" secondItem="OhG-ab-mZm" secondAttribute="top" constant="12" id="RHq-tk-9mV"/>
+                                                <constraint firstAttribute="bottom" secondItem="KZw-4v-ErQ" secondAttribute="bottom" constant="4" id="ffr-JT-zeq"/>
+                                                <constraint firstItem="KZw-4v-ErQ" firstAttribute="leading" secondItem="a20-fn-VW8" secondAttribute="trailing" constant="56" id="khu-aE-aVf"/>
+                                                <constraint firstItem="a20-fn-VW8" firstAttribute="leading" secondItem="OhG-ab-mZm" secondAttribute="leading" constant="8" id="lBx-37-oXo"/>
+                                                <constraint firstAttribute="bottom" secondItem="a20-fn-VW8" secondAttribute="bottom" constant="11" id="yGr-kh-yPq"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -497,13 +506,29 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="syH-Yi-anD" id="UYR-iR-7Qj">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" fixedFrame="YES" text="or is it just fantasy?" translatesAutoresizingMaskIntoConstraints="NO" id="paL-w2-Cwo">
-                                                    <rect key="frame" x="105" y="8" width="202" height="22"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8U-QF-Z1p">
+                                                    <rect key="frame" x="8" y="12" width="88" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.039215686270000001" green="0.80392156859999997" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yKm-tI-YCZ">
+                                                    <rect key="frame" x="110" y="9" width="207" height="26"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="q8U-QF-Z1p" secondAttribute="bottom" constant="11" id="0pL-ya-hTw"/>
+                                                <constraint firstAttribute="trailing" secondItem="yKm-tI-YCZ" secondAttribute="trailing" constant="8" id="4Vn-CZ-fNb"/>
+                                                <constraint firstItem="q8U-QF-Z1p" firstAttribute="leading" secondItem="UYR-iR-7Qj" secondAttribute="leading" constant="8" id="Rpa-qL-Wct"/>
+                                                <constraint firstItem="yKm-tI-YCZ" firstAttribute="leading" secondItem="q8U-QF-Z1p" secondAttribute="trailing" constant="14" id="SSI-F9-IwQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="yKm-tI-YCZ" secondAttribute="bottom" constant="8" id="Ueg-zl-WQQ"/>
+                                                <constraint firstItem="q8U-QF-Z1p" firstAttribute="top" secondItem="UYR-iR-7Qj" secondAttribute="top" constant="12" id="VCS-Z0-dXK"/>
+                                                <constraint firstItem="yKm-tI-YCZ" firstAttribute="top" secondItem="UYR-iR-7Qj" secondAttribute="top" constant="9" id="zHU-gt-5ng"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -534,7 +559,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YRq-nQ-T43" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="bJG-sZ-bBM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3128" y="1152"/>
+            <point key="canvasLocation" x="3128" y="1145"/>
         </scene>
         <!--Home-->
         <scene sceneID="TsB-my-r1x">
