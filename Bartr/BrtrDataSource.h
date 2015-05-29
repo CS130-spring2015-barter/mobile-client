@@ -17,7 +17,6 @@
 +(BrtrUser *) getUserForEmail:(NSString *)email password:(NSString *)pass;
 +(void) updateUser:(BrtrUser *)user withChanges:(NSDictionary *)userInfo withDelegate:(id<DataFetchDelegate>)delegate;
 + (void) saveAllData;
-+ (void) loadFakeData;
 +(BOOL)createUserWithEmail:(NSString *)email password:(NSString *)pass;
 +(BrtrDataSource *)sharedInstance;
 

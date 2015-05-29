@@ -7,6 +7,7 @@
 //
 
 #import "ATLConversationListViewController.h"
+#import "ATLParticipantTableViewController.h"
 #import "ATLConversationViewController.h"
 
 @protocol ATLParticipantTableViewControllerDelegate;

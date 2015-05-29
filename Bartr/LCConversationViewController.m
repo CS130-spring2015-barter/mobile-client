@@ -59,6 +59,8 @@
                     NSLog(@"Read");
                     readCount += 1;
                     break;
+                default:
+                    break;
             }
         }];
         if (readCount) {
@@ -85,6 +87,8 @@
                 case LYRRecipientStatusRead:
                     blockStatusString = @"Read";
                     break;
+                default:
+                    NSLog(@"not necognized");
             }
         }];
         statusString = blockStatusString;
@@ -123,7 +127,6 @@
 
 - (UIImage *)loadLowResImageForMessage:(LYRMessage *)message {
     LYRMessagePart *lowResImagePart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageJPEGPreview);
-    LYRMessagePart *imageInfoPart = ATLMessagePartForMIMEType(message, ATLMIMETypeImageSize);
 
     if (!lowResImagePart) {
         // Default back to image/jpeg MIMEType

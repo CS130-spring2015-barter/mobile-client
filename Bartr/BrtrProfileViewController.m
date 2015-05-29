@@ -318,7 +318,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 // Dynamically set the height for the cells on the comments table based on their text
 // FIX ME: need to change size of font when its established
-- (CGFloat)tableView:(UITableView *) heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *) tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat size = 0.0f;
     CGFloat totalSize =self.navigationController.navigationBar.frame.size.height  + self.tabBarController.tabBar.frame.size.height + self.picture.frame.size.height;
