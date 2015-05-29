@@ -24,6 +24,7 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
+@property (retain, nonatomic) UIImagePickerController *imagePickerController;
 @end
 
 @implementation BrtrProfileViewController
@@ -126,13 +127,11 @@ BOOL isEditMode;
         self.picture.image = [UIImage imageNamed:@"Icon-user"];
     }
     self.picture.image = [self centerCropImage:self.picture.image];
-    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCamera:)];
+    [self.picture addGestureRecognizer:tap];
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
     self.picture.userInteractionEnabled = NO;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
-    [self.picture addGestureRecognizer:tap];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -143,6 +142,37 @@ BOOL isEditMode;
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+}
+
+
+- (void) navigationController: (UINavigationController *) navigationController  willShowViewController: (UIViewController *) viewController animated: (BOOL) animated {
+    if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
+        viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
+    } else {
+        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
+        viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+        viewController.navigationItem.title = @"Take Photo";
+        viewController.navigationController.navigationBarHidden = NO; // important
+    }
+}
+- (IBAction)showCamera:(id)sender {
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+}
+
+
+- (void) showLibrary: (id) sender {
+    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    //[self presentViewController:self.imagePickerController animated:YES completion:NULL];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -161,23 +191,21 @@ BOOL isEditMode;
     [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForSelectedRow] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
+-(void)finishAndUpdate
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController = nil;
+}
+
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     self.tableView.contentInset = UIEdgeInsetsZero;
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
--(void) clickPicture:(UITapGestureRecognizer *)tap
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if([UIImagePickerController isSourceTypeAvailable:
-        UIImagePickerControllerSourceTypePhotoLibrary]) {
-        
-        UIImagePickerController *picker= [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
-        [self presentViewController:picker animated:YES completion:nil];
-    }
+    [self finishAndUpdate];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker
@@ -186,7 +214,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.picture.image = [self centerCropImage: selectedImage];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self finishAndUpdate];
 }
 
 -(void) viewDidAppear:(BOOL)animated
