@@ -50,6 +50,7 @@
  [self.navigationController setNavigationBarHidden:YES animated:NO];
     if (0 == [self.cardView.exampleCardLabels count]) {
         self.cardView.exampleCardLabels = [BrtrDataSource getCardStackForUser:self.user delegate:self.cardView];
+        [self.cardView loadCards];
     }
 }
 

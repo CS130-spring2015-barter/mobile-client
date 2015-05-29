@@ -48,6 +48,7 @@
 @interface DraggableViewBackground : UIView <DraggableViewDelegate, DataFetchDelegate>
 
 //methods called in DraggableView
+-(void)loadCards;
 -(void)cardSwipedLeft:(UIView *)card;
 -(void)cardSwipedRight:(UIView *)card;
 -(id)initWithFrame:(CGRect)frame andDelegate:(NSObject<DraggableViewBackgroundDelegate>*)delegate;
