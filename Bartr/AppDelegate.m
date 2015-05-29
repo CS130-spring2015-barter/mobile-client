@@ -2,9 +2,12 @@
 //  AppDelegate.m
 //  Bartr
 //
-//  Created by Rohan Chitalia on 4/12/15.
+//  Created by Mickey Sweatt on 4/12/15.
 //  Copyright (c) 2015 Bartr. All rights reserved.
 //
+
+// Location Manager code based on:
+// https://github.com/voyage11/Location/tree/master/Location
 
 #import "AppDelegate.h"
 #import "JCDCoreData.h"
@@ -14,20 +17,25 @@
 #import <CoreLocation/CoreLocation.h>
 #import "ATLMessagingUtilities.h"
 #import "LCLayerClient.h"
+#import "LocationShareModel.h"
 
 static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 @interface AppDelegate()
 @property (nonatomic)  KeychainItemWrapper *keychainItem;
-@property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) CLLocation *lastLocation;
+@property (strong,nonatomic) LocationShareModel * shareModel;
+@property (nonatomic) CLLocationCoordinate2D myLastLocation;
+@property (nonatomic) CLLocationAccuracy myLastLocationAccuracy;
+@property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocationCoordinate2D myLocation;
+@property (nonatomic) CLLocationAccuracy myLocationAccuracy;
 @property (nonatomic) LCLayerClient *layerClient;
 @end
 
 @implementation AppDelegate
 @synthesize user = _user;
 @synthesize keychainItem = _keychainItem;
-@synthesize locationManager = _locationManager;
+@synthesize shareModel = _shareModel;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //authenticatedUser: check from NSUserDefaults User credential if its present then set your navigation flow accordingly
@@ -48,8 +56,295 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
     {
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
-    
+    [self initializeLocationManager:launchOptions];
     return YES;
+}
+
+-(void)initializeLocationManager:(NSDictionary *)launchOptions
+{
+    self.shareModel = [LocationShareModel sharedModel];
+    self.shareModel.afterResume = NO;
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager startUpdatingLocation];
+    [self addApplicationStatusToPList:@"didFinishLaunchingWithOptions"];
+    
+    UIAlertView * alert;
+    
+    //We have to make sure that the Background App Refresh is enable for the Location updates to work in the background.
+    if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusDenied){
+        
+        alert = [[UIAlertView alloc]initWithTitle:@""
+                                          message:@"The app doesn't work without the Background App Refresh enabled. To turn it on, go to Settings > General > Background App Refresh"
+                                         delegate:nil
+                                cancelButtonTitle:@"Ok"
+                                otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusRestricted){
+        
+        alert = [[UIAlertView alloc]initWithTitle:@""
+                                          message:@"The functions of this app are limited because the Background App Refresh is disable."
+                                         delegate:nil
+                                cancelButtonTitle:@"Ok"
+                                otherButtonTitles:nil, nil];
+        [alert show];
+        
+    } else{
+        // When there is a significant changes of the location,
+        // The key UIApplicationLaunchOptionsLocationKey will be returned from didFinishLaunchingWithOptions
+        // When the app is receiving the key, it must reinitiate the locationManager and get
+        // the latest location updates
+        
+        // This UIApplicationLaunchOptionsLocationKey key enables the location update even when
+        // the app has been killed/terminated (Not in th background) by iOS or the user.
+        
+        if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+            // This "afterResume" flag is just to show that he receiving location updates
+            // are actually from the key "UIApplicationLaunchOptionsLocationKey"
+            self.shareModel.afterResume = YES;
+            
+            self.shareModel.anotherLocationManager = [[CLLocationManager alloc]init];
+            self.shareModel.anotherLocationManager.delegate = self;
+            self.shareModel.anotherLocationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+            self.shareModel.anotherLocationManager.activityType = CLActivityTypeOtherNavigation;
+            
+            if(IS_OS_8_OR_LATER) {
+                [self.shareModel.anotherLocationManager requestAlwaysAuthorization];
+            }
+            [self.shareModel.anotherLocationManager startMonitoringSignificantLocationChanges];
+            
+            [self addResumeLocationToPList];
+        }
+    }
+
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    //NSLog(@"locationManager didUpdateLocations: %@",locations);
+    
+    for(int i=0;i<locations.count;i++){
+        
+        CLLocation * newLocation = [locations objectAtIndex:i];
+        CLLocationCoordinate2D theLocation = newLocation.coordinate;
+        CLLocationAccuracy theAccuracy = newLocation.horizontalAccuracy;
+        
+        self.myLocation = theLocation;
+        self.myLocationAccuracy = theAccuracy;
+    }
+    
+    [self addLocationToPList:self.shareModel.afterResume];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [self.shareModel.anotherLocationManager stopMonitoringSignificantLocationChanges];
+    
+    if(IS_OS_8_OR_LATER) {
+        [self.shareModel.anotherLocationManager requestAlwaysAuthorization];
+    }
+    [self.shareModel.anotherLocationManager startMonitoringSignificantLocationChanges];
+    
+    [self addApplicationStatusToPList:@"applicationDidEnterBackground"];
+}
+
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [self addApplicationStatusToPList:@"applicationDidBecomeActive"];
+    
+    //Remove the "afterResume" Flag after the app is active again.
+    self.shareModel.afterResume = NO;
+    
+    if(self.shareModel.anotherLocationManager)
+        [self.shareModel.anotherLocationManager stopMonitoringSignificantLocationChanges];
+    
+    self.shareModel.anotherLocationManager = [[CLLocationManager alloc]init];
+    self.shareModel.anotherLocationManager.delegate = self;
+    self.shareModel.anotherLocationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    self.shareModel.anotherLocationManager.activityType = CLActivityTypeOtherNavigation;
+    
+    if(IS_OS_8_OR_LATER) {
+        [self.shareModel.anotherLocationManager requestAlwaysAuthorization];
+    }
+    [self.shareModel.anotherLocationManager startMonitoringSignificantLocationChanges];
+}
+
+
+-(void)applicationWillTerminate:(UIApplication *)application{
+    NSLog(@"applicationWillTerminate");
+    [self addApplicationStatusToPList:@"applicationWillTerminate"];
+    [[JCDCoreData sharedInstance] saveContext];
+}
+
+
+///////////////////////////////////////////////////////////////
+// Below are 3 functions that add location and Application status to PList
+// The purpose is to collect location information locally
+
+-(void)addResumeLocationToPList{
+    
+    NSLog(@"addResumeLocationToPList");
+    UIApplication* application = [UIApplication sharedApplication];
+    
+    NSString * appState;
+    if([application applicationState]==UIApplicationStateActive)
+        appState = @"UIApplicationStateActive";
+    if([application applicationState]==UIApplicationStateBackground)
+        appState = @"UIApplicationStateBackground";
+    if([application applicationState]==UIApplicationStateInactive)
+        appState = @"UIApplicationStateInactive";
+    
+    self.shareModel.myLocationDictInPlist = [[NSMutableDictionary alloc]init];
+    [self.shareModel.myLocationDictInPlist setObject:@"UIApplicationLaunchOptionsLocationKey" forKey:@"Resume"];
+    [self.shareModel.myLocationDictInPlist setObject:appState forKey:@"AppState"];
+    [self.shareModel.myLocationDictInPlist setObject:[NSDate date] forKey:@"Time"];
+    
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSMutableDictionary *savedProfile = [[NSMutableDictionary alloc] initWithContentsOfFile:fullPath];
+    
+    if (!savedProfile){
+        savedProfile = [[NSMutableDictionary alloc] init];
+        self.shareModel.myLocationArrayInPlist = [[NSMutableArray alloc]init];
+    }
+    else{
+        self.shareModel.myLocationArrayInPlist = [savedProfile objectForKey:@"LocationArray"];
+    }
+    
+    if(self.shareModel.myLocationDictInPlist)
+    {
+        [self.shareModel.myLocationArrayInPlist addObject:self.shareModel.myLocationDictInPlist];
+        [savedProfile setObject:self.shareModel.myLocationArrayInPlist forKey:@"LocationArray"];
+    }
+    
+    if (![savedProfile writeToFile:fullPath atomically:FALSE] ) {
+        NSLog(@"Couldn't save LocationArray.plist" );
+    }
+}
+
+
+
+-(void)addLocationToPList:(BOOL)fromResume{
+    NSLog(@"addLocationToPList");
+    
+    UIApplication* application = [UIApplication sharedApplication];
+    
+    NSString * appState;
+    if([application applicationState]==UIApplicationStateActive)
+        appState = @"UIApplicationStateActive";
+    if([application applicationState]==UIApplicationStateBackground)
+        appState = @"UIApplicationStateBackground";
+    if([application applicationState]==UIApplicationStateInactive)
+        appState = @"UIApplicationStateInactive";
+    
+    self.shareModel.myLocationDictInPlist = [[NSMutableDictionary alloc]init];
+    [self.shareModel.myLocationDictInPlist setObject:[NSNumber numberWithDouble:self.myLocation.latitude]  forKey:@"Latitude"];
+    [self.shareModel.myLocationDictInPlist setObject:[NSNumber numberWithDouble:self.myLocation.longitude] forKey:@"Longitude"];
+    [self.shareModel.myLocationDictInPlist setObject:[NSNumber numberWithDouble:self.myLocationAccuracy] forKey:@"Accuracy"];
+    
+    [self.shareModel.myLocationDictInPlist setObject:appState forKey:@"AppState"];
+    
+    if(fromResume)
+        [self.shareModel.myLocationDictInPlist setObject:@"YES" forKey:@"AddFromResume"];
+    else
+        [self.shareModel.myLocationDictInPlist setObject:@"NO" forKey:@"AddFromResume"];
+    
+    [self.shareModel.myLocationDictInPlist setObject:[NSDate date] forKey:@"Time"];
+    
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSMutableDictionary *savedProfile = [[NSMutableDictionary alloc] initWithContentsOfFile:fullPath];
+    
+    if (!savedProfile){
+        savedProfile = [[NSMutableDictionary alloc] init];
+        self.shareModel.myLocationArrayInPlist = [[NSMutableArray alloc]init];
+    }
+    else{
+        self.shareModel.myLocationArrayInPlist = [savedProfile objectForKey:@"LocationArray"];
+    }
+    
+    NSLog(@"Dict: %@",self.shareModel.myLocationDictInPlist);
+    
+    if(self.shareModel.myLocationDictInPlist)
+    {
+        [self.shareModel.myLocationArrayInPlist addObject:self.shareModel.myLocationDictInPlist];
+        [savedProfile setObject:self.shareModel.myLocationArrayInPlist forKey:@"LocationArray"];
+    }
+    
+    if (![savedProfile writeToFile:fullPath atomically:FALSE] ) {
+        NSLog(@"Couldn't save LocationArray.plist" );
+    }
+}
+
+
+
+-(void)addApplicationStatusToPList:(NSString*)applicationStatus{
+    
+    NSLog(@"addApplicationStatusToPList");
+    UIApplication* application = [UIApplication sharedApplication];
+    
+    NSString * appState;
+    if([application applicationState]==UIApplicationStateActive)
+        appState = @"UIApplicationStateActive";
+    if([application applicationState]==UIApplicationStateBackground)
+        appState = @"UIApplicationStateBackground";
+    if([application applicationState]==UIApplicationStateInactive)
+        appState = @"UIApplicationStateInactive";
+    UIAlertView *alert;
+    if([CLLocationManager locationServicesEnabled]){
+        NSLog(@"Location Services Enabled");
+        
+        if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
+            alert = [[UIAlertView alloc] initWithTitle:@"App Permission Denied"
+                                               message:@"To re-enable, please go to Settings and turn on Location Service for this app."
+                                              delegate:nil
+                                     cancelButtonTitle:@"OK"
+                                     otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+    self.shareModel.myLocationDictInPlist = [[NSMutableDictionary alloc]init];
+    [self.shareModel.myLocationDictInPlist setObject:applicationStatus forKey:@"applicationStatus"];
+    [self.shareModel.myLocationDictInPlist setObject:appState forKey:@"AppState"];
+    [self.shareModel.myLocationDictInPlist setObject:[NSDate date] forKey:@"Time"];
+    
+    NSString *plistName = [NSString stringWithFormat:@"LocationArray.plist"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", docDir, plistName];
+    
+    NSMutableDictionary *savedProfile = [[NSMutableDictionary alloc] initWithContentsOfFile:fullPath];
+    
+    if (!savedProfile){
+        savedProfile = [[NSMutableDictionary alloc] init];
+        self.shareModel.myLocationArrayInPlist = [[NSMutableArray alloc]init];
+    }
+    else{
+        self.shareModel.myLocationArrayInPlist = [savedProfile objectForKey:@"LocationArray"];
+        if (self.shareModel.myLocationArrayInPlist == nil) {
+            self.shareModel.myLocationArrayInPlist = [[NSMutableArray alloc] init];
+        }
+    }
+    
+    if(self.shareModel.myLocationDictInPlist)
+    {
+        [self.shareModel.myLocationArrayInPlist addObject:self.shareModel.myLocationDictInPlist];
+        [savedProfile setObject:self.shareModel.myLocationArrayInPlist forKey:@"LocationArray"];
+    }
+    
+    if (![savedProfile writeToFile:fullPath atomically:FALSE] ) {
+        NSLog(@"Couldn't save LocationArray.plist" );
+    }
 }
 
 - (void)setupLayer: (NSString *) userIDString{
@@ -60,17 +355,6 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
             if (!success) {
                 NSLog(@"Failed to connect to Layer: %@", error);
             } else {
-                // TODO This will usually be in a view controller after the user authenticates
-                // For the purposes of th       is Quick Start project, let's authenticate as a user named 'Device/Simulator'.
-/*
-#if TARGET_IPHONE_SIMULATOR
-                NSString *userIDString = @"Simulator";
-#else // TARGET_IPHONE_SIMULATOR
-                NSString *userIDString = @"Device";
-#endif // TARGET_IPHONE_SIMULATOR
-*/
-                // Once connected, authenticate user.
-                // Check Authenticate step for authenticateLayerWithUserID source
                 [self.layerClient authenticateWithUserID:userIDString completion:^(BOOL success, NSError *error) {
                     if (!success) {
                         NSLog(@"Failed Authenticating Layer Client with error:%@", error);
@@ -81,24 +365,10 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
     }
 }
 
--(void) startLocationManager
-{
-    self.locationManager.delegate = self;
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager startUpdatingLocation];
-}
 
--(CLLocation *) getGPSData
+-(CLLocationCoordinate2D) getGPSData
 {
-    return self.lastLocation;
-}
-
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    if ([locations count] > 0) {
-        self.lastLocation = [locations lastObject];
-        [self.locationManager stopUpdatingLocation];
-    }
+    return self.myLocation;
 }
 
 -(NSDictionary *)getCredDict
@@ -154,31 +424,6 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
     NSError *error;
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:cred_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
     [self.keychainItem setObject:data forKey:(__bridge NSString *)(kSecValueData)];
-}
-
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
-     [[JCDCoreData sharedInstance] saveContext];
 }
 
 -(KeychainItemWrapper *) keychainItem

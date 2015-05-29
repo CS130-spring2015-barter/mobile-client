@@ -38,6 +38,7 @@
 		8435DFB41AFC6624003207A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8435DFB31AFC6624003207A4 /* MobileCoreServices.framework */; };
 		8465F1711B169BBD000603DD /* AddItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465F1701B169BBD000603DD /* AddItemsViewController.m */; };
 		8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */; };
+		84B8BA8E1B17F21A00225ADE /* LocationShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B8BA8D1B17F21A00225ADE /* LocationShareModel.m */; };
 		84C8F3671AEC53FE005D7D65 /* BrtrStartupTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */; };
 		84C8F36F1AEC5F54005D7D65 /* JCDCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C8F36B1AEC5F54005D7D65 /* JCDCoreData.m */; };
 		84CAA8021ADE086A00253D2A /* Icon-user.png in Resources */ = {isa = PBXBuildFile; fileRef = 84CAA8011ADE086A00253D2A /* Icon-user.png */; };
@@ -119,6 +120,8 @@
 		84788EC01B115C9000BC4828 /* BrtrBackendFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrBackendFields.h; sourceTree = "<group>"; };
 		8485EF151AFADD6E0032AA07 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		8485EF161AFADD6E0032AA07 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
+		84B8BA8C1B17F21A00225ADE /* LocationShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationShareModel.h; sourceTree = "<group>"; };
+		84B8BA8D1B17F21A00225ADE /* LocationShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationShareModel.m; sourceTree = "<group>"; };
 		84C8F3651AEC53ED005D7D65 /* BrtrStartupTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrStartupTabViewController.h; sourceTree = "<group>"; };
 		84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrStartupTabViewController.m; sourceTree = "<group>"; };
 		84C8F36A1AEC5F54005D7D65 /* JCDCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDCoreData.h; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				84185F7D1B056FA400C671EE /* KeychainItemWrapper.m */,
 				526E9A001ADB822800615EFC /* AppDelegate.h */,
 				526E9A011ADB822800615EFC /* AppDelegate.m */,
+				84B8BA8C1B17F21A00225ADE /* LocationShareModel.h */,
+				84B8BA8D1B17F21A00225ADE /* LocationShareModel.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -415,6 +420,14 @@
 					526E99F81ADB822800615EFC = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 737B62MJUD;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					526E9A141ADB822800615EFC = {
 						CreatedOnToolsVersion = 6.1;
@@ -500,6 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B8BA8E1B17F21A00225ADE /* LocationShareModel.m in Sources */,
 				8485EF171AFADD6E0032AA07 /* ItemTableViewCell.m in Sources */,
 				253629A01B15984A00DA5C6A /* LCConversationViewController.m in Sources */,
 				8421766E1AF5A90600B72AA3 /* BrtrDataSource.m in Sources */,

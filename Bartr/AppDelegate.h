@@ -24,8 +24,7 @@
 -(void) storeEmail:(NSString *) email password:(NSString *)password;
 -(void)storeUserAuthToken:(NSString *)tok;
 -(NSString *)getAuthToken;
--(void) startLocationManager;
--(CLLocation *) getGPSData;
+-(CLLocationCoordinate2D) getGPSData;
 -(void)setupLayer: (NSString *) userIDString;
 @end
 

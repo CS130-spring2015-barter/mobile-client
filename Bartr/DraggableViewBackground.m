@@ -44,8 +44,6 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     return self;
 }
 
-
-
 -(void) didReceiveData:(id)data response:(NSURLResponse *)response
 {
     NSArray *cards = (NSArray *)data;

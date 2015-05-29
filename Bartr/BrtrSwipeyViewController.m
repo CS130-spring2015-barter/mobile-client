@@ -20,7 +20,7 @@
 #import "BrtrBackendFields.h"
 
 @interface BrtrSwipeyViewController ()
-
+@property (nonatomic, strong) DraggableViewBackground* cardView;
 @end
 
 @implementation BrtrSwipeyViewController
@@ -35,6 +35,7 @@
     //imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     DraggableViewBackground *draggableBackground = [[DraggableViewBackground alloc]initWithFrame:self.view.bounds andDelegate:self];
+    self.cardView = draggableBackground;
     [self.view addSubview:draggableBackground];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -47,6 +48,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
  [self.navigationController setNavigationBarHidden:YES animated:NO];
+    if (0 == [self.cardView.allCards count]) {
+        [BrtrDataSource getCardStackForUser:self.user delegate:self.cardView];
+    }
 }
 
 

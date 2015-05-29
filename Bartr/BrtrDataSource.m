@@ -691,8 +691,6 @@
 
 +(void) updateUser:(BrtrUser *)user withChanges:(NSDictionary *)userInfo withDelegate:(id<DataFetchDelegate>)delegate
 {
-    AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [ap startLocationManager];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"UserOperationsQueue";
     NSError *error;
@@ -832,13 +830,13 @@
 {
     NSLog(@"BrtrDataSource: Getting card stack for user");
     AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [ap startLocationManager];
-    CLLocation *location = [ap getGPSData];
+    
+    CLLocationCoordinate2D location = [ap getGPSData];
 
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
-    NSURLRequest *request = [BrtrDataSource getRequestWith:ROUTE_ITEM_GET andQuery:[NSString stringWithFormat:@"%@=%f&%@=%f",KEY_USER_LOC_LAT, location.coordinate.latitude, KEY_USER_LOC_LONG, location.coordinate.latitude]];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:ROUTE_ITEM_GET andQuery:[NSString stringWithFormat:@"%@=%f&%@=%f",KEY_USER_LOC_LAT, location.latitude, KEY_USER_LOC_LONG, location.latitude]];
     
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if(error) {
