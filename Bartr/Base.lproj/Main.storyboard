@@ -655,62 +655,31 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ddi-fw-a6r" kind="relationship" relationship="rootViewController" id="3Mk-55-4zH"/>
+                        <segue destination="jI9-I6-Np9" kind="relationship" relationship="rootViewController" id="Ap6-1s-ZgL"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N3g-PJ-kEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1696" y="2562"/>
         </scene>
-        <!--Items-->
-        <scene sceneID="ImA-eS-loo">
+        <!--Conversation List View Controller-->
+        <scene sceneID="Jz3-er-glm">
             <objects>
-                <tableViewController title="Items" id="ddi-fw-a6r" customClass="BrtrMyItemsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PNo-QM-3pJ">
+                <viewController id="jI9-I6-Np9" customClass="LCConversationListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wDy-Fs-Qw6"/>
+                        <viewControllerLayoutGuide type="bottom" id="dF4-NK-UMj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nmv-w5-R1n">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="73" id="Kc4-gg-QLD" customClass="ItemTableViewCell">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kc4-gg-QLD" id="CYZ-aM-IP8">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LKB-pN-DlO" userLabel="image">
-                                            <rect key="frame" x="8" y="8" width="69" height="54"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KaD-QT-H4s" userLabel="label">
-                                            <rect key="frame" x="85" y="8" width="227" height="54"/>
-                                            <attributedString key="attributedText">
-                                                <fragment content="Label">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="17" name="HelveticaNeue"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="imageView" destination="LKB-pN-DlO" id="yYq-ED-61R"/>
-                                    <outlet property="textLabel" destination="KaD-QT-H4s" id="DOq-ix-TRW"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="ddi-fw-a6r" id="U0Y-gk-TOf"/>
-                            <outlet property="delegate" destination="ddi-fw-a6r" id="gfo-ka-6Q4"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="Wal-dL-36U"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3mg-s9-sFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5TN-To-yt6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UfJ-AP-DVo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2176" y="2562"/>
+            <point key="canvasLocation" x="2158" y="2556"/>
         </scene>
     </scenes>
     <resources>

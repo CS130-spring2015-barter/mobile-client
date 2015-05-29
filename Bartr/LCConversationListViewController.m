@@ -23,6 +23,7 @@
     if (self.navigationItem.rightBarButtonItem == nil) {
         self.navigationItem.rightBarButtonItem = self.navigationItem.leftBarButtonItem;
         self.navigationItem.leftBarButtonItem = nil;
+        self.navigationItem.hidesBackButton = YES;
     }
 }
 #pragma mark - Conversation List Data Source
