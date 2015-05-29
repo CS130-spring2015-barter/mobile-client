@@ -80,23 +80,31 @@
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
+        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
         self.navigationItem.rightBarButtonItem = nil;
-        
+        self.navigationItem.rightBarButtonItem = button;
+        [self showLibrary:nil];
     }
     else {
         [self showCamera:nil];
     }
 }
 
-- (void) navigationController: (UINavigationController *) navigationController  willShowViewController: (UIViewController *) viewController animated: (BOOL) animated {
-    if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
-        viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
-    } else {
-        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
-        viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
-        viewController.navigationItem.title = @"Take Photo";
-        viewController.navigationController.navigationBarHidden = NO; // important
+- (void) navigationController: (UINavigationController *) navigationController
+       willShowViewController: (UIViewController *) viewController
+                     animated: (BOOL) animated
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
+            viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
+        } else {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
+            viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+            viewController.navigationItem.title = @"Take Photo";
+            viewController.navigationController.navigationBarHidden = NO; // important
+        }
     }
 }
 - (IBAction)showCamera:(id)sender {
@@ -114,8 +122,16 @@
 
 
 - (void) showLibrary: (id) sender {
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    //[self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
 }
 
 

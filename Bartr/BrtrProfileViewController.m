@@ -127,7 +127,15 @@ BOOL isEditMode;
         self.picture.image = [UIImage imageNamed:@"Icon-user"];
     }
     self.picture.image = [self centerCropImage:self.picture.image];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCamera:)];
+    UITapGestureRecognizer *tap;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCamera:)];
+    }
+    else
+    {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLibrary:)];
+    }
     [self.picture addGestureRecognizer:tap];
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
@@ -145,15 +153,21 @@ BOOL isEditMode;
 }
 
 
-- (void) navigationController: (UINavigationController *) navigationController  willShowViewController: (UIViewController *) viewController animated: (BOOL) animated {
-    if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
-        viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
-    } else {
-        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
-        viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
-        viewController.navigationItem.title = @"Take Photo";
-        viewController.navigationController.navigationBarHidden = NO; // important
+- (void) navigationController: (UINavigationController *) navigationController
+       willShowViewController: (UIViewController *) viewController
+                     animated: (BOOL) animated
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
+            viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
+        } else {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
+            viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+            viewController.navigationItem.title = @"Take Photo";
+            viewController.navigationController.navigationBarHidden = NO; // important
+        }
     }
 }
 - (IBAction)showCamera:(id)sender {
@@ -169,10 +183,17 @@ BOOL isEditMode;
     }
 }
 
-
 - (void) showLibrary: (id) sender {
-    self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    //[self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification

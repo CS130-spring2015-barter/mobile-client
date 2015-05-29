@@ -57,7 +57,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
     [self initializeLocationManager:launchOptions];
-    [self setupLayer: self.user.email];
+    
     return YES;
 }
 

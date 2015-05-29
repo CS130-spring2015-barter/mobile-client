@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *ad = (AppDelegate *)[UIApplication  sharedApplication].delegate;
+    [ad setupLayer:ad.user.email];
     self.delegate = self;
     self.user = ad.user;
     // Do any additional setup after loading the view.
