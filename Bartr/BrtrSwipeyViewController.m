@@ -48,8 +48,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
  [self.navigationController setNavigationBarHidden:YES animated:NO];
-    if (0 == [self.cardView.allCards count]) {
-        [BrtrDataSource getCardStackForUser:self.user delegate:self.cardView];
+    if (0 == [self.cardView.exampleCardLabels count]) {
+        self.cardView.exampleCardLabels = [BrtrDataSource getCardStackForUser:self.user delegate:self.cardView];
     }
 }
 
