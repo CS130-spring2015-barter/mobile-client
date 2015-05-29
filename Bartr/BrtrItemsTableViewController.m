@@ -73,13 +73,36 @@
     return cell;
 }
 
-/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        
+        [self.tableView beginUpdates];
+        BrtrUserItem* selected_item = [self.items objectAtIndex:indexPath.row];
+        [BrtrDataSource user:ad.user didDeleteItem:selected_item delegate:self];
+        
+        NSMutableArray *mut_items = [NSMutableArray arrayWithArray:self.items];
+        [mut_items removeObjectAtIndex:indexPath.row];
+        self.items = [mut_items copy];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        
+
+    }
+}
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if ([self.items count] != 0) {
+        if ([[self.items objectAtIndex:0] isKindOfClass:[BrtrUserItem class]]) {
+            return YES;
+        }
+    }
+    return NO;
 }
-*/
 
 /*
 // Override to support editing the table view.

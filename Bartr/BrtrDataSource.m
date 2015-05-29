@@ -133,6 +133,22 @@
     return request;
 }
 
++(NSURLRequest *)deleteRequestWith:(NSString *)route andQuery:(NSString *)query
+{
+    NSString *urlString = [NSString stringWithFormat: @"%@%@" , ENDPOINT, route];
+    
+    urlString = (query == nil) ? urlString : [NSString stringWithFormat:@"%@?%@", urlString, query];
+    NSURL *url = [NSURL URLWithString:urlString];
+    AppDelegate *ap = (AppDelegate * )[UIApplication sharedApplication].delegate;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"DELETE"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[ap getAuthToken] forHTTPHeaderField:@"Authorization"];
+    return request;
+}
+
 +(NSData *)decodePictureDictionary:(NSDictionary *)image_dict base64encoded:(BOOL)isBase64
 {
     NSData *image_data;
@@ -406,11 +422,8 @@
     }];
 }
 
-// FIXME
-// As of now we're assuming a like/reject will be successful
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
-    // FIXME
     NSMutableArray *newLikedItems = [[NSMutableArray alloc] initWithArray:self.liked_items];
     [newLikedItems addObject:item];
     self.liked_items = [newLikedItems copy];
@@ -421,7 +434,6 @@
 
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
-    // FIXME
     NSMutableArray *newSeenItems = [[NSMutableArray alloc] initWithArray:self.rejected_items];
     [newSeenItems addObject:item];
     self.rejected_items = [newSeenItems copy];
@@ -431,7 +443,7 @@
 }
 
 
-// FIXME thinking about whether or not these should be synchronous calls that return a BOOL
+
 +(void) user:(BrtrUser *)user didAddItemWithName:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate
 {
     NSLog(@"BrtrDataSource: Attempting to add item");
@@ -462,7 +474,6 @@
             }
             else
             {
-                // FIXME
                 NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
                 return;
             }
@@ -498,7 +509,6 @@
                 return;
             }
             else {
-                // FIXME
                 [theDelegate fetchingDataFailed:nil];
                 return;
             }
@@ -506,9 +516,49 @@
     }];
 }
 
--(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate
++(void) user:(BrtrUser *)user didDeleteItem:(BrtrUserItem *)item delegate:(id<DataFetchDelegate>)theDelegate
 {
-    NSLog(@"BrtrDataSource: Deleted an item");
+    NSLog(@"BrtrDataSource: Attempting to delete item %@", item.i_id);
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.name = @"FetchDataQueue";
+    NSURLRequest *request = [BrtrDataSource deleteRequestWith:[NSString stringWithFormat:@"item/%@", item.i_id]
+                                                     andQuery:nil];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if(error) {
+            NSLog(@"BrtrDataSource: Did not anything when trying to delete");
+            [theDelegate fetchingDataFailed:error];
+        }
+        else {
+            NSHTTPURLResponse *httpResponse = nil;
+            if([response isKindOfClass:[NSHTTPURLResponse class]])
+            {
+                NSLog(@"BrtrDataSource: Received a HTTPResponse");
+                httpResponse = (NSHTTPURLResponse *)response;
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
+                return;
+            }
+            
+            NSLog(@"BrtrDataSource: Response code: %ld", (long)[httpResponse statusCode]);
+            if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300)
+            {
+                NSLog(@"BrtrDataSource: Successfully deleted item");
+                NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+                [context deleteObject:item];
+            }
+            else
+            {
+                NSLog(@"BrtrDataSource: Did not receive meaningful response from server");
+                [theDelegate fetchingDataFailed:nil];
+            }
+        }
+    }];
+
+    
+    
 }
 
 #pragma mark - User Data Source
@@ -713,7 +763,6 @@
             }
             else
             {
-                // FIXME
                 NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
                 return;
             }
@@ -770,7 +819,6 @@
             }
             else
             {
-                // FIXME
                 NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse for liked/rejected item");
                 return;
             }
@@ -820,7 +868,6 @@
             }
             else
             {
-                // FIXME
                 NSLog(@"BrtrDataSource: Did not successfully like/reject item");
                 return;
             }
@@ -838,7 +885,8 @@
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     queue.name = @"FetchDataQueue";
-    NSURLRequest *request = [BrtrDataSource getRequestWith:ROUTE_ITEM_GET andQuery:[NSString stringWithFormat:@"%@=%f&%@=%f",KEY_USER_LOC_LAT, location.coordinate.latitude, KEY_USER_LOC_LONG, location.coordinate.latitude]];
+    NSURLRequest *request = [BrtrDataSource getRequestWith:ROUTE_ITEM_GET
+                                                  andQuery:[NSString stringWithFormat:@"%@=%f&%@=%f&%@=%@",KEY_USER_LOC_LAT, location.coordinate.latitude, KEY_USER_LOC_LONG, location.coordinate.latitude, @"user_id", ap.user.u_id]];
     
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if(error) {
@@ -854,7 +902,6 @@
             }
             else
             {
-                // FIXME
                 NSLog(@"BrtrDataSource: ERROR did not receive HTTPResponse");
                 return;
             }
@@ -906,7 +953,6 @@
             }
             else
             {
-                // FIXME
                 [theDelegate fetchingDataFailed:nil];
                 return;
             }

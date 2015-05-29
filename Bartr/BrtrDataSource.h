@@ -30,6 +30,6 @@
 -(void) user:(BrtrUser *)user didLikeItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 -(void) user:(BrtrUser *)user didRejectItem:(BrtrCardItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 +(void) user:(BrtrUser *)user didAddItemWithName:(NSString *)name andInfo:(NSString *)info andImage:(NSData *)image delegate:(id<DataFetchDelegate>)theDelegate;
--(void) user:(BrtrUser *)user didDeleteItem:(BrtrItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
++(void) user:(BrtrUser *)user didDeleteItem:(BrtrUserItem *)item delegate:(id<DataFetchDelegate>)theDelegate;
 +(NSDictionary *)getUserInfoForUserWithId:(NSNumber *)u_id;
 @end
