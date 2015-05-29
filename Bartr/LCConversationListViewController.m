@@ -15,7 +15,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.participants = [NSSet setWithArray:@[[LCUser userWithParticipantIdentifier:@"Device"], [LCUser userWithParticipantIdentifier:@"Simulator"]]];
-self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewChat:)];
+//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewChat:)];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.navigationItem.rightBarButtonItem == nil) {
+        self.navigationItem.rightBarButtonItem = self.navigationItem.leftBarButtonItem;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
 }
 #pragma mark - Conversation List Data Source
 
@@ -79,11 +87,12 @@ self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarBut
     return participants;
 }
 
-- (void)createNewChat:(id)sender {
+/*- (void)createNewChat:(id)sender {
     ATLParticipantTableViewController *participantTableViewController = [ATLParticipantTableViewController participantTableViewControllerWithParticipants:self.participants sortType:ATLParticipantPickerSortTypeFirstName];
     participantTableViewController.delegate = self;
     [self.navigationController pushViewController:participantTableViewController animated:YES];
 }
+*/
 
 #pragma mark - Conversation Selection From Push Notification
 

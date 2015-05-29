@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2526F0621B1813D500FA1CF3 /* BrtrMyItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2526F0611B1813D500FA1CF3 /* BrtrMyItemsTableViewController.m */; };
 		253238EF1AEC500700DF7DE5 /* DraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EA1AEC500700DF7DE5 /* DraggableView.m */; };
 		253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EC1AEC500700DF7DE5 /* DraggableViewBackground.m */; };
 		253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 253238EE1AEC500700DF7DE5 /* OverlayView.m */; };
@@ -61,6 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2526F0601B1813D500FA1CF3 /* BrtrMyItemsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrtrMyItemsTableViewController.h; sourceTree = "<group>"; };
+		2526F0611B1813D500FA1CF3 /* BrtrMyItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrtrMyItemsTableViewController.m; sourceTree = "<group>"; };
 		253238E91AEC500700DF7DE5 /* DraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableView.h; sourceTree = "<group>"; };
 		253238EA1AEC500700DF7DE5 /* DraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableView.m; sourceTree = "<group>"; };
 		253238EB1AEC500700DF7DE5 /* DraggableViewBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableViewBackground.h; sourceTree = "<group>"; };
@@ -360,6 +363,8 @@
 				84C8F3661AEC53FE005D7D65 /* BrtrStartupTabViewController.m */,
 				84CAA8111AE4C6E000253D2A /* BrtrItemsTableViewController.h */,
 				84CAA8121AE4C6E000253D2A /* BrtrItemsTableViewController.m */,
+				2526F0601B1813D500FA1CF3 /* BrtrMyItemsTableViewController.h */,
+				2526F0611B1813D500FA1CF3 /* BrtrMyItemsTableViewController.m */,
 				84CAA80E1AE4C5A400253D2A /* BrtrProfileViewController.h */,
 				84CAA80F1AE4C5A400253D2A /* BrtrProfileViewController.m */,
 				D2E298871AF9B7F400808AB1 /* BrtrItemViewController.h */,
@@ -521,6 +526,7 @@
 				8465F1711B169BBD000603DD /* AddItemsViewController.m in Sources */,
 				253238F11AEC500700DF7DE5 /* OverlayView.m in Sources */,
 				84273B3C1B01CBA1004430B5 /* LoginViewController.m in Sources */,
+				2526F0621B1813D500FA1CF3 /* BrtrMyItemsTableViewController.m in Sources */,
 				526E9A021ADB822800615EFC /* AppDelegate.m in Sources */,
 				253238F01AEC500700DF7DE5 /* DraggableViewBackground.m in Sources */,
 				2536299F1B15984A00DA5C6A /* LCConversationListViewController.m in Sources */,

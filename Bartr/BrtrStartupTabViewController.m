@@ -14,6 +14,7 @@
 #import "BrtrSwipeyViewController.h"
 #import "JCDCoreData.h"
 #import "LCConversationListViewController.h"
+#import "BrtrMyItemsTableViewController.h"
 
 @interface BrtrStartupTabViewController  ()
 @property (strong, nonatomic) BrtrUser *user;
@@ -48,6 +49,16 @@
     if ([vc isKindOfClass:[BrtrProfileViewController class]])
     {
         NSLog(@"Profile");
+    }
+    else if ([vc isKindOfClass:[BrtrMyItemsTableViewController class]])
+    {
+        BrtrMyItemsTableViewController *itvc = (BrtrMyItemsTableViewController *) vc;
+        itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
+        AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        itvc.navigationItem.title = @"Your Items";
+        itvc.allowEditableItems = YES;
+        [BrtrDataSource getUserItemsForUser:ad.user delegate:itvc];
+        
     }
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
