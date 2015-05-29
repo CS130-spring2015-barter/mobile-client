@@ -94,7 +94,7 @@
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        messageLabel.font = [UIFont fontWithName:@"Avenir-Book" size:20];
         [messageLabel sizeToFit];
         
         self.tableView.backgroundView = messageLabel;
