@@ -57,6 +57,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
         self.window.rootViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
     [self initializeLocationManager:launchOptions];
+    
     return YES;
 }
 
@@ -124,17 +125,10 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     
     //NSLog(@"locationManager didUpdateLocations: %@",locations);
-    
-    for(int i=0;i<locations.count;i++){
-        
-        CLLocation * newLocation = [locations objectAtIndex:i];
-        CLLocationCoordinate2D theLocation = newLocation.coordinate;
-        CLLocationAccuracy theAccuracy = newLocation.horizontalAccuracy;
-        
-        self.myLocation = theLocation;
-        self.myLocationAccuracy = theAccuracy;
-    }
-    
+    CLLocation *newLocation = [locations lastObject];
+    self.myLocation = newLocation.coordinate;
+    self.myLastLocationAccuracy = newLocation.horizontalAccuracy;
+    [self.locationManager stopUpdatingLocation];
     [self addLocationToPList:self.shareModel.afterResume];
 }
 
@@ -175,7 +169,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 
 -(void)applicationWillTerminate:(UIApplication *)application{
-    NSLog(@"applicationWillTerminate");
+    //NSLog(@"applicationWillTerminate");
     [self addApplicationStatusToPList:@"applicationWillTerminate"];
     [[JCDCoreData sharedInstance] saveContext];
 }
@@ -187,7 +181,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 -(void)addResumeLocationToPList{
     
-    NSLog(@"addResumeLocationToPList");
+    //NSLog(@"addResumeLocationToPList");
     UIApplication* application = [UIApplication sharedApplication];
     
     NSString * appState;
@@ -232,7 +226,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 
 -(void)addLocationToPList:(BOOL)fromResume{
-    NSLog(@"addLocationToPList");
+    //NSLog(@"addLocationToPList");
     
     UIApplication* application = [UIApplication sharedApplication];
     
@@ -290,7 +284,7 @@ static NSString *const kLayerAppID = @"c219d8fa-002d-11e5-8cc1-8b63dd004c78";
 
 -(void)addApplicationStatusToPList:(NSString*)applicationStatus{
     
-    NSLog(@"addApplicationStatusToPList");
+   // NSLog(@"addApplicationStatusToPList");
     UIApplication* application = [UIApplication sharedApplication];
     
     NSString * appState;

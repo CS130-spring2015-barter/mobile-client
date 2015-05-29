@@ -10,6 +10,7 @@
 #import "BrtrCardItem.h"
 #import "BrtrItemViewController.h"
 #import "BrtrDataSource.h"
+#import "JCDCoreData.h"
 
 @implementation DraggableViewBackground {
     NSInteger cardsLoadedIndex; //%%% the index of the card you have loaded into the loadedCards array last
@@ -35,7 +36,7 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         self.delegate = delegate;
         [super layoutSubviews];
         [self setupView];
-        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
+        //exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
         loadedCards = [[NSMutableArray alloc] init];
         allCards = [[NSMutableArray alloc] init];
         cardsLoadedIndex = 0;
@@ -163,6 +164,13 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
     DraggableView *itemCard = (DraggableView *)card;
+    NSMutableArray *mut_example_cards = [NSMutableArray arrayWithArray:exampleCardLabels];
+    [mut_example_cards removeObject:itemCard.item];
+    exampleCardLabels = [mut_example_cards copy];
+    
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:itemCard.item];
+    
     [self.delegate itemSwipedLeft:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
@@ -170,7 +178,11 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         [loadedCards addObject:[allCards objectAtIndex:cardsLoadedIndex]];
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
-    } else {
+    }
+//    else {
+//        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
+//    }
+    if ([exampleCardLabels count] == 0) {
         exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
     }
 }
@@ -182,7 +194,14 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 {
     //do whatever you want with the card that was swiped
     //    DraggableView *c = (DraggableView *)card;
-     DraggableView *itemCard = (DraggableView *)card;
+    DraggableView *itemCard = (DraggableView *)card;
+    NSMutableArray *mut_example_cards = [NSMutableArray arrayWithArray:exampleCardLabels];
+    [mut_example_cards removeObject:itemCard.item];
+    exampleCardLabels = [mut_example_cards copy];
+    
+    NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
+    [context deleteObject:itemCard.item];
+    
     [self.delegate itemSwipedRight:itemCard.item usingDelegate:self];
     [loadedCards removeObjectAtIndex:0]; //%%% card was swiped, so it's no longer a "loaded card"
     
@@ -191,7 +210,10 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
         cardsLoadedIndex++;//%%% loaded a card, so have to increment count
         [self insertSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-1)] belowSubview:[loadedCards objectAtIndex:(MAX_BUFFER_SIZE-2)]];
     }
-    else {
+//    else {
+//        exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
+//    }
+    if ([exampleCardLabels count] == 0) {
         exampleCardLabels=[self.delegate getMultipleCardsUsingDelegate:self];
     }
 }

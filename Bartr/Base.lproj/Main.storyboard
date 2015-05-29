@@ -428,14 +428,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Item Photo" id="NHu-py-Rth">
-                        <barButtonItem key="leftBarButtonItem" title="Photo Library" id="HAx-nG-vJP">
-                            <connections>
-                                <action selector="showImagePickerForPhotoPicker:" destination="SlD-4z-MiD" id="0Xg-sr-sxq"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="ePl-AJ-oq7">
                             <connections>
-                                <action selector="showImagePickerForCamera:" destination="SlD-4z-MiD" id="nt2-W9-7d6"/>
+                                <action selector="showCamera:" destination="SlD-4z-MiD" id="Ge2-9i-yQS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -11,7 +11,11 @@
 
 @interface BrtrItemsTableViewController : UITableViewController <DataFetchDelegate>
 
+typedef void (^VoidBlock)();
+
 @property (nonatomic, strong) NSArray *items;
 @property                     BOOL     allowEditableItems; 
+@property (readwrite, copy ) VoidBlock reloadCall;
 
+- (void)reloadData;
 @end

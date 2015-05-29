@@ -24,6 +24,7 @@
 @property (weak, nonatomic) UITextField *lastNameField;
 @property (weak, nonatomic) UITextView *aboutMeField;
 @property (retain, nonatomic) UIBarButtonItem *myItemButton;
+@property (retain, nonatomic) UIImagePickerController *imagePickerController;
 @end
 
 @implementation BrtrProfileViewController
@@ -121,14 +122,24 @@ BOOL isEditMode;
     self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
-    
+    self.picture.image = [UIImage imageWithData: self.user.image];
+    if (self.picture.image == nil) {
+        self.picture.image = [UIImage imageNamed:@"Icon-user"];
+    }
+    self.picture.image = [self centerCropImage:self.picture.image];
+    UITapGestureRecognizer *tap;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showCamera:)];
+    }
+    else
+    {
+        tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showLibrary:)];
+    }
+    [self.picture addGestureRecognizer:tap];
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
     self.picture.userInteractionEnabled = NO;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPicture:)];
-    [self.picture addGestureRecognizer:tap];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -139,6 +150,50 @@ BOOL isEditMode;
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+}
+
+
+- (void) navigationController: (UINavigationController *) navigationController
+       willShowViewController: (UIViewController *) viewController
+                     animated: (BOOL) animated
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
+            viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
+        } else {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
+            viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+            viewController.navigationItem.title = @"Take Photo";
+            viewController.navigationController.navigationBarHidden = NO; // important
+        }
+    }
+}
+- (IBAction)showCamera:(id)sender {
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+}
+
+- (void) showLibrary: (id) sender {
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -157,23 +212,21 @@ BOOL isEditMode;
     [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForSelectedRow] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
+-(void)finishAndUpdate
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.imagePickerController = nil;
+}
+
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     self.tableView.contentInset = UIEdgeInsetsZero;
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
--(void) clickPicture:(UITapGestureRecognizer *)tap
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if([UIImagePickerController isSourceTypeAvailable:
-        UIImagePickerControllerSourceTypePhotoLibrary]) {
-        
-        UIImagePickerController *picker= [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        picker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
-        [self presentViewController:picker animated:YES completion:nil];
-    }
+    [self finishAndUpdate];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker
@@ -182,7 +235,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     NSLog(@"%@", [info allKeys]);
     UIImage *selectedImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
     self.picture.image = [self centerCropImage: selectedImage];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self finishAndUpdate];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -208,6 +261,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     return 4;
 }
+
 
 // this actually gets the information for each cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -264,7 +318,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 // Dynamically set the height for the cells on the comments table based on their text
 // FIX ME: need to change size of font when its established
-- (CGFloat)tableView:(UITableView *)t heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *) heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat size = 0.0f;
     CGFloat totalSize =self.navigationController.navigationBar.frame.size.height  + self.tabBarController.tabBar.frame.size.height + self.picture.frame.size.height;
@@ -341,7 +395,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *vc = segue.destinationViewController;
     
-    BrtrItemsTableViewController *itvc;
+    __block  BrtrItemsTableViewController * __unsafe_unretained itvc;
     if ([@"ShowMyItems" isEqual: segue.identifier]) {
         if ([vc isKindOfClass:[UINavigationController class]])
         {
@@ -353,7 +407,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
-            [BrtrDataSource getUserItemsForUser:ad.user delegate:itvc];
+            itvc.reloadCall = ^(){[BrtrDataSource getUserItemsForUser:self.user delegate:itvc];  [itvc reloadData]; };
         }
         else {
             // error

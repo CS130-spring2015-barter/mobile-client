@@ -69,9 +69,7 @@
 @end
 
 
-
 @implementation APLViewController
-
 
 - (void)viewDidLoad
 {
@@ -82,21 +80,76 @@
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         // There is not a camera on this device, so don't show the camera button.
+        UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
         self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = button;
+        [self showLibrary:nil];
+    }
+    else {
+        [self showCamera:nil];
+    }
+}
+
+- (void) navigationController: (UINavigationController *) navigationController
+       willShowViewController: (UIViewController *) viewController
+                     animated: (BOOL) animated
+{
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
+    {
+        if (self.imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(showCamera:)];
+            viewController.navigationItem.rightBarButtonItems = [NSArray arrayWithObject:button];
+        } else {
+            UIBarButtonItem* button = [[UIBarButtonItem alloc] initWithTitle:@"Library" style:UIBarButtonItemStylePlain target:self action:@selector(showLibrary:)];
+            viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObject:button];
+            viewController.navigationItem.title = @"Take Photo";
+            viewController.navigationController.navigationBarHidden = NO; // important
+        }
+    }
+}
+- (IBAction)showCamera:(id)sender {
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
 }
 
 
-- (IBAction)showImagePickerForCamera:(id)sender
-{
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+- (void) showLibrary: (id) sender {
+    if (!self.imagePickerController) {
+        self.imagePickerController = [[UIImagePickerController alloc] init];
+        self.imagePickerController.delegate = self;
+        self.imagePickerController.allowsEditing = YES;
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:self.imagePickerController animated:YES completion:NULL];
+    }
+    else {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
 }
 
 
-- (IBAction)showImagePickerForPhotoPicker:(id)sender
-{
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+
+- (IBAction)showImagePickerForCamera:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
 }
+
+
+//- (IBAction)showImagePickerForPhotoPicker:(id)sender
+//{
+//    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -105,42 +158,6 @@
 }
 
 
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
-{
-    if (self.imageView.isAnimating)
-    {
-        [self.imageView stopAnimating];
-    }
-
-    if (self.capturedImages.count > 0)
-    {
-        [self.capturedImages removeAllObjects];
-    }
-
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = sourceType;
-    imagePickerController.delegate = self;
-        // Has camera
-    if (sourceType == UIImagePickerControllerSourceTypeCamera && [UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
-    {
-        /*
-         The user wants to use the camera interface. Set up our custom overlay view for the camera.
-         */
-        imagePickerController.showsCameraControls = NO;
-
-        /*
-         Load the overlay view from the OverlayView nib file. Self is the File's Owner for the nib file, so the overlayView outlet is set to the main view in the nib. Pass that view to the image picker controller to use as its overlay view, and set self's reference to the view to nil.
-         */
-        [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil];
-        self.overlayView.frame = imagePickerController.cameraOverlayView.frame;
-        imagePickerController.cameraOverlayView = self.overlayView;
-        self.overlayView = nil;
-    }
-
-    self.imagePickerController = imagePickerController;
-    [self presentViewController:self.imagePickerController animated:YES completion:nil];
-}
 
 
 #pragma mark - Toolbar actions
@@ -162,42 +179,6 @@
 }
 
 
-- (IBAction)delayedTakePhoto:(id)sender
-{
-    // These controls can't be used until the photo has been taken
-    self.doneButton.enabled = NO;
-    self.takePictureButton.enabled = NO;
-    self.delayedPhotoButton.enabled = NO;
-    self.startStopButton.enabled = NO;
-
-    NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:5.0];
-    NSTimer *cameraTimer = [[NSTimer alloc] initWithFireDate:fireDate interval:1.0 target:self selector:@selector(timedPhotoFire:) userInfo:nil repeats:NO];
-
-    [[NSRunLoop mainRunLoop] addTimer:cameraTimer forMode:NSDefaultRunLoopMode];
-    self.cameraTimer = cameraTimer;
-}
-
-
-- (IBAction)startTakingPicturesAtIntervals:(id)sender
-{
-    /*
-     Start the timer to take a photo every 1.5 seconds.
-     
-     CAUTION: for the purpose of this sample, we will continue to take pictures indefinitely.
-     Be aware we will run out of memory quickly.  You must decide the proper threshold number of photos allowed to take from the camera.
-     One solution to avoid memory constraints is to save each taken photo to disk rather than keeping all of them in memory.
-     In low memory situations sometimes our "didReceiveMemoryWarning" method will be called in which case we can recover some memory and keep the app running.
-     */
-    self.startStopButton.title = NSLocalizedString(@"Stop", @"Title for overlay view controller start/stop button");
-    [self.startStopButton setAction:@selector(stopTakingPicturesAtIntervals:)];
-
-    self.doneButton.enabled = NO;
-    self.delayedPhotoButton.enabled = NO;
-    self.takePictureButton.enabled = NO;
-
-    self.cameraTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(timedPhotoFire:) userInfo:nil repeats:YES];
-    [self.cameraTimer fire]; // Start taking pictures right away.
-}
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -208,6 +189,7 @@
         itemInfoVC.itemImage = self.imageView.image;
         itemInfoVC.itemDescription = self.itemDescription;
         self.imageView.image = nil;
+        [self.imageView.layer setBorderWidth: 0.0];
     }
 }
 
@@ -255,22 +237,6 @@
 
     self.imagePickerController = nil;
 }
-/*
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    NSLog(@"W:%f, H:%f", self.imageView.frame.size.width, self.imageView.frame.size.height);
-}
-*/
-
-#pragma mark - Timer
-
-// Called by the timer to take a picture.
-- (void)timedPhotoFire:(NSTimer *)timer
-{
-    [self.imagePickerController takePicture];
-}
-
 
 #pragma mark - UIImagePickerControllerDelegate
 
@@ -278,7 +244,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-
+    self.navigationItem.leftBarButtonItem = nil;
     [self.capturedImages addObject:image];
 
     if ([self.cameraTimer isValid])
@@ -293,6 +259,8 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
+    self.navigationItem.leftBarButtonItem = nil;
+    [self finishAndUpdate];
 }
 
 - (IBAction)unwindToThisViewController:(UIStoryboardSegue *)unwindSegue
@@ -306,7 +274,11 @@
         if (self.imageView.image == nil) {
             // TODO
             self.nextButton.hidden = YES;
+            [self.imageView.layer setBorderWidth: 0.0];
         }
+    }
+    else {
+        [self.imageView.layer setBorderWidth: 2.0];
     }
     
 }

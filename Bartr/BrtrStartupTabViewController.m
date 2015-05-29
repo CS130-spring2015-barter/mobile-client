@@ -26,9 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate *ad = (AppDelegate *)[UIApplication  sharedApplication].delegate;
+    [ad setupLayer:ad.user.email];
     self.delegate = self;
     self.user = ad.user;
-    [ad setupLayer: self.user.email];
     // Do any additional setup after loading the view.
 }
 
@@ -36,8 +36,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
@@ -52,23 +50,24 @@
     }
     else if ([vc isKindOfClass:[BrtrMyItemsTableViewController class]])
     {
-        BrtrMyItemsTableViewController *itvc = (BrtrMyItemsTableViewController *) vc;
+        __block BrtrMyItemsTableViewController *__unsafe_unretained itvc = (BrtrMyItemsTableViewController *)vc;
         itvc.items = [[NSArray alloc] initWithArray: [self.user.my_items allObjects]];
         AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
         itvc.navigationItem.title = @"Your Items";
         itvc.allowEditableItems = YES;
-        [BrtrDataSource getUserItemsForUser:ad.user delegate:itvc];
+        itvc.reloadCall = ^(){[BrtrDataSource getUserItemsForUser:ad.user delegate:itvc]; [itvc reloadData];};
         
     }
     else if ([vc isKindOfClass:[BrtrItemsTableViewController class]])
     {
-        BrtrItemsTableViewController *itvc = (BrtrItemsTableViewController *)vc;
+        __block BrtrItemsTableViewController *__unsafe_unretained itvc = (BrtrItemsTableViewController *)vc;
         NSManagedObjectContext *context = [[JCDCoreData sharedInstance] defaultContext];
         AppDelegate *ap = (AppDelegate *)[UIApplication sharedApplication].delegate;
         itvc.items = [context fetchObjectsWithEntityName:@"BrtrLikedItem" sortedBy:nil withPredicate:[NSPredicate predicateWithFormat:@"user.email = %@", ap.user.email]];
-        [BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
+        //[BrtrDataSource getLikedIDsForUser:self.user delegate:itvc];
         itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Liked Items", self.user.firstName];
         itvc.allowEditableItems = NO;
+        itvc.reloadCall = ^(){[BrtrDataSource getLikedIDsForUser:self.user delegate:itvc]; [itvc reloadData];};
        // NSLog(@"Items");
     }
     else if ([vc isKindOfClass:[BrtrSwipeyViewController class]])
@@ -77,7 +76,6 @@
         
     }
     else if ([vc isKindOfClass:[LCConversationListViewController class]]) {
-
         AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
         LCConversationListViewController *cvc = (LCConversationListViewController *)vc;
         cvc = [LCConversationListViewController conversationListViewControllerWithLayerClient:ad.getLayerClient];
