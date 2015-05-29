@@ -222,7 +222,7 @@
         <scene sceneID="2Zi-oo-990">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hyh-tx-hM2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="I0B-uK-HJ5"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile_30" id="I0B-uK-HJ5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="TXf-rP-1mX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -241,7 +241,7 @@
         <scene sceneID="B3L-ZR-eIW">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8Vf-RH-966" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Items" id="7iz-nk-Jsp"/>
+                    <tabBarItem key="tabBarItem" title="Items" image="items_30" id="7iz-nk-Jsp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wsJ-sT-jd1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -348,7 +348,7 @@
                                 <rect key="frame" x="73" y="64" width="175" height="175"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.396078431372549" green="0.61568627450980395" blue="0.32549019607843138" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="AN0-ru-Z6D" secondAttribute="trailing" constant="72" id="0jy-TV-p0C"/>
                             <constraint firstAttribute="trailing" secondItem="rzo-xh-SKk" secondAttribute="trailing" id="GPh-fW-T7c"/>
@@ -386,7 +386,7 @@
         <scene sceneID="3LK-Xt-NpH">
             <objects>
                 <navigationController title="Add Item" id="vnB-EC-YRt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Add Item" id="duB-cy-28H"/>
+                    <tabBarItem key="tabBarItem" title="Add Item" image="add_30" id="duB-cy-28H"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MK7-d1-guM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -552,7 +552,7 @@
         <scene sceneID="TsB-my-r1x">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jDN-A8-LPn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="YMR-eO-7ot"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home_30" id="YMR-eO-7ot"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zng-5v-kIk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -642,7 +642,7 @@
         <scene sceneID="JTB-PG-mTp">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rMV-1Q-8cW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Messages" id="DCI-qW-4ph"/>
+                    <tabBarItem key="tabBarItem" title="Messages" image="mail_30" id="DCI-qW-4ph"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZjB-ds-tcd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -678,7 +678,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add_30" width="30" height="30"/>
         <image name="ball" width="275" height="183"/>
+        <image name="home_30" width="30" height="30"/>
+        <image name="items_30" width="30" height="30"/>
+        <image name="mail_30" width="30" height="30"/>
+        <image name="profile_30" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
