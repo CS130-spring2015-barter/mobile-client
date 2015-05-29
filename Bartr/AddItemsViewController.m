@@ -63,10 +63,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
         /* only called when cell is created */
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     switch (indexPath.row) {
         case 0: {
-            cell.textLabel.text = @"Name";
             UITextField* textField = (UITextField *)[cell viewWithTag:100];
             textField.delegate = self;
             textField.text = self.itemName;
@@ -74,12 +74,11 @@
             [textField setReturnKeyType:UIReturnKeyDone];            
         } break;
         case 1: {
-            cell.textLabel.text = @"Description";
             UITextView *textView = (UITextView *)[cell viewWithTag:100];
+            textView.delegate = self;
             textView.text = self.itemDescription;
             self.itemDescriptionField = textView;
-            textView.delegate = self;
-            
+            [textView setReturnKeyType:UIReturnKeyDone];
         } break;
         default:
             break;
@@ -88,17 +87,22 @@
     return cell;
 }
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    id textField = [cell viewWithTag:100];
-    [textField becomeFirstResponder];
+    if (0 == indexPath.row) {
+        // size for 0
+        return 40;
+    }
+    else {
+        // size for desc
+        return 100;
+    }
 }
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
-    return YES;
+    [self.itemDescriptionField becomeFirstResponder];
+    return NO;
 }
 
 -(void) textFieldDidEndEditing:(UITextField *)textField
@@ -111,6 +115,20 @@
 {
     self.itemDescription = textView.text;
     [self updateStatusOfDoneButton];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
 }
 
 -(void) updateStatusOfDoneButton
@@ -143,18 +161,6 @@
     if  ([segue.identifier isEqualToString:@"unwind"]) {
         self.itemName = itemNameField.text;
         self.itemDescription = itemDescriptionField.text;
-    }
-}
-
--(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (0 == indexPath.row) {
-        // size for 0
-        return 40;
-    }
-    else {
-        // size for desc
-        return 100;
     }
 }
 
