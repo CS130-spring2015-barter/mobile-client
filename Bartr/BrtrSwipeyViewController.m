@@ -65,10 +65,12 @@
     __block BrtrUser     *temp_user = self.user;
     [queue addOperationWithBlock:^{
         AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        NSString *item_name = temp_item.name;
         [[BrtrDataSource sharedInstance] user:temp_user didLikeItem:temp_item delegate:delegate];
         LCConversationViewController *conv = [LCConversationViewController conversationViewControllerWithLayerClient:[ad getLayerClient]];
         NSDictionary *user_info = [BrtrDataSource getUserInfoForUserWithId:temp_item.owner_id];
-        [conv sendMessage:@"Hello world!" toReceiver:[user_info objectForKey:KEY_USER_EMAIL]];
+        NSString *message = [NSString stringWithFormat:@"Hello %@ I am interested in your %@", [user_info  objectForKey:KEY_USER_FIRST_NAME ], item_name];
+        [conv sendMessage:message toReceiver:[user_info objectForKey:KEY_USER_EMAIL]];
     }];
 }
 

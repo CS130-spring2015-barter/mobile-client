@@ -47,9 +47,11 @@ static const int MAX_BUFFER_SIZE = 2; //%%% max number of cards loaded at any gi
 -(void) didReceiveData:(id)data response:(NSURLResponse *)response
 {
     NSArray *cards = (NSArray *)data;
-    NSMutableArray *newCards = [[NSMutableArray alloc ] initWithArray:exampleCardLabels];
+    NSMutableSet *newCards = [[NSMutableSet alloc] init];
+    NSSet *currCards = [[NSSet alloc] initWithArray:exampleCardLabels];
     [newCards addObjectsFromArray:cards];
-    self.exampleCardLabels = [newCards copy];
+    [newCards minusSet:currCards];
+    self.exampleCardLabels = [[newCards copy] allObjects];
     
     [self loadCards];
     [self setNeedsDisplay];
