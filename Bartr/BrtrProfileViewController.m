@@ -121,7 +121,11 @@ BOOL isEditMode;
     self.user = ad.user;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.picture.image = [self centerCropImage: [UIImage imageWithData: self.user.image]];
+    self.picture.image = [UIImage imageWithData: self.user.image];
+    if (self.picture.image == nil) {
+        self.picture.image = [UIImage imageNamed:@"Icon-user"];
+    }
+    self.picture.image = [self centerCropImage:self.picture.image];
     
     self.tableView.scrollEnabled = false;
     self.myItemButton = self.navigationItem.leftBarButtonItem;
@@ -209,6 +213,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     return 4;
 }
 
+
 // this actually gets the information for each cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -264,7 +269,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 
 // Dynamically set the height for the cells on the comments table based on their text
 // FIX ME: need to change size of font when its established
-- (CGFloat)tableView:(UITableView *)t heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *) heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat size = 0.0f;
     CGFloat totalSize =self.navigationController.navigationBar.frame.size.height  + self.tabBarController.tabBar.frame.size.height + self.picture.frame.size.height;
@@ -341,7 +346,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *vc = segue.destinationViewController;
     
-    BrtrItemsTableViewController *itvc;
+    __block  BrtrItemsTableViewController * __unsafe_unretained itvc;
     if ([@"ShowMyItems" isEqual: segue.identifier]) {
         if ([vc isKindOfClass:[UINavigationController class]])
         {
@@ -353,7 +358,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
             AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
             itvc.navigationItem.title = [NSString stringWithFormat:@"%@'s Items", ad.user.firstName];
             itvc.allowEditableItems = YES;
-            [BrtrDataSource getUserItemsForUser:ad.user delegate:itvc];
+            itvc.reloadCall = ^(){[BrtrDataSource getUserItemsForUser:self.user delegate:itvc];  [itvc reloadData]; };
         }
         else {
             // error

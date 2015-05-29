@@ -87,9 +87,14 @@
 }
 
 
-- (IBAction)showImagePickerForCamera:(id)sender
-{
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+
+- (IBAction)showImagePickerForCamera:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
 }
 
 
@@ -208,6 +213,7 @@
         itemInfoVC.itemImage = self.imageView.image;
         itemInfoVC.itemDescription = self.itemDescription;
         self.imageView.image = nil;
+        [self.imageView.layer setBorderWidth: 0.0];
     }
 }
 
@@ -306,7 +312,11 @@
         if (self.imageView.image == nil) {
             // TODO
             self.nextButton.hidden = YES;
+            [self.imageView.layer setBorderWidth: 0.0];
         }
+    }
+    else {
+        [self.imageView.layer setBorderWidth: 2.0];
     }
     
 }

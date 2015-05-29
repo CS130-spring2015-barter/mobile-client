@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AppDelegate *ad = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.delegate = self;
     self.dataSource = self;
 };
